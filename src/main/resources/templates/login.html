@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/assets/csscust/styleLogin.min.css}" rel="stylesheet" type="text/css"  />
+<script th:src="@{/assets/js/login.min.js}"></script>
+<script th:src="@{/assets/js/login.min2.js}"></script>
+<link th:href="@{/assets/csscust/styleLogin.css}" rel="stylesheet" type="text/css"  />
+</head>
+<body th:background="@{/assets/imgcust/background.jpg}">
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid"></div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+				<span style="font-size:25px; text-shadow: 2px 2px 4px #000000; color: white">Selamat Datang di </span>
+        		<span style="font-size:25px;font-weight:bold; text-shadow: 2px 2px 4px #000000; color: white">Lead Management System</span>
+        		<br>
+        		<span style="font-size:15px; text-shadow: 2px 2px 4px #000000; color: white">Hari ini <label th:text="${strDay}"></label> <label th:text="${strDate}"></label></span>
+			</div>
+			<div class="col-sm-4">
+				<form style="background-color: white; border-radius: 5px" th:action="@{/login}" method="POST">
+						<div style="width: 100%; text-align: center;"><img th:src="@{/assets/imgcust/1.jpg}" style="width: 35%;"></div>
+						<div style="width: auto; text-align: center;">LEAD MANAGEMENT SYSTEM</div>
+                  	<div class="containerform">
+						<label style="color: black"><b>User ID</b></label> 
+						<input type="text" placeholder="Enter User ID" name="username" id="username" required> 
+						
+						<label style="color: black"><b>Password</b></label>
+						<input type="password" placeholder="Enter Password" name="password" id="password" required>
+						
+						<div align="center" th:if="${param.error}">
+							<p style="font-size: 20; color: #FF1C19;">Username or Password invalid, please verify</p>
+						</div>
+						
+						<button type="submit" style="background-color: #438EB9">Login</button>
+					</div>
+				</form>
+				<form th:action="@{/registration}" method="get">
+					<button class="btn-warning btn-block" type="Submit">Go To Registration ?</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

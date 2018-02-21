@@ -1,0 +1,70 @@
+.navbar {
+	border-radius: 0;
+	margin-bottom: 6%;
+	/*background-color: #F0AC4C;
+	border-color: #F0AC4C;*/
+	opacity: 0;
+}
+
+.carousel-inner img {
+	width: 100%; /* Set width to 100% */
+	margin: auto;
+	min-height: 200px;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+}
+
+button:hover {
+	opacity: 0.8;
+}
+
+.containerform {
+	padding: 16px;
+	width: 100%;
+}
+
+@media ( max-width : 600px , max-width : 300px) {
+	.carousel-caption {
+		display: none;
+	}
+	span.psw {
+		display: block;
+		float: none;
+	}
+	.cancelbtn {
+		width: 100%;
+	}
+}
+
+body, html {
+	height: 100%;
+	margin: 0;
+}
+
+.bg {
+	/* Full height */
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}

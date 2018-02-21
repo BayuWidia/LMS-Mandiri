@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"  />
+<script th:src="@{/assets/js/jquery.2.1.1.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/moment.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datetimepicker.min.js}"></script>
+
+<!-- <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css"  />
+<link th:href="@{/assets/css/styleTimeline.css}" rel="stylesheet" type="text/css"  /> -->
+<link th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" type="text/css"  />
+<title>Customer Information</title>
+</head>
+<body>
+	<div class="container">
+	  <!-- Modal New Penawaran-->
+	  <div class="modal fade" id="modalNewPenawaran" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Tambah Penawaran Baru</h4>
+	        </div>
+	        <div class="modal-body">
+				<form id="blankCampaign" name="blankCampaign" th:action="@{/campaignSave}" th:object="${blankCampaign}" method="post">
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{customer}" />
+	            <div class="form-group">
+	              <label>Nama Produk</label>
+	              <select class="form-control" th:field="*{product}">
+	                  <option th:each="product : ${listProduct}"
+	                     th:value="${product.id}"
+	                     th:utext="${product.name}"/>
+	              </select>
+	            </div>
+	            <div class="form-group">
+	                <label>Hasil Tanggapan</label>
+	                <input type="hidden" th:field="*{status}"></input>
+	                <div class="btn-group pull-right">
+	                  <button id="btnYa" type="button" class="btn btn-info">Ya</button>
+	                  <button id="btnToBe" type="button" class="btn btn-default">To Be Follow Up</button>
+	                  <button id="btnTidak" type="button" class="btn btn-basic">Tidak</button>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	              <label>Alasan Nasabah</label>
+	              <select class="form-control" th:field="*{reason}">
+	                  <option th:each="reason : ${listReason}"
+	                     th:value="${reason.id}"
+	                     th:utext="${reason.name}"/>
+	              </select>
+	            </div>
+	            <div class="form-group">
+	              <label for="datetimepicker1">Reminder</label>
+<!-- 	              <input type="hidden" th:field="*{reminderon}" /> -->
+	              <div class='input-group date' id='datetimepicker1'>
+	                <input type='text' class="form-control" th:field="*{reminderon}" />
+	                <span class="input-group-addon">
+	                  <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	              </div>
+ 	              	<script type="text/javascript" th:inline="javascript">
+ 			            $(function () {
+ 			                $('#datetimepicker1').datetimepicker({
+ 			                	format:'DD-MM-YY HH:mm'
+ 			                });
+ 			                
+ 			            });
+			        </script>
+	            </div>
+	            <div class="form-group">
+	              <label for="email">Alamat Email</label>
+	              <input type="email" class="form-control" placeholder="Enter email" th:field="*{email}" />
+	            </div>
+	            <div class="form-group">
+	              <label for="pwd">Nomor HP</label>
+	              <input type="text" class="form-control" placeholder="No Handphone" th:field="*{nohp}"/>
+	            </div>
+	            <button type="submit" class="btn btn-lg btn-primary center-block">Submit</button>
+	          </form>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>
+	<!-- End Modal Penawaran baru -->
+	
+	<!-- Modal Detail Produk -->
+	<div class="container">
+	  <div class="modal fade" id="modalDetail" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Detail Produk</h4>
+	        </div>
+	        <div id="modalDetailBody" class="modal-body">
+	          
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+  	</div>
+  	<!-- End Modal Detail Produk -->
+
+	<div class="container-fluid">
+	  <!--Outer-->
+	  <div class="row">
+	  	<!--Left Side-->
+	  	<div class="col-sm-8">
+	    	<!--Left Top - Customer Information-->
+	    	<div class="row">
+	        	<div class="col-sm">
+	        		<table class="table table-hover" th:object="${customer}">
+					    <tr>
+					      <td class="col-md-2">Nama</td>
+					      <td class="col-md-1">:</td>
+					      <td class="col-md-10" th:text="${customer.name}"></td>
+					    </tr>
+					    <tr>
+					      <td>Jenis Kelamin</td>
+					      <td>:</td>
+					      <td th:text="${customer.gender}"></td>
+					    </tr>
+					    <tr>
+					      <td>No CIF</td>
+					      <td>:</td>
+					      <td th:text="${customer.cif}"></td>
+					    </tr>
+					    <tr>
+					      <td>NIK</td>
+					      <td>:</td>
+					      <td th:text="${customer.nik}"></td>
+					    </tr>
+					    <tr>
+					      <td>Tempat/Tanggal Lahir</td>
+					      <td>:</td>
+					      <td th:text="${customer.birthplace} +'/' + ${customer.birthdate}"></td>
+					    </tr>
+					    <tr>
+					      <td>Alamat</td>
+					      <td>:</td>
+					      <td th:text="${customer.address}"></td>
+					    </tr>
+					    <tr>
+					      <td>Nomor Telepon</td>
+					      <td>:</td>
+					      <td th:text="${customer.phone}"></td>
+					    </tr>
+					</table>
+	        	</div>
+	        </div>
+	        <!--Left Mid - Customer Product and offer-->
+	        <div class="row">
+	        	<div class="col-sm">
+	        		Customer Product
+	        		<ul class="nav nav-tabs">
+					  <li class="active"><a data-toggle="tab" href="#newProduct">Produk yang ditawarkan</a></li>
+					  <li><a data-toggle="tab" href="#offered">Produk yang sudah pernah ditawarakan</a></li>
+					  <li><a data-toggle="tab" href="#owned">Produk yang dimiliki</a></li>
+					</ul>
+					
+					<div class="tab-content">
+					  <div id="newProduct" class="tab-pane fade in active">
+					  	<table class="table table-bordered">
+						    <tbody>
+						      <tr th:each="newproduct : ${newproduct}">
+						        <td class="col-md-2" th:text="${newproduct.product.name}"></td>
+						        <td class="col-md-1">
+						        	<button th:onclick="|showDetailProduct('${newproduct.product.id}')|" th:id="'btnDetail_'+${newproduct.product.id}" type="button" class="btn btn-info"  data-toggle="modal" data-target="#modalDetail">Detail</button>
+						       	</td>
+						      </tr>
+						    </tbody>
+						  </table>
+					  </div>
+					  <div id="offered" class="tab-pane fade">
+					  	<table class="table table-bordered">
+						    <thead class="bg-primary text-white">
+						      <tr>
+						        <th class="col-md-1">No.</th>
+						        <th class="col-md-3">Tanggal offer</th>
+						        <th class="col-md-3">Nama Produk</th>
+						        <!-- <th class="col-md-3">Status</th> -->
+						        <th class="col-md-3">Alasan</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr th:each="offered, iterationStatus : ${offered}">
+						        <td th:text="${iterationStatus.count}">1</td>
+						        <td th:text="${offered.createdon}"></td>
+						        <td th:text="${offered.product.name}"></td>
+						        <!-- <td th:text="${offered.status}"></td> -->
+						        <!-- <td th:text="${offered.tanggapan}"></td> -->
+						      </tr>
+						    </tbody>
+						  </table>
+					  </div>
+					  <div id="owned" class="tab-pane fade">
+					    <table class="table table-bordered">
+						    <thead class="bg-primary text-white">
+						      <tr>
+						        <th class="col-md-1">No.</th>
+						        <th class="col-md-3">Nama Produk</th>
+						        <th class="col-md-3">Nomor Rekening</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr th:each="product, iterationStatus : ${ownedProduct}">
+						        <td th:text="${iterationStatus.count}">1</td>
+						        <td th:text="${product.product.name}"></td>
+						        <td th:text="${product.accountno}"></td>
+						      </tr>
+						    </tbody>
+						  </table>
+					  </div>
+					</div>
+					
+	        	</div>
+	        </div>
+	        <!-- Lef bottom - Add new campaign -->
+	        <div class="row">
+	        	<div class="col-sm">
+	        		<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalNewPenawaran">
+			          <span class="glyphicon glyphicon-plus"></span>Tambah penawaran baru
+			        </button>
+	        	</div>
+	        </div>
+	        
+	    </div>
+	    <!--Rigth Side - Customer Activities-->
+	    <div class="col-sm-4">
+	    	Aktivitas Customer
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>
+
+<Script type="text/javascript" th:inline="javascript">
+	function showDetailProduct(id){
+		//var productid = JSON.stringify({ "id":id });
+		//alert(productid);
+		$.ajax({
+		      url: '/getDetailProduct?id='+id,
+		      type: 'get',
+		      success: function(response) {
+		    	  $("#modalDetailBody").html(response);
+		    	  //alert(response);
+		      },
+		      error: function(e){
+		            //alert(xhr + status + errorThrown);
+		            alert(e.responseText);
+	          }
+		  });
+		
+	};
+
+	$(document).ready(function(){
+			
+		var $form = $('#blankCampaign');
+		  $form.on('submit', function(e) {
+		    e.preventDefault();
+		    $.ajax({
+		      url: $form.attr('action'),
+		      type: 'post',
+		      data: $form.serialize(),
+		      success: function(response) {
+		    	  alert(response);
+		      },
+		    	error: function(e) {
+		        	alert(e.responseText);
+		      }
+		  });
+		});
+		
+	  var $dp = $('#datetimepicker1').data("DateTimePicker");
+
+	  $('#datetimepicker1').on('dp.change', function (e) {
+	  	//$("#reminderon").val(e.date.unix());
+	  	//$("#reminderon").val(e);
+ 		//alert(e.date.unix());
+	  });
+	  
+	  $("#btnYa").click(function(){
+		  $("#status").val(1);
+	  });
+	  $("#btnToBe").click(function(){
+		  $("#status").val(2);
+	  });
+	  $("#btnTidak").click(function(){
+		  $("#status").val(3);
+	  });
+	});
+</Script>
