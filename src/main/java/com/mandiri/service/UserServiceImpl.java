@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mandiri.filter.UserProfile;
 //import com.mandiri.model.Role;
-import com.mandiri.model.User;
 //import com.mandiri.repository.RoleRepository;
 import com.mandiri.repository.UserRepository;
 
@@ -26,12 +26,12 @@ public class UserServiceImpl implements UserService {
 //	}
 	
 	@Override
-	public User findUserByUsername(String username) {
+	public UserProfile findUserProfileByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 
 	@Override
-	public void saveUser(User user) {
+	public void saveUserProfile(UserProfile user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 //		user.setActive(1);
 //		Role userRole = roleRepository.findByName("admin");
