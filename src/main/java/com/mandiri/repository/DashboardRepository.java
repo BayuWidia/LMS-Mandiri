@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.mandiri.model.UserActivity;
+import com.mandiri.model.TAuditTrail;
+//import com.mandiri.model.UserActivity;
 
 @Repository("dashboardRepository")
-public interface DashboardRepository extends JpaRepository<UserActivity, Long> {
+public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 
-	@Query(value = "SELECT ua.id, ua.action, ua.cif, ua.createdon, ua.createdby FROM public.user_activities ua "
+	@Query(value = "SELECT ua.id, ua.audited, ua.createdon, ua.criteria, ua.info, ua.modifiedon, ua.user_nip, ua.createdby, ua.modifiedby"
+			+ " FROM public.t_audit_trail ua "
 			+ "where (:createdBy is null or (:createdBy is not null and ua.createdby= :createdBy)) order by ua.createdon desc limit 10 ", nativeQuery = true)
 	List<Object[]> findUserActivity(@Param("createdBy") String createdBy);
 

@@ -3,11 +3,11 @@ package com.mandiri.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.mandiri.model.User;
+import com.mandiri.filter.UserProfile;
 
 @Repository("userRepository")
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserProfile, Long> {
 //	 User findByEmail(String email);
 	 
-	 User findByUsername(String username);
+	UserProfile findByUsername(String username);
 }

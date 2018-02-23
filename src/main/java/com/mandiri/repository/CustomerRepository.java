@@ -2,11 +2,10 @@ package com.mandiri.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.mandiri.model.Customer;
+import com.mandiri.model.TCustomerResponse;
 
 @Repository("customerRepository")
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<TCustomerResponse, Long> {
 	 
-	Customer findCustomerByCif(Long cif);
+	TCustomerResponse findTCustomerResponseByCif(Long cif);
 }
