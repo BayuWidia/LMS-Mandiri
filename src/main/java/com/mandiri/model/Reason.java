@@ -2,7 +2,6 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -16,89 +15,53 @@ public class Reason implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="reason_id")
+	private String reasonId;
 
-	private String name;
+	@Column(name="reason_name")
+	private String reasonName;
 
-	private Integer status;
+	@Column(name="response_id")
+	private String responseId;
 
-	//bi-directional many-to-one association to CustomerCampaign
-	@OneToMany(mappedBy="reason")
-	private List<CustomerCampaign> customerCampaigns;
-
-	//bi-directional many-to-one association to CustomerResponse
-	@OneToMany(mappedBy="reason")
-	private List<CustomerResponse> customerResponses;
+	//bi-directional many-to-one association to TProduct
+	@ManyToOne
+	@JoinColumn(name="product_id")
+	private TProduct TProduct;
 
 	public Reason() {
 	}
 
-	public Long getId() {
-		return this.id;
+	public String getReasonId() {
+		return this.reasonId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setReasonId(String reasonId) {
+		this.reasonId = reasonId;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getReasonName() {
+		return this.reasonName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setReasonName(String reasonName) {
+		this.reasonName = reasonName;
 	}
 
-	public Integer getStatus() {
-		return this.status;
+	public String getResponseId() {
+		return this.responseId;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setResponseId(String responseId) {
+		this.responseId = responseId;
 	}
 
-	public List<CustomerCampaign> getCustomerCampaigns() {
-		return this.customerCampaigns;
+	public TProduct getTProduct() {
+		return this.TProduct;
 	}
 
-	public void setCustomerCampaigns(List<CustomerCampaign> customerCampaigns) {
-		this.customerCampaigns = customerCampaigns;
-	}
-
-	public CustomerCampaign addCustomerCampaign(CustomerCampaign customerCampaign) {
-		getCustomerCampaigns().add(customerCampaign);
-		customerCampaign.setReason(this);
-
-		return customerCampaign;
-	}
-
-	public CustomerCampaign removeCustomerCampaign(CustomerCampaign customerCampaign) {
-		getCustomerCampaigns().remove(customerCampaign);
-		customerCampaign.setReason(null);
-
-		return customerCampaign;
-	}
-
-	public List<CustomerResponse> getCustomerResponses() {
-		return this.customerResponses;
-	}
-
-	public void setCustomerResponses(List<CustomerResponse> customerResponses) {
-		this.customerResponses = customerResponses;
-	}
-
-	public CustomerResponse addCustomerRespons(CustomerResponse customerRespons) {
-		getCustomerResponses().add(customerRespons);
-		customerRespons.setReason(this);
-
-		return customerRespons;
-	}
-
-	public CustomerResponse removeCustomerRespons(CustomerResponse customerRespons) {
-		getCustomerResponses().remove(customerRespons);
-		customerRespons.setReason(null);
-
-		return customerRespons;
+	public void setTProduct(TProduct TProduct) {
+		this.TProduct = TProduct;
 	}
 
 }
