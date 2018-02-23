@@ -1,9 +1,9 @@
 package com.mandiri.service;
 
-import com.mandiri.filter.UserProfile;
+import com.mandiri.model.Userprofile;
 
 public interface UserService {
 //	public User findUserByEmail(String email);
-	public void saveUserProfile(UserProfile user);
-	public UserProfile findUserProfileByUsername(String username);
+	public void saveUserProfile(Userprofile user);
+	public Userprofile findUserProfileByUsername(String username);
 }

@@ -42,7 +42,7 @@ public class DashboardService {
 		for (Object[] data : lsData) {
 			DashboardFilter f = new DashboardFilter();
 			f.setId((BigInteger) data[0]);
-//			f.setAudited((String) data[1]);
+			f.setInfo((String) data[1]);
 			f.setUser_nip((BigInteger) data[2]);
 			
 			Date date = (Timestamp) data[3];

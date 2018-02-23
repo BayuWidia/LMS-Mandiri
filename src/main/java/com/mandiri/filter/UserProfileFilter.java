@@ -10,7 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Component("userProfile")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = WebApplicationContext.SCOPE_SESSION)
-public class UserProfile implements Serializable {
+public class UserProfileFilter implements Serializable {
 
 	/**
 	 * 
