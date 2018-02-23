@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class DashboardFilter {
 	private BigInteger id;
-	private String action;
-	private BigInteger cif;
+	private String info;
+	private BigInteger user_nip;
 	private String createdby;
 	private String createdon;
 	private String day;
@@ -50,20 +50,20 @@ public class DashboardFilter {
 		this.id = id;
 	}
 
-	public String getAction() {
-		return action;
+	public String getInfo() {
+		return info;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
-	public BigInteger getCif() {
-		return cif;
+	public BigInteger getUser_nip() {
+		return user_nip;
 	}
 
-	public void setCif(BigInteger cif) {
-		this.cif = cif;
+	public void setUser_nip(BigInteger user_nip) {
+		this.user_nip = user_nip;
 	}
 
 	public String getCreatedby() {

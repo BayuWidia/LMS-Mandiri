@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mandiri.filter.CustomerFilter;
 import com.mandiri.filter.DashboardFilter;
-import com.mandiri.model.Customer;
-import com.mandiri.model.User;
-import com.mandiri.model.UserActivity;
+import com.mandiri.filter.UserProfile;
+import com.mandiri.model.TAuditTrail;
 import com.mandiri.repository.DashboardRepository;
 import com.mandiri.service.CustomerService;
 import com.mandiri.service.DashboardService;
@@ -53,7 +52,7 @@ public class DashboardController {
 		
 //		ModelAndView modelAndView = (ModelAndView) model;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
+		UserProfile user = userService.findUserProfileByUsername(auth.getName());
 		
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
@@ -73,8 +72,8 @@ public class DashboardController {
 		
 		DashboardFilter dashboardFilter = new DashboardFilter();
 		model.addAttribute("dashboardFilter", dashboardFilter);
-		model.addAttribute("userName", user.getFullname());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getUsername()));
+		model.addAttribute("userName", user.getFullName());
+		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getUserName()));
 		
 		return "dashboard";
 	}
@@ -103,7 +102,7 @@ public class DashboardController {
 		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
+		UserProfile user = userService.findUserProfileByUsername(auth.getName());
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
 		DateFormat fmtMon = new SimpleDateFormat("MMMM");
@@ -123,9 +122,9 @@ public class DashboardController {
 			strKategori = "Nama";
 		}
 		
-		UserActivity ua = new UserActivity();
-		ua.setAction("Melakukan pencarian customer dengan kriteria "+strKategori+" "+strPencarian);
-		ua.setUser(user);
+		TAuditTrail ua = new TAuditTrail();
+		ua.setInfo("Melakukan pencarian customer dengan kriteria "+strKategori+" "+strPencarian);
+//		ua.setUserprofile1(user.getUserName());
 		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		dashboardRepository.save(ua);
 		
@@ -137,8 +136,8 @@ public class DashboardController {
 		CustomerFilter customerFilter = new CustomerFilter();
 		model.addAttribute("customerFilter", customerFilter);
 		model.addAttribute("dashboardFilter", dashboardFilter);
-		model.addAttribute("userName", user.getFullname());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getUsername()));
+		model.addAttribute("userName", user.getFullName());
+		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getUserName()));
 		
 		return "hasilsearch";
 	}
@@ -150,8 +149,8 @@ public class DashboardController {
 		System.out.println("customer-edit-all-dashboard ::: "+cif);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
-		Customer customer = customerService.findCustomerByCif(Long.valueOf(cif));
+		UserProfile user = userService.findUserProfileByUsername(auth.getName());
+//		Cus customer = customerService.findCustomerByCif(Long.valueOf(cif));
 		
 		return "redirect:/dashboard";
 	}

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mandiri.filter.DashboardFilter;
-import com.mandiri.model.UserActivity;
+import com.mandiri.model.TAuditTrail;
 import com.mandiri.repository.DashboardRepository;
 import com.mandiri.util.CustomeUtil;
 
@@ -24,14 +24,14 @@ public class DashboardService {
 	
 	CustomeUtil customeUtil = new CustomeUtil();
 
-	public List<UserActivity> findAll() {
+	public List<TAuditTrail> findAll() {
 		return dashboardRepository.findAll();
 	}
 
 	public List<DashboardFilter> listUserActivity(String createdBy) {
 
 		List<Object[]> lsData = new ArrayList<>();
-		lsData = dashboardRepository.findUserActivity(createdBy);
+		lsData = dashboardRepository.findTAuditTrail(createdBy);
 
 		return convertlist(lsData);
 	}
@@ -42,8 +42,8 @@ public class DashboardService {
 		for (Object[] data : lsData) {
 			DashboardFilter f = new DashboardFilter();
 			f.setId((BigInteger) data[0]);
-			f.setAction((String) data[1]);
-			f.setCif((BigInteger) data[2]);
+			f.setAudited((String) data[1]);
+			f.setUser_nip((BigInteger) data[2]);
 			
 			Date date = (Timestamp) data[3];
 			DateFormat fmtDate = new SimpleDateFormat("dd MMMM yyyy");
@@ -84,7 +84,7 @@ public class DashboardService {
 		
 		for(Object[] data:lsData){
 			DashboardFilter f=new DashboardFilter();
-			f.setCif((BigInteger) data[0]);
+			f.setCif2((BigInteger) data[0]);
 			f.setName((String) data[1]);
 			f.setNik((String) data[2]);
 			f.setEmail((String) data[3]);

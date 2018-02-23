@@ -14,10 +14,10 @@ import com.mandiri.model.TAuditTrail;
 @Repository("dashboardRepository")
 public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 
-	@Query(value = "SELECT ua.id, ua.audited, ua.createdon, ua.criteria, ua.info, ua.modifiedon, ua.user_nip, ua.createdby, ua.modifiedby"
+	@Query(value = "SELECT ua.id, ua.info, ua.user_nip, ua.createdon, ua.criteria, ua.audited, ua.modifiedon, ua.createdby, ua.modifiedby"
 			+ " FROM public.t_audit_trail ua "
 			+ "where (:createdBy is null or (:createdBy is not null and ua.createdby= :createdBy)) order by ua.createdon desc limit 10 ", nativeQuery = true)
-	List<Object[]> findUserActivity(@Param("createdBy") String createdBy);
+	List<Object[]> findTAuditTrail(@Param("createdBy") String createdBy);
 
 	@Query(value = "SELECT cus.cif, cus.name, cus.nik, cus.email, cus.phone, cus.address, cus.birthdate, cus.birthplace, "
 			+ "cus.indentitytype, cus.gender, cus.branchid, cus.mothername, cus.createdon as cus_createdon, "
