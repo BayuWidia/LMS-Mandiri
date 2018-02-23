@@ -7,7 +7,7 @@ import com.mandiri.filter.UserProfileFilter;
 import com.mandiri.model.Userprofile;
 
 @Repository("userRepository")
-public interface UserRepository extends JpaRepository<UserProfileFilter, Long> {
+public interface UserProfileRepository extends JpaRepository<UserProfileFilter, Long> {
 //	 User findByEmail(String email);
 	 
 	Userprofile findByUsername(String username);

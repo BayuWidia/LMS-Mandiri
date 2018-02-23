@@ -24,20 +24,20 @@ import com.mandiri.filter.DashboardFilter;
 //import com.mandiri.model.Customer;
 //import com.mandiri.model.User;
 //import com.mandiri.model.UserActivity;
-import com.mandiri.repository.CustomerRepository;
+import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.DashboardRepository;
-import com.mandiri.service.CustomerService;
+import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
-import com.mandiri.service.UserService;
+import com.mandiri.service.UserProfileService;
 
 @Controller
 public class HasilSearchController {
 
 	@Autowired
-	private UserService userService;
+	private UserProfileService userProfileService;
 	
 	@Autowired
-	private CustomerService customerService;
+	private TCpiService tCpiService;
 	
 	@Autowired
 	private DashboardService dashboardService;
@@ -46,7 +46,7 @@ public class HasilSearchController {
 	private DashboardRepository dashboardRepository;
 	
 	@Autowired
-	private CustomerRepository customerRepository;
+	private TCpiRepository tCpiRepository;
 	
 	@Autowired
 	SessionController sessionController;

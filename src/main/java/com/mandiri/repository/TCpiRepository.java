@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.mandiri.model.TCustomerResponse;
 
 @Repository("customerRepository")
-public interface CustomerRepository extends JpaRepository<TCustomerResponse, Long> {
+public interface TCpiRepository extends JpaRepository<TCustomerResponse, Long> {
 	 
 	TCustomerResponse findTCustomerResponseByCif(Long cif);
 }

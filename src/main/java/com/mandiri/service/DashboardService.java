@@ -28,10 +28,10 @@ public class DashboardService {
 		return dashboardRepository.findAll();
 	}
 
-	public List<DashboardFilter> listUserActivity(String createdBy) {
+	public List<DashboardFilter> listUserActivity(String userNip) {
 
 		List<Object[]> lsData = new ArrayList<>();
-		lsData = dashboardRepository.findTAuditTrail(createdBy);
+		lsData = dashboardRepository.findTAuditTrail(userNip);
 
 		return convertlist(lsData);
 	}

@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import com.mandiri.model.Userprofile;
 //import com.mandiri.model.Role;
 //import com.mandiri.repository.RoleRepository;
-import com.mandiri.repository.UserRepository;
+import com.mandiri.repository.UserProfileRepository;
 
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserProfileServiceImpl implements UserProfileService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserProfileRepository userProfileRepository;
 	
 //	@Autowired
 //	private RoleRepository roleRepository;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public Userprofile findUserProfileByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userProfileRepository.findByUsername(username);
 	}
 
 	@Override

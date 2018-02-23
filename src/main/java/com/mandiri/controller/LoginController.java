@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 //import com.mandiri.model.User;
-import com.mandiri.service.UserService;
+import com.mandiri.service.UserProfileService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
-	private UserService userService;
+	private UserProfileService userService;
 
 
 	@RequestMapping(value = {"/","/login"}, method = RequestMethod.GET)

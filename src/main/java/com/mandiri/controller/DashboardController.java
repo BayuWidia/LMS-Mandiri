@@ -24,16 +24,16 @@ import com.mandiri.filter.UserProfileFilter;
 import com.mandiri.model.TAuditTrail;
 import com.mandiri.model.Userprofile;
 import com.mandiri.repository.DashboardRepository;
-import com.mandiri.service.CustomerService;
+import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
-import com.mandiri.service.UserService;
+import com.mandiri.service.UserProfileService;
 import com.mandiri.util.StringUtil;
 
 @Controller
 public class DashboardController {
 
 	@Autowired
-	private UserService userService;
+	private UserProfileService userProfileService;
 	
 	@Autowired
 	private DashboardService dashboardService;
@@ -45,7 +45,7 @@ public class DashboardController {
 	SessionController sessionController;
 	
 	@Autowired
-	private CustomerService customerService;
+	private TCpiService tCpiService;
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
@@ -53,7 +53,7 @@ public class DashboardController {
 		
 //		ModelAndView modelAndView = (ModelAndView) model;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
 		
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
@@ -74,7 +74,7 @@ public class DashboardController {
 		DashboardFilter dashboardFilter = new DashboardFilter();
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getName()));
+		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
 		
 		return "dashboard";
 	}
@@ -103,7 +103,7 @@ public class DashboardController {
 		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
 		DateFormat fmtMon = new SimpleDateFormat("MMMM");
@@ -138,7 +138,7 @@ public class DashboardController {
 		model.addAttribute("customerFilter", customerFilter);
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getName()));
+		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
 		
 		return "hasilsearch";
 	}
@@ -150,7 +150,7 @@ public class DashboardController {
 		System.out.println("customer-edit-all-dashboard ::: "+cif);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
 //		Cus customer = customerService.findCustomerByCif(Long.valueOf(cif));
 		
 		return "redirect:/dashboard";

@@ -28,12 +28,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //import com.mandiri.model.User;
 import com.mandiri.repository.CustomerCampaignRepository;
 //import com.mandiri.repository.CustomerProductRepository;
-import com.mandiri.repository.CustomerRepository;
+import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.ProductRepository;
 import com.mandiri.repository.ReasonRepository;
 //import com.mandiri.repository.StatusRepository;
-import com.mandiri.service.CustomerService;
-import com.mandiri.service.UserService;
+import com.mandiri.service.TCpiService;
+import com.mandiri.service.UserProfileService;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -47,7 +47,7 @@ import javax.servlet.http.HttpSession;
 public class CustomerController {
 	
 	@Autowired
-	private CustomerRepository cRepo; 
+	private TCpiRepository cRepo; 
 	
 //	@Autowired
 //	private CustomerProductRepository cpRepo;
