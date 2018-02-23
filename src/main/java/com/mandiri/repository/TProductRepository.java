@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.mandiri.model.TProduct;
 
 @Repository
-public interface ProductRepository extends JpaRepository<TProduct, Long> {
+public interface TProductRepository extends JpaRepository<TProduct, Long> {
 
 }
