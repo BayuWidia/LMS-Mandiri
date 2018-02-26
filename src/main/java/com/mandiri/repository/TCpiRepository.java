@@ -13,7 +13,7 @@ import com.mandiri.model.TCustomerResponse;
 @Repository("customerRepository")
 public interface TCpiRepository extends JpaRepository<TCpi, Long> {
 	
-	@Query(value = "SELECT c FROM TCpi c where c.cif = :cif LIMIT 1")
+	@Query(value = "SELECT c FROM TCpi c where c.cif = :cif")
 	TCpi findbyCif(@Param("cif") String cif);
 	
 	TCustomerResponse findTCustomerResponseByCif(Long cif);
