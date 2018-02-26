@@ -19,18 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.mandiri.model.Customer;
-//import com.mandiri.model.CustomerCampaign;
-//import com.mandiri.model.CustomerProduct;
-//import com.mandiri.model.Product;
-//import com.mandiri.model.Reason;
-//import com.mandiri.model.Status;
-//import com.mandiri.model.User;
+import com.mandiri.model.TCph;
+import com.mandiri.model.TCpi;
 import com.mandiri.repository.CampaignRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
+import com.mandiri.repository.TCpoRepository;
 import com.mandiri.repository.TProductRepository;
 import com.mandiri.repository.ReasonRepository;
+import com.mandiri.repository.TCphRepository;
 //import com.mandiri.repository.StatusRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.UserProfileService;
@@ -47,53 +44,52 @@ import javax.servlet.http.HttpSession;
 public class CustomerController {
 	
 	@Autowired
-	private TCpiRepository cRepo; 
+	private TCpiRepository customerRepo; 
+	@Autowired
+	private TCphRepository cphRepo;
+	@Autowired
+	private TCpoRepository cpoRepo;
 	
-//	@Autowired
-//	private CustomerProductRepository cpRepo;
+	@Autowired
+	private CampaignRepository campaignRepo;
+
+	@Autowired
+	private TProductRepository productRepo;
 	
-//	@Autowired
-//	private CustomerCampaignRepository campaignRepo;
-//	
-//	@Autowired
-//	private ProductRepository productRepo;
-//	
-//	@Autowired
-//	private ReasonRepository reasonRepo;
-//	
-//	@Autowired
-//	private StatusRepository statusRepo;
-//	@Autowired
-//	SessionController sessionController;
-//	
-//	@Autowired
-//	private CustomerService customerService;
-//	@Autowired
-//	private UserService userService;
+	@Autowired
+	private ReasonRepository reasonRepo;
+
+	@Autowired
+	SessionController sessionController;
+	
+	@Autowired
+	private TCpiService customerService;
+	@Autowired
+	private UserProfileService userService;
 	
 	
 	//Long cif = 1111L;
 	
-//	@GetMapping(value={"/customer-edit/{cif}"})
-//	public String customerEdit(@PathVariable Long cif, Model model, HttpSession session){
-//		sessionController.getSession(model, session);
-//			
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		User user = userService.findUserByUsername(auth.getName());
-//		Customer customer = customerService.findCustomerByCif(Long.valueOf(cif));
-//			
-//		System.out.println(System.getProperty("catalina.base"));
-//		
-//		Customer cust = new Customer();
-//		cust = cRepo.findOne(cif);
-//		System.out.println(cust.toString());
-//		model.addAttribute("customer", cust);
-//		
-//		//Produk
-//		List<CustomerProduct> listOwned = cpRepo.findbyCif(cif);
-//		model.addAttribute("ownedProduct", listOwned);
-//		
-//		//Customer Campaign
+	@GetMapping(value={"/customer-edit/{cif}"})
+	public String customerEdit(@PathVariable String cif, Model model, HttpSession session){
+		sessionController.getSession(model, session);
+			
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//User user = userService.findUserByUsername(auth.getName());
+		//TCpi customer = customerService.findCustomerByCif(Long.valueOf(cif));
+			
+		System.out.println(System.getProperty("catalina.base"));
+		
+		TCpi cust = new TCpi();
+		//cust = customerRepo.findbyCif(cif);
+		System.out.println(cust.toString());
+		model.addAttribute("customer", cust);
+		
+		//Produk
+		List<TCph> listOwned = cphRepo.findbyCif(cif);
+		model.addAttribute("ownedProduct", listOwned);
+		
+		//Customer Campaign
 //		List<CustomerCampaign> listCampaign = campaignRepo.findbyCif(cif);
 //		List<CustomerCampaign> campaign0 = listCampaign.stream().filter(p->p.getStatus().getId() == 0).collect(Collectors.toList());
 //		List<CustomerCampaign> campaign1 = listCampaign.stream().filter(p->p.getStatus().getId() == 1).collect(Collectors.toList());
@@ -117,9 +113,9 @@ public class CustomerController {
 //		CustomerCampaign blankCampaign = new CustomerCampaign();
 //		blankCampaign.setCustomer(new Customer(cif));
 //		model.addAttribute("blankCampaign", blankCampaign);
-//		
-//		return "CustomerView";
-//	}
+		
+		return "CustomerView";
+	}
 //	
 //	@PostMapping(value={"/campaignSave"})
 ////	public String customerSingleView(@ModelAttribute("blankCampaign") CustomerCampaign blankCampaign){

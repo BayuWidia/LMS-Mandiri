@@ -11,7 +11,7 @@ import com.mandiri.model.Campaign;
 @Repository
 public interface CampaignRepository extends JpaRepository<Campaign, Long>{
 	@Query(value = "SELECT c FROM Campaign c where c.TProduct.productId = :productId")
-	List<Campaign> findbyProductId(@Param("cif") String productId);
+	List<Campaign> findbyProductId(@Param("productId") String productId);
 	
 //	@Query(value = "SELECT c FROM CustomerCampaign c where c.customer.cif = :cif and c.status = :status")
 //	List<CustomerCampaign> findbyCifandStatus(@Param("cif") Long cif, @Param("status") int status);
