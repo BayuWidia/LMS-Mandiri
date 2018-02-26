@@ -71,8 +71,8 @@ public class CustomerController {
 	
 	@Autowired
 	private TCpiService customerService;
-	@Autowired
-	private UserProfileService userService;
+//	@Autowired
+//	private UserProfileService userService;
 	
 	
 	//Long cif = 1111L;

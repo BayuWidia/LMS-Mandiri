@@ -29,7 +29,7 @@ public class TCpo implements Serializable {
 	@Column(name="branch_product")
 	private String branchProduct;
 
-	private String cif;
+	//private String cif;
 
 	private Timestamp createdon;
 
@@ -56,6 +56,10 @@ public class TCpo implements Serializable {
 
 	private String sequence;
 
+	@ManyToOne
+	@JoinColumn(name="cif")
+	private TCpi TCpi;
+	
 	@Column(name="source_type")
 	private Integer sourceType;
 
@@ -112,13 +116,20 @@ public class TCpo implements Serializable {
 		this.branchProduct = branchProduct;
 	}
 
-	public String getCif() {
-		return this.cif;
+	public TCpi getTCpi() {
+		return this.TCpi;
 	}
 
-	public void setCif(String cif) {
-		this.cif = cif;
+	public void setTCpi(TCpi TCpi) {
+		this.TCpi = TCpi;
 	}
+//	public String getCif() {
+//		return this.cif;
+//	}
+//
+//	public void setCif(String cif) {
+//		this.cif = cif;
+//	}
 
 	public Timestamp getCreatedon() {
 		return this.createdon;
