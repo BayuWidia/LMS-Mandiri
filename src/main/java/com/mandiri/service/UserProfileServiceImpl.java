@@ -10,7 +10,7 @@ import com.mandiri.model.Userprofile;
 import com.mandiri.repository.UserProfileRepository;
 
 
-@Service("userService")
+@Service("UserProfileService")
 public class UserProfileServiceImpl implements UserProfileService {
 
 	@Autowired
@@ -28,8 +28,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 //	}
 	
 	@Override
-	public Userprofile findUserProfileByUsername(String username) {
-		return userProfileRepository.findByUsername(username);
+	public Userprofile findUserProfileByName(String name) {
+		return userProfileRepository.findByName(name);
 	}
 
 	@Override

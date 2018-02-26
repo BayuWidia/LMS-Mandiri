@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.mandiri.filter.UserProfileFilter;
 import com.mandiri.model.Userprofile;
 
-@Repository("userRepository")
-public interface UserProfileRepository extends JpaRepository<UserProfileFilter, Long> {
+@Repository("UserProfileRepository")
+public interface UserProfileRepository extends JpaRepository<Userprofile, String> {
 //	 User findByEmail(String email);
 	 
-	Userprofile findByUsername(String username);
+	Userprofile findByName(String name);
 }

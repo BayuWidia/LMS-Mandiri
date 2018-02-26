@@ -53,7 +53,7 @@ public class DashboardController {
 		
 //		ModelAndView modelAndView = (ModelAndView) model;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
 		
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
@@ -103,7 +103,7 @@ public class DashboardController {
 		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
 		DateFormat fmtMon = new SimpleDateFormat("MMMM");
@@ -150,7 +150,7 @@ public class DashboardController {
 		System.out.println("customer-edit-all-dashboard ::: "+cif);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByUsername(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
 //		Cus customer = customerService.findCustomerByCif(Long.valueOf(cif));
 		
 		return "redirect:/dashboard";

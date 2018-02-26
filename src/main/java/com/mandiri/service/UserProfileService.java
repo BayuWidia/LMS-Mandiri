@@ -5,5 +5,5 @@ import com.mandiri.model.Userprofile;
 public interface UserProfileService {
 //	public User findUserByEmail(String email);
 	public void saveUserProfile(Userprofile user);
-	public Userprofile findUserProfileByUsername(String username);
+	public Userprofile findUserProfileByName(String name);
 }
