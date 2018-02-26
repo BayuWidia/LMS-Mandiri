@@ -25,6 +25,7 @@ import com.mandiri.model.TCpi;
 import com.mandiri.model.TCpo;
 import com.mandiri.model.TCustomerResponse;
 import com.mandiri.model.TProduct;
+import com.mandiri.model.Userprofile;
 import com.mandiri.repository.CampaignRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
@@ -129,42 +130,42 @@ public class CustomerController {
 		return "CustomerView";
 	}
 //	
-//	@PostMapping(value={"/campaignSave"})
-////	public String customerSingleView(@ModelAttribute("blankCampaign") CustomerCampaign blankCampaign){
-////		System.out.println(blankCampaign.toString());
-//	public @ResponseBody String campaignSave(@ModelAttribute(value="blankCampaign") CustomerCampaign blankCampaign, HttpEntity<String> httpEntity) {
-//		blankCampaign.setCreatedon(new Timestamp(System.currentTimeMillis()));
-//		User createdby = new User();
-//		createdby.setUsername("bayu");
-//		blankCampaign.setUser1(createdby);;
-//		
-//		//SET CIF by session
-//		//blankCampaign.setCustomer(new Customer(blan));
-//		
-//	    String json = httpEntity.getBody();
-//		System.out.println(json);
-//		//System.out.println(blankCampaign.getEmail());
-////		if (result.hasErrors()) {
-////	        System.out.println(result.getGlobalError() + "" + result.getFieldError());
-////	    }
+	@PostMapping(value={"/campaignSave"})
+//	public String customerSingleView(@ModelAttribute("blankCampaign") CustomerCampaign blankCampaign){
+//		System.out.println(blankCampaign.toString());
+	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
+		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));
+		Userprofile createdby = new Userprofile();
+		createdby.setNip("2222222223");
+		blankResponse.setUserprofile1(createdby);
+		
+		//SET CIF by session
+		//blankCampaign.setCustomer(new Customer(blan));
+		
+	    String json = httpEntity.getBody();
+		System.out.println(json);
+		//System.out.println(blankCampaign.getEmail());
+//		if (result.hasErrors()) {
+//	        System.out.println(result.getGlobalError() + "" + result.getFieldError());
+//	    }
 //		System.out.println(blankCampaign.toString());
 //		System.out.println(blankCampaign.getProduct1().getName());
-//		campaignRepo.save(blankCampaign);
-//		
-//		return "test";
-//	}
+		tresponseRepo.save(blankResponse);
+		
+		return "test";
+	}
 //	
 //	
-//	@GetMapping(value={"/getDetailProduct"})
-//	@ResponseBody
-//	public String getDetailProduct(@RequestParam("id") Long id){
-//		System.out.println(id);
-//		
-//		Product prod = new Product();
-//		prod = productRepo.findOne(id);
-//		
-//		return prod.getDetail().toString();
-//	}
+	@GetMapping(value={"/getDetailProduct"})
+	@ResponseBody
+	public String getDetailProduct(@RequestParam("id") String id){
+		System.out.println(id);
+		
+		TProduct prod = new TProduct();
+		prod = productRepo.findbyId(id);
+		
+		return prod.getDetail();
+	}
 //	
 //	//Testing post from ajax
 //	@GetMapping(value={"/Test"})
