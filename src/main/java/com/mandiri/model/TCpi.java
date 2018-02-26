@@ -20,6 +20,11 @@ public class TCpi implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String cif;
 
+	public TCpi(String cif) {
+		super();
+		this.cif = cif;
+	}
+
 	private String address;
 
 	@Column(name="birth_date")

@@ -19,12 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mandiri.model.Reason;
 import com.mandiri.model.TCph;
 import com.mandiri.model.TCpi;
+import com.mandiri.model.TCpo;
+import com.mandiri.model.TCustomerResponse;
+import com.mandiri.model.TProduct;
 import com.mandiri.repository.CampaignRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.TCpoRepository;
+import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.repository.TProductRepository;
 import com.mandiri.repository.ReasonRepository;
 import com.mandiri.repository.TCphRepository;
@@ -49,6 +54,8 @@ public class CustomerController {
 	private TCphRepository cphRepo;
 	@Autowired
 	private TCpoRepository cpoRepo;
+	@Autowired
+	private TCustomerResponseRepository tresponseRepo;
 	
 	@Autowired
 	private CampaignRepository campaignRepo;
@@ -80,39 +87,44 @@ public class CustomerController {
 			
 		System.out.println(System.getProperty("catalina.base"));
 		
+		//Get customer Information
 		TCpi cust = new TCpi();
-		//cust = customerRepo.findbyCif(cif);
+		cust = customerRepo.findbyCif(cif);
 		System.out.println(cust.toString());
 		model.addAttribute("customer", cust);
 		
-		//Produk
+		//owned product by cif
 		List<TCph> listOwned = cphRepo.findbyCif(cif);
 		model.addAttribute("ownedProduct", listOwned);
 		
 		//Customer Campaign
-//		List<CustomerCampaign> listCampaign = campaignRepo.findbyCif(cif);
-//		List<CustomerCampaign> campaign0 = listCampaign.stream().filter(p->p.getStatus().getId() == 0).collect(Collectors.toList());
-//		List<CustomerCampaign> campaign1 = listCampaign.stream().filter(p->p.getStatus().getId() == 1).collect(Collectors.toList());
-//		
-//		model.addAttribute("offered", campaign1);
-//		model.addAttribute("newproduct", campaign0);
-//		
-//		//Select list product
-//		List<Product> listProduct = productRepo.findAll();
-//		model.addAttribute("listProduct", listProduct);
-//		
-//		//Select list product
-//		List<Reason> listReason = reasonRepo.findAll();
-//		model.addAttribute("listReason", listReason);
-//		
-//		//Button group status
-//		//List<Status> listStatus = statusRepo.findAll();
-//		//model.addAttribute("listStatus", listStatus);
-//		
-//		//Blank Customer Campaign for form purpose
-//		CustomerCampaign blankCampaign = new CustomerCampaign();
-//		blankCampaign.setCustomer(new Customer(cif));
-//		model.addAttribute("blankCampaign", blankCampaign);
+		//List<CustomerCampaign> listCampaign = campaignRepo.findbyCif(cif);
+		//List<CustomerCampaign> campaign0 = listCampaign.stream().filter(p->p.getStatus().getId() == 0).collect(Collectors.toList());
+		//List<CustomerCampaign> campaign1 = listCampaign.stream().filter(p->p.getStatus().getId() == 1).collect(Collectors.toList());
+		
+		//Get TCpo - offer
+		List<TCpo> listOffer = cpoRepo.findbyCif(cif);
+		model.addAttribute("newOffer", listOffer);
+		
+		List<TCustomerResponse> listOfferd = tresponseRepo.findbyCif(cif);
+		model.addAttribute("offered", listOfferd);
+		
+		//Select list product
+		List<TProduct> listProduct = productRepo.findAll();
+		model.addAttribute("listProduct", listProduct);
+		
+		//Select list product
+		List<Reason> listReason = reasonRepo.findAll();
+		model.addAttribute("listReason", listReason);
+		
+		//Button group status
+		//List<Status> listStatus = statusRepo.findAll();
+		//model.addAttribute("listStatus", listStatus);
+		
+		//Blank Customer Campaign for form purpose
+		TCustomerResponse blankResponse = new TCustomerResponse();
+		blankResponse.setTCpi(new TCpi(cif));
+		model.addAttribute("blankResponse", blankResponse);
 		
 		return "CustomerView";
 	}
