@@ -84,7 +84,7 @@ public class DashboardService {
 		
 		for(Object[] data:lsData){
 			DashboardFilter f=new DashboardFilter();
-			f.setCif2((BigInteger) data[0]);
+			f.setCif((BigInteger) data[0]);
 			f.setName((String) data[1]);
 			f.setNik((String) data[2]);
 			f.setEmail((String) data[3]);
@@ -101,16 +101,15 @@ public class DashboardService {
 			f.setCreatedby2((String) data[14]);
 			f.setModifiedby((String) data[15]);
 			
-			f.setId2((BigInteger) data[16]);
-			f.setProductid((Integer) data[17]);
-			f.setAccountno((BigInteger) data[18]);
-			f.setCardno((BigInteger) data[19]);
-			f.setLeanno((BigInteger) data[20]);
-			f.setCreatedon3(customeUtil.formatDate((Date) data[21]));
-			f.setCreatedby3((String) data[22]);
-			f.setModifiedon3((String) data[23]);
-			f.setModifiedby3((String) data[24]);
-//			f.setDetail((String) data[25]);
+			f.setCif2((BigInteger) data[16]);
+			f.setAccountno((BigInteger) data[17]);
+			f.setCreatedon3(customeUtil.formatDate((Date) data[28]));
+			f.setCreatedby3((String) data[19]);
+			f.setModifiedon3((String) data[20]);
+			f.setModifiedby3((String) data[21]);
+			
+			f.setAccountNumber((String) data[22]);
+			f.setCardNumber((String) data[23]);
 			
 			lsDataSearch.add(f);
 		}

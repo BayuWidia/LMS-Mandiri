@@ -27,11 +27,11 @@
 						<div style="width: 100%; text-align: center;"><img th:src="@{/assets/imgcust/1.jpg}" style="width: 35%;"></div>
 						<div style="width: auto; text-align: center;">LEAD MANAGEMENT SYSTEM</div>
                   	<div class="containerform">
-						<label style="color: black"><b>User ID</b></label> 
-						<input type="text" placeholder="Enter User ID" name="username" id="username" required> 
+						<label style="color: black"><b>Nomor Induk Pegawai</b></label> 
+						<input type="text" placeholder="Ketikkan Nomor Induk Pegawai" name="nip" id="nip" required> 
 						
 						<label style="color: black"><b>Password</b></label>
-						<input type="password" placeholder="Enter Password" name="password" id="password" required>
+						<input type="password" placeholder="Ketikkan Password" name="password" id="password" required>
 						
 						<div align="center" th:if="${param.error}">
 							<p style="font-size: 20; color: #FF1C19;">Username or Password invalid, please verify</p>

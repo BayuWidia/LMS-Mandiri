@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 public class DashboardFilter {
+	private BigInteger cif;
 	private BigInteger id;
 	private String info;
 	private BigInteger user_nip;
@@ -41,6 +42,17 @@ public class DashboardFilter {
 	private String createdby3;
 	private String modifiedby3;
 	private String detail;
+
+	private String accountNumber;
+	private String cardNumber;
+
+	public BigInteger getCif() {
+		return cif;
+	}
+
+	public void setCif(BigInteger cif) {
+		this.cif = cif;
+	}
 
 	public BigInteger getId() {
 		return id;
@@ -320,6 +332,22 @@ public class DashboardFilter {
 
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 }

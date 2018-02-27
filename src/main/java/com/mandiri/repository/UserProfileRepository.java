@@ -10,5 +10,6 @@ import com.mandiri.model.Userprofile;
 public interface UserProfileRepository extends JpaRepository<Userprofile, String> {
 //	 User findByEmail(String email);
 	 
+	Userprofile findByNip(String nip);
 	Userprofile findByName(String name);
 }

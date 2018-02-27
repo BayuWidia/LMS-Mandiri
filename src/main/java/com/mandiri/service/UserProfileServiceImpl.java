@@ -28,6 +28,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 //	}
 	
 	@Override
+	public Userprofile findUserProfileByNip(String nip) {
+		return userProfileRepository.findByNip(nip);
+	}
+	
+	@Override
 	public Userprofile findUserProfileByName(String name) {
 		return userProfileRepository.findByName(name);
 	}
