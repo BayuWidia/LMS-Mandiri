@@ -51,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-//				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
-				.dataSource(dataSource).passwordEncoder(passwordEncoder());
+				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+//				.dataSource(dataSource).passwordEncoder(passwordEncoder());
 	}
 	
 //	@Bean
@@ -61,21 +61,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //	    return (PasswordEncoder) new MD5PasswordEncoder();
 //	}
 
-	@Bean
-    public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = (PasswordEncoder) new Md5PasswordEncoder();
-        return encoder;
-    }
+//	@Bean
+//    public PasswordEncoder passwordEncoder(){
+//        PasswordEncoder encoder = (PasswordEncoder) new Md5PasswordEncoder();
+//        return encoder;
+//    }
 	 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/login").permitAll()
-				.antMatchers("/registration").permitAll().antMatchers("/admin/**").hasAnyAuthority("admin","user","sales").anyRequest()
+				.antMatchers("/registration").permitAll().antMatchers("/admin/**").hasAnyAuthority("*").anyRequest()
 				.authenticated()
 				.and()
 				.csrf().disable().formLogin().loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/dashboard").usernameParameter("username").passwordParameter("password")
+				.defaultSuccessUrl("/dashboard").usernameParameter("nip").passwordParameter("password")
 				.and()
 				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
 				.and()

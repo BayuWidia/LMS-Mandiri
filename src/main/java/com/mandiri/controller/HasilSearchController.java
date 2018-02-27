@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mandiri.filter.CustomerFilter;
 import com.mandiri.filter.DashboardFilter;
+import com.mandiri.model.TAuditTrail;
+import com.mandiri.model.TCpi;
+import com.mandiri.model.TCustomerResponse;
+import com.mandiri.model.Userprofile;
 //import com.mandiri.model.Customer;
 //import com.mandiri.model.User;
 //import com.mandiri.model.UserActivity;
 import com.mandiri.repository.TCpiRepository;
+import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.repository.DashboardRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
@@ -49,86 +54,84 @@ public class HasilSearchController {
 	private TCpiRepository tCpiRepository;
 	
 	@Autowired
+	private TCustomerResponseRepository tCustomerResponseRepository;
+	
+	@Autowired
 	SessionController sessionController;
 	
-//	@RequestMapping(value="/customer-edit-all/{cif}", method=RequestMethod.GET)
-//	public String customerEditAll(@PathVariable String cif, Model model, HttpSession session){
-//		sessionController.getSession(model, session);
-//		
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		User user = userService.findUserByUsername(auth.getName());
-//		Customer customer = customerService.findCustomerByCif(Long.valueOf(cif));
-//		
-//		UserActivity ua = new UserActivity();
-//		ua.setAction("Melihat detail customer profile data dengan nama customer "+customer.getName());
-//		ua.setUser(user);
+	@RequestMapping(value="/customer-edit-all/{cif}", method=RequestMethod.GET)
+	public String customerEditAll(@PathVariable String cif, Model model, HttpSession session){
+		sessionController.getSession(model, session);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
+		TCpi customer = tCpiService.findTCpiByCif(cif);
+		
+		TAuditTrail ua = new TAuditTrail();
+		ua.setInfo("Melihat detail customer profile data dengan nama customer "+customer.getName());
+		ua.setUserprofile1(user);
 //		ua.setCustomer(customer);
-//		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
-//		dashboardRepository.save(ua);
-//		
-//		return "redirect:/dashboard";
-//	}
-//	
-//	@RequestMapping(path = "/customer-add-action", method = RequestMethod.POST)
-//	public String customerAddAction(@ModelAttribute("customerFilter") CustomerFilter customerFilter, Model model, HttpSession session) throws ParseException {
-//		sessionController.getSession(model, session);
-//		System.out.println("CIF ===>>>"+customerFilter.getCif());
-//		System.out.println("NAME ===>>>"+customerFilter.getName());
-//		System.out.println("GENDER ===>>>"+customerFilter.getGender());
-//		System.out.println("JENIS ID ===>>>"+customerFilter.getIndentitytype());
-//		System.out.println("NIK ===>>>"+customerFilter.getNik());
-//		System.out.println("TEMPAT LAHIR ===>>>"+customerFilter.getBirthplace());
-//		System.out.println("TGL LAHIR ===>>>"+customerFilter.getBirthdate());
-//		System.out.println("PHONE ===>>>"+customerFilter.getPhone());
-//		System.out.println("ALAMAT ===>>>"+customerFilter.getAddress());
-//		System.out.println("EMAIL ===>>>"+customerFilter.getEmail());
-//		
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		User user = userService.findUserByUsername(auth.getName());
-//		
-//		Customer cust = new Customer();
-//		cust.setCif(customerFilter.getCif().longValue());
-//		cust.setName(customerFilter.getName());
-//		cust.setGender(customerFilter.getGender());
-//		cust.setIndentitytype(customerFilter.getIndentitytype());
-//		cust.setNik(customerFilter.getNik());
-//		cust.setBirthplace(customerFilter.getBirthplace());
-//		
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-//        Date birthDate = formatter.parse(customerFilter.getBirthdate());
-//		cust.setBirthdate(birthDate);
+		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
+		dashboardRepository.save(ua);
+		
+		return "redirect:/dashboard";
+	}
+	
+	@RequestMapping(path = "/customer-add-action", method = RequestMethod.POST)
+	public String customerAddAction(@ModelAttribute("customerFilter") CustomerFilter customerFilter, Model model, HttpSession session) throws ParseException {
+		sessionController.getSession(model, session);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
+		
+//		TCustomerResponse cust = new TCustomerResponse();
 //		cust.setPhone(customerFilter.getPhone());
-//		cust.setAddress(customerFilter.getAddress());
 //		cust.setEmail(customerFilter.getEmail());
-//		cust.setUser1(user);
+//		cust.setUserprofile1(user);
 //		cust.setCreatedon(new Timestamp(System.currentTimeMillis()));
-//		customerRepository.save(cust);
-//		
-//		
-//		Date date = new Date();
-//		DateFormat fmtDate = new SimpleDateFormat("dd");
-//		DateFormat fmtMon = new SimpleDateFormat("MMMM");
-//		DateFormat fmtYear = new SimpleDateFormat("yyyy");
-//		DateFormat fmtDay = new SimpleDateFormat("EEEE");
-//		
-//		String strDate = fmtDate.format(date);
-//		String strMon = fmtMon.format(date);
-//		String strYear = fmtYear.format(date);
-//		String strDay = fmtDay.format(date);
-//		
-//		model.addAttribute("strDate", strDate);
-//		model.addAttribute("strMon", strMon);
-//		model.addAttribute("strYear", strYear);
-//		model.addAttribute("strDay", strDay);
-//		
-//		DashboardFilter dashboardFilter = new DashboardFilter();
-//		model.addAttribute("dashboardFilter", dashboardFilter);
-//		model.addAttribute("userName", user.getFullname());
-//		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getUsername()));
-//		model.addAttribute("messageDataSimpan", "Data tersebut berhasil disimpan");
-//		
-//		return "dashboard";
-//		
-//	}
+//		tCustomerResponseRepository.save(cust);
+		
+		TCpi cpi = new TCpi();
+		cpi.setCif(customerFilter.getCif().toString());
+		cpi.setName(customerFilter.getName());
+		cpi.setGender(customerFilter.getGender());
+		cpi.setIdentity(customerFilter.getIndentitytype());
+		cpi.setNik(customerFilter.getNik());
+		cpi.setBirthPlace(customerFilter.getBirthplace());
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date birthDate = formatter.parse(customerFilter.getBirthdate());
+        cpi.setBirthDate((Timestamp) birthDate);
+        cpi.setAddress(customerFilter.getAddress());
+        cpi.setEmail(customerFilter.getEmail());
+        cpi.setUserprofile1(user);
+        cpi.setCreatedon(new Timestamp(System.currentTimeMillis()));
+        tCpiRepository.save(cpi);
+		
+		Date date = new Date();
+		DateFormat fmtDate = new SimpleDateFormat("dd");
+		DateFormat fmtMon = new SimpleDateFormat("MMMM");
+		DateFormat fmtYear = new SimpleDateFormat("yyyy");
+		DateFormat fmtDay = new SimpleDateFormat("EEEE");
+		
+		String strDate = fmtDate.format(date);
+		String strMon = fmtMon.format(date);
+		String strYear = fmtYear.format(date);
+		String strDay = fmtDay.format(date);
+		
+		model.addAttribute("strDate", strDate);
+		model.addAttribute("strMon", strMon);
+		model.addAttribute("strYear", strYear);
+		model.addAttribute("strDay", strDay);
+		
+		DashboardFilter dashboardFilter = new DashboardFilter();
+		model.addAttribute("dashboardFilter", dashboardFilter);
+		model.addAttribute("userName", user.getName());
+		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
+		model.addAttribute("messageDataSimpan", "Data tersebut berhasil disimpan");
+		
+		return "dashboard";
+		
+	}
 
 }

@@ -53,7 +53,7 @@ public class DashboardController {
 		
 //		ModelAndView modelAndView = (ModelAndView) model;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
 		
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
@@ -103,7 +103,7 @@ public class DashboardController {
 		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
 		Date date = new Date();
 		DateFormat fmtDate = new SimpleDateFormat("dd");
 		DateFormat fmtMon = new SimpleDateFormat("MMMM");
@@ -121,6 +121,12 @@ public class DashboardController {
 			strKategori = "Telephone";
 		} else if (strKategori.equalsIgnoreCase("NAME")){
 			strKategori = "Nama";
+		} else if (strKategori.equalsIgnoreCase("CIF")){
+			strKategori = "Cif";
+		} else if (strKategori.equalsIgnoreCase("NOREK")){
+			strKategori = "Nomor Rekening";
+		} else if (strKategori.equalsIgnoreCase("NOKAR")){
+			strKategori = "Nomor Kartu";
 		}
 		
 		TAuditTrail ua = new TAuditTrail();
@@ -150,7 +156,7 @@ public class DashboardController {
 		System.out.println("customer-edit-all-dashboard ::: "+cif);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Userprofile user = userProfileService.findUserProfileByName(auth.getName());
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
 //		Cus customer = customerService.findCustomerByCif(Long.valueOf(cif));
 		
 		return "redirect:/dashboard";
