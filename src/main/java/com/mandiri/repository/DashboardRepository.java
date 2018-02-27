@@ -15,7 +15,7 @@ import com.mandiri.model.TAuditTrail;
 public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 
 	@Query(value = "SELECT ua.id, ua.info, ua.user_nip, ua.createdon, ua.criteria, ua.audited, ua.modifiedon, ua.createdby, ua.modifiedby"
-			+ " FROM public.t_audit_trail ua"
+			+ " FROM dev_lms.t_audit_trail ua"
 			+ " where (:userNip is null or (:userNip is not null and ua.user_nip = :userNip)) order by ua.user_nip desc limit 10 ", nativeQuery = true)
 	List<Object[]> findTAuditTrail(@Param("userNip") String userNip);
 	

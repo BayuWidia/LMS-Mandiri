@@ -10,6 +10,6 @@ import com.mandiri.model.TProduct;
 
 @Repository
 public interface TProductRepository extends JpaRepository<TProduct, String> {
-	@Query(value = "SELECT c FROM TProduct c where c.product_id = :id")
+	@Query(value = "SELECT c FROM TProduct c where c.productId = :id")
 	TProduct findbyId(@Param("id") String id);
 }

@@ -43,7 +43,7 @@ public class DashboardService {
 			DashboardFilter f = new DashboardFilter();
 			f.setId((BigInteger) data[0]);
 			f.setInfo((String) data[1]);
-			f.setUser_nip((BigInteger) data[2]);
+			f.setUser_nip((String) data[2]);
 			
 			Date date = (Timestamp) data[3];
 			DateFormat fmtDate = new SimpleDateFormat("dd MMMM yyyy");

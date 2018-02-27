@@ -7,7 +7,7 @@ public class DashboardFilter {
 	private BigInteger cif;
 	private BigInteger id;
 	private String info;
-	private BigInteger user_nip;
+	private String user_nip;
 	private String createdby;
 	private String createdon;
 	private String day;
@@ -70,11 +70,11 @@ public class DashboardFilter {
 		this.info = info;
 	}
 
-	public BigInteger getUser_nip() {
+	public String getUser_nip() {
 		return user_nip;
 	}
 
-	public void setUser_nip(BigInteger user_nip) {
+	public void setUser_nip(String user_nip) {
 		this.user_nip = user_nip;
 	}
 
