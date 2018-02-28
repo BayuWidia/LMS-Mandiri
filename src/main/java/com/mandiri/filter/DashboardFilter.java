@@ -4,21 +4,21 @@ import java.math.BigInteger;
 import java.util.Date;
 
 public class DashboardFilter {
-	private BigInteger cif;
+	private String cif;
 	private BigInteger id;
 	private String info;
 	private String user_nip;
-	private String createdby;
+	private Integer createdby;
 	private String createdon;
 	private String day;
 	private String kategori;
 	private String pencarian;
 
-	private BigInteger cif2;
+	private String cif2;
 	private String address;
 	private Date birthdate;
 	private String birthplace;
-	private BigInteger branchid;
+	private String branchid;
 	private String createdon2;
 	private String email;
 	private String gender;
@@ -32,7 +32,7 @@ public class DashboardFilter {
 	private String modifiedby;
 
 	private BigInteger id2;
-	private BigInteger accountno;
+	private String accountno;
 	private BigInteger cardno;
 	private String createdon3;
 	private BigInteger leanno;
@@ -46,11 +46,11 @@ public class DashboardFilter {
 	private String accountNumber;
 	private String cardNumber;
 
-	public BigInteger getCif() {
+	public String getCif() {
 		return cif;
 	}
 
-	public void setCif(BigInteger cif) {
+	public void setCif(String cif) {
 		this.cif = cif;
 	}
 
@@ -78,11 +78,11 @@ public class DashboardFilter {
 		this.user_nip = user_nip;
 	}
 
-	public String getCreatedby() {
+	public Integer getCreatedby() {
 		return createdby;
 	}
 
-	public void setCreatedby(String createdby) {
+	public void setCreatedby(Integer createdby) {
 		this.createdby = createdby;
 	}
 
@@ -118,11 +118,11 @@ public class DashboardFilter {
 		this.pencarian = pencarian;
 	}
 
-	public BigInteger getCif2() {
+	public String getCif2() {
 		return cif2;
 	}
 
-	public void setCif2(BigInteger cif2) {
+	public void setCif2(String cif2) {
 		this.cif2 = cif2;
 	}
 
@@ -150,11 +150,11 @@ public class DashboardFilter {
 		this.birthplace = birthplace;
 	}
 
-	public BigInteger getBranchid() {
+	public String getBranchid() {
 		return branchid;
 	}
 
-	public void setBranchid(BigInteger branchid) {
+	public void setBranchid(String branchid) {
 		this.branchid = branchid;
 	}
 
@@ -254,11 +254,11 @@ public class DashboardFilter {
 		this.id2 = id2;
 	}
 
-	public BigInteger getAccountno() {
+	public String getAccountno() {
 		return accountno;
 	}
 
-	public void setAccountno(BigInteger accountno) {
+	public void setAccountno(String accountno) {
 		this.accountno = accountno;
 	}
 

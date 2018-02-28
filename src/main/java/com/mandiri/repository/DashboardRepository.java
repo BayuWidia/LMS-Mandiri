@@ -16,11 +16,11 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 
 	@Query(value = "SELECT ua.id, ua.info, ua.user_nip, ua.createdon, ua.criteria, ua.audited, ua.modifiedon, ua.createdby, ua.modifiedby"
 			+ " FROM dev_lms.t_audit_trail ua"
-			+ " where (:userNip is null or (:userNip is not null and ua.user_nip = :userNip)) order by ua.user_nip desc limit 10 ", nativeQuery = true)
+			+ " where (:userNip is null or (:userNip is not null and ua.user_nip = :userNip)) order by ua.createdby desc limit 10 ", nativeQuery = true)
 	List<Object[]> findTAuditTrail(@Param("userNip") String userNip);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "
@@ -32,8 +32,8 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByNik(@Param("Nik") String Nik);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "
@@ -45,8 +45,8 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByPhone(@Param("Phone") String Phone);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "
@@ -58,8 +58,8 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByName(@Param("Name") String Name);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "
@@ -71,8 +71,8 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByCif(@Param("Cif") BigInteger Cif);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "
@@ -84,8 +84,8 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByNorek(@Param("Norek") BigInteger Norek);
 	
-	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birthdate, cpi.birthplace, "
-			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mothername, cus.createdon as cus_createdon, "
+	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "
+			+ "cpi.identity, cpi.gender, cpi.branch, cpi.mother_name, cus.createdon as cus_createdon, "
 			+ "cus.modifiedon as cus_modifiedon, cus.createdby as cus_createdby, cus.modifiedby as cus_modifiedby, cpi.cif as cpi_cif, "
 			+ "cus.account_number, cpi.createdon as cpi_createdon, "
 			+ "cpi.createdby as cpi_createdby, cpi.modifiedon as cpi_modifiedon, cpi.modifiedby as cpi_modifiedby, "

@@ -96,9 +96,9 @@
 															<span class="red bolder" th:text="${userActivity.day}"></span>
 															<br />
 															<a th:if="${userActivity.cif} != null" th:href="@{'/customer-edit/' + ${userActivity.cif}}">
-															<label th:text="${userActivity.action}"></label>
+															<label th:text="${userActivity.info}"></label>
 															</a>
-															<label th:if="${userActivity.cif} == null" th:text="${userActivity.action}"></label>
+															<label th:if="${userActivity.cif} == null" th:text="${userActivity.info}"></label>
 															
 														</div>
 													</div>
