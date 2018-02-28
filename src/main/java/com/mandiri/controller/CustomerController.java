@@ -89,14 +89,9 @@ public class CustomerController {
 		System.out.println(System.getProperty("catalina.base"));
 		
 		//Get customer Information
-		TCpi cust = new TCpi();
-		cust = customerRepo.findbyCif(cif);
-		System.out.println(cust.toString());
-		model.addAttribute("customer", cust);
-		
-		//owned product by cif
-		List<TCph> listOwned = cphRepo.findbyCif(cif);
-		model.addAttribute("ownedProduct", listOwned);
+		TCpi customer = new TCpi();
+		customer = customerRepo.findbyCif(cif);
+		model.addAttribute("customer", customer);
 		
 		//Customer Campaign
 		//List<CustomerCampaign> listCampaign = campaignRepo.findbyCif(cif);
@@ -104,15 +99,20 @@ public class CustomerController {
 		//List<CustomerCampaign> campaign1 = listCampaign.stream().filter(p->p.getStatus().getId() == 1).collect(Collectors.toList());
 		
 		//Get TCpo - offer
-		List<TCpo> listOffer = cpoRepo.findbyCif(cif);
-		model.addAttribute("newOffer", listOffer);
+		List<TCpo> listNewOffer = cpoRepo.findbyCif(cif);
+		System.out.println("NEW OFFER : "+listNewOffer.size());
+		model.addAttribute("listNewOffer", listNewOffer);
 		
 		List<TCustomerResponse> listOfferd = tresponseRepo.findbyCif(cif);
-		model.addAttribute("offered", listOfferd);
+		model.addAttribute("listOfferd", listOfferd);
+		
+		//owned product by cif
+		List<TCph> listOwned = cphRepo.findbyCif(cif);
+		model.addAttribute("listOwned", listOwned);
 		
 		//Select list product
 		List<TProduct> listProduk = productRepo.findAll();
-		model.addAttribute("listProduct", listProduk);
+		model.addAttribute("listProduk", listProduk);
 		
 		//Select list product
 		List<Reason> listReason = reasonRepo.findAll();
