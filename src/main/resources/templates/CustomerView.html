@@ -27,15 +27,15 @@
 	          <h4 class="modal-title">Tambah Penawaran Baru</h4>
 	        </div>
 	        <div class="modal-body">
-				<form id="blankCampaign" name="blankCampaign" th:action="@{/campaignSave}" th:object="${blankCampaign}" method="post">
-					<input type="hidden" th:field="*{id}" />
-					<input type="hidden" th:field="*{customer}" />
+				<form id="blankCampaign" name="blankCampaign" th:action="@{/responseSave}" th:object="${blankResponse}" method="post">
+					<input type="hidden" th:field="*{customerResponseId}" />
+					<input type="hidden" th:field="*{TCpi}" />
 	            <div class="form-group">
 	              <label>Nama Produk</label>
-	              <select class="form-control" th:field="*{product}">
-	                  <option th:each="product : ${listProduct}"
-	                     th:value="${product.id}"
-	                     th:utext="${product.name}"/>
+	              <select class="form-control" th:field="*{TProduct}">
+	                  <option th:each="product : ${listProduk}"
+	                     th:value="${product.productId}"
+	                     th:utext="${product.productName}"/>
 	              </select>
 	            </div>
 	            <div class="form-group">

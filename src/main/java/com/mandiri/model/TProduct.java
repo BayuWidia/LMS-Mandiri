@@ -29,6 +29,22 @@ public class TProduct implements Serializable {
 	@Column(name="sub_product_name")
 	private String subProductName;
 
+	//bi-directional many-to-one association to Campaign
+	@OneToMany(mappedBy="TProduct")
+	private List<Campaign> campaigns;
+
+	//bi-directional many-to-one association to TCph
+	@OneToMany(mappedBy="TProduct")
+	private List<TCph> TCphs;
+
+	//bi-directional many-to-one association to TCpo
+	@OneToMany(mappedBy="TProduct")
+	private List<TCpo> TCpos;
+
+	//bi-directional many-to-one association to TCustomerResponse
+	@OneToMany(mappedBy="TProduct")
+	private List<TCustomerResponse> TCustomerResponses;
+
 	//bi-directional many-to-one association to TProduct
 	@ManyToOne
 	@JoinColumn(name="sub_product_id")
@@ -79,6 +95,94 @@ public class TProduct implements Serializable {
 
 	public void setSubProductName(String subProductName) {
 		this.subProductName = subProductName;
+	}
+
+	public List<Campaign> getCampaigns() {
+		return this.campaigns;
+	}
+
+	public void setCampaigns(List<Campaign> campaigns) {
+		this.campaigns = campaigns;
+	}
+
+	public Campaign addCampaign(Campaign campaign) {
+		getCampaigns().add(campaign);
+		campaign.setTProduct(this);
+
+		return campaign;
+	}
+
+	public Campaign removeCampaign(Campaign campaign) {
+		getCampaigns().remove(campaign);
+		campaign.setTProduct(null);
+
+		return campaign;
+	}
+
+	public List<TCph> getTCphs() {
+		return this.TCphs;
+	}
+
+	public void setTCphs(List<TCph> TCphs) {
+		this.TCphs = TCphs;
+	}
+
+	public TCph addTCph(TCph TCph) {
+		getTCphs().add(TCph);
+		TCph.setTProduct(this);
+
+		return TCph;
+	}
+
+	public TCph removeTCph(TCph TCph) {
+		getTCphs().remove(TCph);
+		TCph.setTProduct(null);
+
+		return TCph;
+	}
+
+	public List<TCpo> getTCpos() {
+		return this.TCpos;
+	}
+
+	public void setTCpos(List<TCpo> TCpos) {
+		this.TCpos = TCpos;
+	}
+
+	public TCpo addTCpo(TCpo TCpo) {
+		getTCpos().add(TCpo);
+		TCpo.setTProduct(this);
+
+		return TCpo;
+	}
+
+	public TCpo removeTCpo(TCpo TCpo) {
+		getTCpos().remove(TCpo);
+		TCpo.setTProduct(null);
+
+		return TCpo;
+	}
+
+	public List<TCustomerResponse> getTCustomerResponses() {
+		return this.TCustomerResponses;
+	}
+
+	public void setTCustomerResponses(List<TCustomerResponse> TCustomerResponses) {
+		this.TCustomerResponses = TCustomerResponses;
+	}
+
+	public TCustomerResponse addTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().add(TCustomerRespons);
+		TCustomerRespons.setTProduct(this);
+
+		return TCustomerRespons;
+	}
+
+	public TCustomerResponse removeTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().remove(TCustomerRespons);
+		TCustomerRespons.setTProduct(null);
+
+		return TCustomerRespons;
 	}
 
 	public TProduct getTProduct() {

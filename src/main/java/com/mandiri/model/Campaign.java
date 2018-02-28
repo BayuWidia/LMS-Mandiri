@@ -15,7 +15,6 @@ public class Campaign implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 
 	private String description;

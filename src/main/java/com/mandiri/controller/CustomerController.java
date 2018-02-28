@@ -111,8 +111,8 @@ public class CustomerController {
 		model.addAttribute("offered", listOfferd);
 		
 		//Select list product
-		List<TProduct> listProduct = productRepo.findAll();
-		model.addAttribute("listProduct", listProduct);
+		List<TProduct> listProduk = productRepo.findAll();
+		model.addAttribute("listProduct", listProduk);
 		
 		//Select list product
 		List<Reason> listReason = reasonRepo.findAll();
@@ -130,7 +130,7 @@ public class CustomerController {
 		return "CustomerView";
 	}
 //	
-	@PostMapping(value={"/campaignSave"})
+	@PostMapping(value={"/responseSave"})
 //	public String customerSingleView(@ModelAttribute("blankCampaign") CustomerCampaign blankCampaign){
 //		System.out.println(blankCampaign.toString());
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
@@ -138,9 +138,6 @@ public class CustomerController {
 		Userprofile createdby = new Userprofile();
 		createdby.setNip("2222222223");
 		blankResponse.setUserprofile1(createdby);
-		
-		//SET CIF by session
-		//blankCampaign.setCustomer(new Customer(blan));
 		
 	    String json = httpEntity.getBody();
 		System.out.println(json);

@@ -17,7 +17,6 @@ public class TCpi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String cif;
 
 	public TCpi(String cif) {
@@ -89,6 +88,10 @@ public class TCpi implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="modifiedby")
 	private Userprofile userprofile2;
+
+	//bi-directional many-to-one association to TCpo
+	@OneToMany(mappedBy="TCpi")
+	private List<TCpo> TCpos;
 
 	//bi-directional many-to-one association to TCustomerResponse
 	@OneToMany(mappedBy="TCpi")
@@ -317,6 +320,28 @@ public class TCpi implements Serializable {
 
 	public void setUserprofile2(Userprofile userprofile2) {
 		this.userprofile2 = userprofile2;
+	}
+
+	public List<TCpo> getTCpos() {
+		return this.TCpos;
+	}
+
+	public void setTCpos(List<TCpo> TCpos) {
+		this.TCpos = TCpos;
+	}
+
+	public TCpo addTCpo(TCpo TCpo) {
+		getTCpos().add(TCpo);
+		TCpo.setTCpi(this);
+
+		return TCpo;
+	}
+
+	public TCpo removeTCpo(TCpo TCpo) {
+		getTCpos().remove(TCpo);
+		TCpo.setTCpi(null);
+
+		return TCpo;
 	}
 
 	public List<TCustomerResponse> getTCustomerResponses() {

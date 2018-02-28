@@ -17,7 +17,6 @@ public class TCpo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="cpo_id")
 	private String cpoId;
 
@@ -28,8 +27,6 @@ public class TCpo implements Serializable {
 
 	@Column(name="branch_product")
 	private String branchProduct;
-
-	//private String cif;
 
 	private Timestamp createdon;
 
@@ -56,15 +53,16 @@ public class TCpo implements Serializable {
 
 	private String sequence;
 
-	@ManyToOne
-	@JoinColumn(name="cif")
-	private TCpi TCpi;
-	
 	@Column(name="source_type")
 	private Integer sourceType;
 
 	@Column(name="sub_product_id")
 	private String subProductId;
+
+	//bi-directional many-to-one association to TCpi
+	@ManyToOne
+	@JoinColumn(name="cif")
+	private TCpi TCpi;
 
 	//bi-directional many-to-one association to TProduct
 	@ManyToOne
@@ -115,21 +113,6 @@ public class TCpo implements Serializable {
 	public void setBranchProduct(String branchProduct) {
 		this.branchProduct = branchProduct;
 	}
-
-	public TCpi getTCpi() {
-		return this.TCpi;
-	}
-
-	public void setTCpi(TCpi TCpi) {
-		this.TCpi = TCpi;
-	}
-//	public String getCif() {
-//		return this.cif;
-//	}
-//
-//	public void setCif(String cif) {
-//		this.cif = cif;
-//	}
 
 	public Timestamp getCreatedon() {
 		return this.createdon;
@@ -233,6 +216,14 @@ public class TCpo implements Serializable {
 
 	public void setSubProductId(String subProductId) {
 		this.subProductId = subProductId;
+	}
+
+	public TCpi getTCpi() {
+		return this.TCpi;
+	}
+
+	public void setTCpi(TCpi TCpi) {
+		this.TCpi = TCpi;
 	}
 
 	public TProduct getTProduct() {

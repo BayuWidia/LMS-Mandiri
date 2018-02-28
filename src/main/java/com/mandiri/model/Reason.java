@@ -2,6 +2,7 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,54 +15,75 @@ public class Reason implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="reason_id")
-	private String reasonId;
+	private String id;
 
-	@Column(name="reason_name")
-	private String reasonName;
+	private String name;
 
-	@Column(name="response_id")
-	private String responseId;
+	@Column(name="product_group")
+	private String productGroup;
 
-	//bi-directional many-to-one association to TProduct
-	@ManyToOne
-	@JoinColumn(name="product_id")
-	private TProduct TProduct;
+	@Column(name="response_type")
+	private String responseType;
+
+	//bi-directional many-to-one association to TCustomerResponse
+	@OneToMany(mappedBy="reason")
+	private List<TCustomerResponse> TCustomerResponses;
 
 	public Reason() {
 	}
 
-	public String getReasonId() {
-		return this.reasonId;
+	public String getId() {
+		return this.id;
 	}
 
-	public void setReasonId(String reasonId) {
-		this.reasonId = reasonId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getReasonName() {
-		return this.reasonName;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setReasonName(String reasonName) {
-		this.reasonName = reasonName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getResponseId() {
-		return this.responseId;
+	public String getProductGroup() {
+		return this.productGroup;
 	}
 
-	public void setResponseId(String responseId) {
-		this.responseId = responseId;
+	public void setProductGroup(String productGroup) {
+		this.productGroup = productGroup;
 	}
 
-	public TProduct getTProduct() {
-		return this.TProduct;
+	public String getResponseType() {
+		return this.responseType;
 	}
 
-	public void setTProduct(TProduct TProduct) {
-		this.TProduct = TProduct;
+	public void setResponseType(String responseType) {
+		this.responseType = responseType;
+	}
+
+	public List<TCustomerResponse> getTCustomerResponses() {
+		return this.TCustomerResponses;
+	}
+
+	public void setTCustomerResponses(List<TCustomerResponse> TCustomerResponses) {
+		this.TCustomerResponses = TCustomerResponses;
+	}
+
+	public TCustomerResponse addTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().add(TCustomerRespons);
+		TCustomerRespons.setReason(this);
+
+		return TCustomerRespons;
+	}
+
+	public TCustomerResponse removeTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().remove(TCustomerRespons);
+		TCustomerRespons.setReason(null);
+
+		return TCustomerRespons;
 	}
 
 }

@@ -16,7 +16,6 @@ public class TAuditTrail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 
 	private Timestamp audited;
@@ -31,17 +30,17 @@ public class TAuditTrail implements Serializable {
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="user_nip")
+	@JoinColumn(name="createdby")
 	private Userprofile userprofile1;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="createdby")
+	@JoinColumn(name="modifiedby")
 	private Userprofile userprofile2;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="modifiedby")
+	@JoinColumn(name="user_nip")
 	private Userprofile userprofile3;
 
 	public TAuditTrail() {

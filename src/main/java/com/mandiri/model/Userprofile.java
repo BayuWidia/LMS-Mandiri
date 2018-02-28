@@ -16,7 +16,6 @@ public class Userprofile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String nip;
 
 	@Column(name="approve_date")
@@ -38,6 +37,8 @@ public class Userprofile implements Serializable {
 	private String branchcodeAlt4;
 
 	private Timestamp dob;
+
+	private String groupsales;
 
 	private String groupuser;
 
@@ -204,6 +205,14 @@ public class Userprofile implements Serializable {
 
 	public void setDob(Timestamp dob) {
 		this.dob = dob;
+	}
+
+	public String getGroupsales() {
+		return this.groupsales;
+	}
+
+	public void setGroupsales(String groupsales) {
+		this.groupsales = groupsales;
 	}
 
 	public String getGroupuser() {

@@ -16,7 +16,6 @@ public class TCustomerResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="customer_response_id")
 	private String customerResponseId;
 
@@ -81,6 +80,11 @@ public class TCustomerResponse implements Serializable {
 	@Column(name="tanggal_sales")
 	private Timestamp tanggalSales;
 
+	//bi-directional many-to-one association to Reason
+	@ManyToOne
+	@JoinColumn(name="reasonid")
+	private Reason reason;
+
 	//bi-directional many-to-one association to TCpi
 	@ManyToOne
 	@JoinColumn(name="cif")
@@ -93,17 +97,17 @@ public class TCustomerResponse implements Serializable {
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="createdby")
 	private Userprofile userprofile1;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="createdby")
+	@JoinColumn(name="modifiedby")
 	private Userprofile userprofile2;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
-	@JoinColumn(name="modifiedby")
+	@JoinColumn(name="user_id")
 	private Userprofile userprofile3;
 
 	public TCustomerResponse() {
@@ -299,6 +303,14 @@ public class TCustomerResponse implements Serializable {
 
 	public void setTanggalSales(Timestamp tanggalSales) {
 		this.tanggalSales = tanggalSales;
+	}
+
+	public Reason getReason() {
+		return this.reason;
+	}
+
+	public void setReason(Reason reason) {
+		this.reason = reason;
 	}
 
 	public TCpi getTCpi() {
