@@ -100,18 +100,19 @@ public class CustomerController {
 		
 		//Get TCpo - offer
 		List<TCpo> listNewOffer = cpoRepo.findbyCif(cif);
-		model.addAttribute("newOffer", listNewOffer);
+		System.out.println("NEW OFFER : "+listNewOffer.size());
+		model.addAttribute("listNewOffer", listNewOffer);
 		
 		List<TCustomerResponse> listOfferd = tresponseRepo.findbyCif(cif);
-		model.addAttribute("offered", listOfferd);
+		model.addAttribute("listOfferd", listOfferd);
 		
 		//owned product by cif
 		List<TCph> listOwned = cphRepo.findbyCif(cif);
-		model.addAttribute("ownedProduct", listOwned);
+		model.addAttribute("listOwned", listOwned);
 		
 		//Select list product
 		List<TProduct> listProduk = productRepo.findAll();
-		model.addAttribute("listProduct", listProduk);
+		model.addAttribute("listProduk", listProduk);
 		
 		//Select list product
 		List<Reason> listReason = reasonRepo.findAll();

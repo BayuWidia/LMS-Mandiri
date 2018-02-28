@@ -43,6 +43,7 @@
 				            <div class="form-group">
 				              <label>Nama Produk</label>
 				              <select class="form-control" th:field="*{TProduct}">
+				              <option value="">-- Pilih Produk --</option>
 				                  <option th:each="TProduct : ${listProduk}"
 				                     th:value="${TProduct.productId}"
 				                     th:utext="${TProduct.productName}"/>
