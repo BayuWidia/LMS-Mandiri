@@ -101,7 +101,7 @@ public class HasilSearchController {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date birthDate = formatter.parse(customerFilter.getBirthdate());
-        cpi.setBirthDate((Timestamp) birthDate);
+        cpi.setBirthDate(birthDate);
         cpi.setAddress(customerFilter.getAddress());
         cpi.setEmail(customerFilter.getEmail());
         cpi.setUserprofile1(user);
