@@ -131,6 +131,8 @@ public class DashboardController {
 		
 		TAuditTrail ua = new TAuditTrail();
 		ua.setInfo("Melakukan pencarian customer dengan kriteria "+strKategori+" "+strPencarian);
+		ua.setAudited(new Timestamp(System.currentTimeMillis()));
+		ua.setUserprofile3(user);
 		ua.setUserprofile1(user);
 		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		dashboardRepository.save(ua);

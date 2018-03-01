@@ -69,8 +69,9 @@ public class HasilSearchController {
 		
 		TAuditTrail ua = new TAuditTrail();
 		ua.setInfo("Melihat detail customer profile data dengan nama customer "+customer.getName());
+		ua.setAudited(new Timestamp(System.currentTimeMillis()));
+		ua.setUserprofile3(user);
 		ua.setUserprofile1(user);
-//		ua.setCustomer(customer);
 		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		dashboardRepository.save(ua);
 		
