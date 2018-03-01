@@ -3,17 +3,19 @@
 <head>
 <!-- <meta charset="ISO-8859-1"/> -->
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"/> -->
+
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
 <!-- <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"  /> -->
 <!-- <script th:src="@{/assets/js/jquery.2.1.1.min.js}"></script> -->
 <!-- <script th:src="@{/assets/js/bootstrap.min.js}"></script> -->
 <!-- <script th:src="@{/assets/js/moment.min.js}"></script> -->
 <!-- <script th:src="@{/assets/js/bootstrap-datetimepicker.min.js}"></script> -->
-
-<!-- <!-- <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css"  /> -->
-<!-- <link th:href="@{/assets/css/styleTimeline.css}" rel="stylesheet" type="text/css"  /> -->
 <!-- <link th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" type="text/css"  /> -->
 
-<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<!-- <!-- <link th:href="@{/assets/css/style.css}" rel="stylesheet" type="text/css"  /> -->
+<!-- <!-- <link th:href="@{/assets/css/styleTimeline.css}" rel="stylesheet" type="text/css"  /> -->
+
 <title>Customer Information</title>
 </head>
 <body class="no-skin">
@@ -34,7 +36,7 @@
 				      <div class="modal-content">
 				        <div class="modal-header">
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				          <h4 class="modal-title">Tambah Penawaran Baru</h4>
+				          <h4 id="penawaranTitle" class="modal-title">Tambah Penawaran Baru</h4>
 				        </div>
 				        <div class="modal-body">
 							<form id="blankCampaign" name="blankCampaign" th:action="@{/responseSave}" th:object="${blankResponse}" method="post">
@@ -248,7 +250,7 @@
 				        <!-- Lef bottom - Add new campaign -->
 				        <div class="panel panel-default">
 				        	<div class="col-sm">
-				        		<button type="button" class="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#modalNewPenawaran">
+				        		<button id="btnPenawaranTambah" type="button" class="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#modalNewPenawaran">
 						          <span class="glyphicon glyphicon-plus"></span>Tambah penawaran baru
 						        </button>
 				        	</div>
@@ -268,6 +270,10 @@
 </html>
 
 <Script type="text/javascript" th:inline="javascript">
+// 	$('#datetimepicker1').datetimepicker({
+// 	 	format:'DD-MM-YY HH:mm'
+// 	 });
+
 	//Show popup detail
 	function showDetailProduct(id){
 		//var productid = JSON.stringify({ "id":id });
@@ -288,11 +294,17 @@
 	
 	//show Response form with product already selected
 	function showResponseForm(id, type){
-		
-	}
+		$('#penawaranTitle').html('Tanggapan Customer('+ id + ')');
+		$('#TProduct').val(id);
+	};
 
-	$(document).ready(function(){
-			
+	$('#btnPenawaranTambah').click(function(){
+		$('#penawaranTitle').html('Tambah Penawaran Baru');
+	});
+	
+	
+	//$(document).ready(function(){
+	jQuery(function($) {	
 		var $form = $('#blankCampaign');
 		  $form.on('submit', function(e) {
 		    e.preventDefault();
@@ -318,6 +330,7 @@
 	  });
 	  
 	  $("#btnYa").click(function(){
+		  alert('halo');
 		  $("#status").val(0);
 	  });
 	  $("#btnTidak").click(function(){
