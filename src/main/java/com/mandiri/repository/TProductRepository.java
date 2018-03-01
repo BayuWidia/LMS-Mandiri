@@ -12,4 +12,7 @@ import com.mandiri.model.TProduct;
 public interface TProductRepository extends JpaRepository<TProduct, String> {
 	@Query(value = "SELECT c FROM TProduct c where c.productId = :id")
 	TProduct findbyId(@Param("id") String id);
+	
+	@Query(value = "SELECT c FROM TProduct c where c.group != 'TRASH' ")
+	List<TProduct> findExceptTrash();
 }

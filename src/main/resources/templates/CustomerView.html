@@ -139,10 +139,14 @@
 								      <td class="col-md-1">:</td>
 								      <td class="col-md-10" th:text="${customer.name}"></td>
 								    </tr>
-								    <tr>
+								    <tr th:switch="${customer.gender}">
 								      <td>Jenis Kelamin</td>
 								      <td>:</td>
-								      <td th:text="${customer.gender}"></td>
+								      <td th:case="'P'">Perempuan</td>
+								      <td th:case="'L'">Laki-laki</td>
+								      <td th:case="'F'">Perempuan</td>
+								      <td th:case="'M'">Laki-laki</td>
+								      <td th:case="'*'"></td>
 								    </tr>
 								    <tr>
 								      <td>No CIF</td>
@@ -183,12 +187,15 @@
 								
 								<div class="tab-content">
 								  <div id="newProduct" class="tab-pane fade in active">
-								  	<table class="table table-bordered">
+								  	<table class="table">
 									    <tbody>
 									      <tr th:each="newoffer : ${listNewOffer}">
-									        <td class="col-md-2" th:text="${newoffer.TProduct.productName}"></td>
+									        <td class="col-md-2">
+									        	<button class="btn btn-success btn-block" th:text="${newoffer.TProduct.productName}"></button>
+									        </td>
 									        <td class="col-md-1">
-									        	<button th:onclick="|showDetailProduct('${newoffer.TProduct.productId}')|" th:id="'btnDetail_'+${newoffer.TProduct.productId}" type="button" class="btn btn-info"  data-toggle="modal" data-target="#modalDetail">Detail</button>
+									        	<button th:onclick="|showDetailProduct('${newoffer.TProduct.productId}')|" th:id="'btnDetail_'+${newoffer.TProduct.productId}" type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalDetail">Detail</button>
+									        	<button th:onclick="|showResponseForm('${newoffer.TProduct.productId}', 1)|" th:id="'btnResponse_'+${newoffer.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Tanggapan</button>
 									       	</td>
 									      </tr>
 									    </tbody>
@@ -196,7 +203,7 @@
 								  </div>
 								  <div id="offered" class="tab-pane fade">
 								  	<table class="table table-bordered">
-									    <thead class="bg-primary text-white">
+									    <thead class="bg-info text-white">
 									      <tr>
 									        <th class="col-md-1">No.</th>
 									        <th class="col-md-3">Tanggal offer</th>
@@ -205,7 +212,7 @@
 									        <th class="col-md-3">Alasan</th>
 									      </tr>
 									    </thead>
-			<!-- 						    <tbody> -->
+									    <tbody>
 			<!-- 						      <tr th:each="offered, iterationStatus : ${offered}"> -->
 			<!-- 						        <td th:text="${iterationStatus.count}">1</td> -->
 			<!-- 						        <td th:text="${offered.createdon}"></td> -->
@@ -213,7 +220,7 @@
 			<!-- 						        <td th:text="${offered.status}"></td> -->
 			<!-- 						        <td th:text="${offered.tanggapan}"></td> -->
 			<!-- 						      </tr> -->
-			<!-- 						    </tbody> -->
+									    </tbody>
 									  </table>
 								  </div>
 								  <div id="owned" class="tab-pane fade">
@@ -241,7 +248,7 @@
 				        <!-- Lef bottom - Add new campaign -->
 				        <div class="panel panel-default">
 				        	<div class="col-sm">
-				        		<button type="button" class="btn btn-default btn-block btn-sm" data-toggle="modal" data-target="#modalNewPenawaran">
+				        		<button type="button" class="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#modalNewPenawaran">
 						          <span class="glyphicon glyphicon-plus"></span>Tambah penawaran baru
 						        </button>
 				        	</div>
@@ -261,6 +268,7 @@
 </html>
 
 <Script type="text/javascript" th:inline="javascript">
+	//Show popup detail
 	function showDetailProduct(id){
 		//var productid = JSON.stringify({ "id":id });
 		//alert(productid);
@@ -276,8 +284,12 @@
 		            alert(e.responseText);
 	          }
 		  });
-		
 	};
+	
+	//show Response form with product already selected
+	function showResponseForm(id, type){
+		
+	}
 
 	$(document).ready(function(){
 			
