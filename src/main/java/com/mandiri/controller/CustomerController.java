@@ -72,9 +72,6 @@ public class CustomerController {
 	
 	@Autowired
 	private TCpiService customerService;
-//	@Autowired
-//	private UserProfileService userService;
-	
 	
 	//Long cif = 1111L;
 	
@@ -93,11 +90,6 @@ public class CustomerController {
 		customer = customerRepo.findbyCif(cif);
 		model.addAttribute("customer", customer);
 		
-		//Customer Campaign
-		//List<CustomerCampaign> listCampaign = campaignRepo.findbyCif(cif);
-		//List<CustomerCampaign> campaign0 = listCampaign.stream().filter(p->p.getStatus().getId() == 0).collect(Collectors.toList());
-		//List<CustomerCampaign> campaign1 = listCampaign.stream().filter(p->p.getStatus().getId() == 1).collect(Collectors.toList());
-		
 		//Get TCpo - offer
 		List<TCpo> listNewOffer = cpoRepo.findbyCif(cif);
 		System.out.println("NEW OFFER : "+listNewOffer.size());
@@ -111,16 +103,12 @@ public class CustomerController {
 		model.addAttribute("listOwned", listOwned);
 		
 		//Select list product
-		List<TProduct> listProduk = productRepo.findAll();
+		List<TProduct> listProduk = productRepo.findExceptTrash();
 		model.addAttribute("listProduk", listProduk);
 		
 		//Select list product
 		List<Reason> listReason = reasonRepo.findAll();
 		model.addAttribute("listReason", listReason);
-		
-		//Button group status
-		//List<Status> listStatus = statusRepo.findAll();
-		//model.addAttribute("listStatus", listStatus);
 		
 		//Blank Customer Campaign for form purpose
 		TCustomerResponse blankResponse = new TCustomerResponse();
@@ -129,10 +117,8 @@ public class CustomerController {
 		
 		return "CustomerView";
 	}
-//	
+	
 	@PostMapping(value={"/responseSave"})
-//	public String customerSingleView(@ModelAttribute("blankCampaign") CustomerCampaign blankCampaign){
-//		System.out.println(blankCampaign.toString());
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
 		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		Userprofile createdby = new Userprofile();
@@ -141,18 +127,12 @@ public class CustomerController {
 		
 	    String json = httpEntity.getBody();
 		System.out.println(json);
-		//System.out.println(blankCampaign.getEmail());
-//		if (result.hasErrors()) {
-//	        System.out.println(result.getGlobalError() + "" + result.getFieldError());
-//	    }
-//		System.out.println(blankCampaign.toString());
-//		System.out.println(blankCampaign.getProduct1().getName());
+		
 		tresponseRepo.save(blankResponse);
 		
 		return "test";
 	}
-//	
-//	
+
 	@GetMapping(value={"/getDetailProduct"})
 	@ResponseBody
 	public String getDetailProduct(@RequestParam("id") String id){
