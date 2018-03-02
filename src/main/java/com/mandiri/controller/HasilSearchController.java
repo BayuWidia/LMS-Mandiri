@@ -68,7 +68,7 @@ public class HasilSearchController {
 		TCpi customer = tCpiService.findTCpiByCif(cif);
 		
 		TAuditTrail ua = new TAuditTrail();
-		ua.setInfo("Melihat detail customer profile data dengan nama customer "+customer.getName());
+		ua.setInfo("Melihat detail customer profile data dengan nama customer "+customer.getName()+","+cif);
 		ua.setAudited(new Timestamp(System.currentTimeMillis()));
 		ua.setUserprofile3(user);
 		ua.setUserprofile1(user);

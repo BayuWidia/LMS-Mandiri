@@ -7,6 +7,7 @@ public class DashboardFilter {
 	private String cif;
 	private BigInteger id;
 	private String info;
+	private String infoCifTemp;
 	private String user_nip;
 	private Integer createdby;
 	private String createdon;
@@ -68,6 +69,14 @@ public class DashboardFilter {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public String getInfoCifTemp() {
+		return infoCifTemp;
+	}
+
+	public void setInfoCifTemp(String infoCifTemp) {
+		this.infoCifTemp = infoCifTemp;
 	}
 
 	public String getUser_nip() {

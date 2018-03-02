@@ -130,7 +130,7 @@ public class DashboardController {
 		}
 		
 		TAuditTrail ua = new TAuditTrail();
-		ua.setInfo("Melakukan pencarian customer dengan kriteria "+strKategori+" "+strPencarian);
+		ua.setInfo("Melakukan pencarian customer dengan kriteria "+strKategori+" "+strPencarian+","+"null");
 		ua.setAudited(new Timestamp(System.currentTimeMillis()));
 		ua.setUserprofile3(user);
 		ua.setUserprofile1(user);
