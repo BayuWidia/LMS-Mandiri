@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,12 +25,14 @@ import com.mandiri.filter.DashboardFilter;
 import com.mandiri.model.TAuditTrail;
 import com.mandiri.model.TCpi;
 import com.mandiri.model.TCustomerResponse;
+import com.mandiri.model.TOccupation;
 import com.mandiri.model.Userprofile;
 //import com.mandiri.model.Customer;
 //import com.mandiri.model.User;
 //import com.mandiri.model.UserActivity;
 import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.TCustomerResponseRepository;
+import com.mandiri.repository.TOccupationRepository;
 import com.mandiri.repository.DashboardRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
@@ -52,6 +55,9 @@ public class HasilSearchController {
 	
 	@Autowired
 	private TCpiRepository tCpiRepository;
+	
+	@Autowired
+	private TOccupationRepository tOccupationRepository;
 	
 	@Autowired
 	private TCustomerResponseRepository tCustomerResponseRepository;
@@ -99,6 +105,8 @@ public class HasilSearchController {
 		cpi.setIdentity(customerFilter.getIndentitytype());
 		cpi.setNik(customerFilter.getNik());
 		cpi.setBirthPlace(customerFilter.getBirthplace());
+		TOccupation tOccupation = tOccupationRepository.findByOccp(customerFilter.getJobType());
+		cpi.setTOccupation(tOccupation);
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date birthDate = formatter.parse(customerFilter.getBirthdate());

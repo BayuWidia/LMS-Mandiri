@@ -40,7 +40,7 @@
 											<div class="form-group">
 												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pilih Kategori </label>
 												<div class="col-sm-9">
-													<select class="form-control" id="form-field-select-1" th:field="*{kategori}">
+													<select class="form-control" id="form-field-select-1" th:field="*{kategori}" required="required">
 														<option value="">--Pilih--</option>
 														<option value="NIK">NIK</option>
 														<option value="PHONE">No Telp</option>
@@ -55,7 +55,7 @@
 											<div class="form-group">
 												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pencarian </label>
 												<div class="col-sm-9">
-													<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}"/>
+													<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}" required="required"/>
 												</div>
 												<label th:text="${messageStrPencarian}" class="col-md-8 control-label text-red"></label>
 											</div>

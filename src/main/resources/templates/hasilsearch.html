@@ -24,13 +24,13 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Nomor CIF </label>
 						<div class="col-sm-9">
-							<input type="text" th:field="*{cif}" onkeypress="return isNumber(event)" id="form-field-1-1" placeholder="Ketikkan Nomor CIF..." class="form-control" />
+							<input type="text" required="required" th:field="*{cif}" onkeypress="return isNumber(event)" id="form-field-1-1" placeholder="Ketikkan Nomor CIF..." class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Nama Nasabah </label>
 						<div class="col-sm-3">
-							<input type="text" th:field="*{name}" id="form-field-1-1" placeholder="Ketikkan Nama Nasabah..." class="form-control" />
+							<input type="text" required="required" th:field="*{name}" id="form-field-1-1" placeholder="Ketikkan Nama Nasabah..." class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label no-padding-right" for="form-field-1-1"> Nasabah PeP </label>
 						<div class="col-sm-1">
@@ -58,22 +58,22 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Jenis Identitas </label>
 						<div class="col-sm-4">
-							<input type="text" th:field="*{indentitytype}" id="form-field-1-1" placeholder="Ketikkan Jenis Identitas..." class="form-control" />
+							<input type="text" required="required" th:field="*{indentitytype}" id="form-field-1-1" placeholder="Ketikkan Jenis Identitas..." class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label no-padding-right" for="form-field-1-1"> NIK </label>
 						<div class="col-sm-4">
-							<input type="text" th:field="*{nik}" onkeypress="return isNumber(event)" id="form-field-1-1" placeholder="Ketikkan Nomor Identitas..." class="form-control" />
+							<input type="text" required="required" th:field="*{nik}" onkeypress="return isNumber(event)" id="form-field-1-1" placeholder="Ketikkan Nomor Identitas..." class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Tempat Lahir </label>
 						<div class="col-sm-2">
-							<input type="text" th:field="*{birthplace}" id="form-field-1-1" placeholder="Ketikkan Kota Kelahiran..." class="form-control" />
+							<input type="text" required="required" th:field="*{birthplace}" id="form-field-1-1" placeholder="Ketikkan Kota Kelahiran..." class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label no-padding-right" for="form-field-1-1"> Tanggal Lahir </label>
 						<div class="col-sm-2">
 							 <div class="input-group">
-								<input class="form-control date-picker" th:field="*{birthdate}" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+								<input class="form-control date-picker" required="required" th:field="*{birthdate}" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
 								<span class="input-group-addon">
 									<i class="fa fa-calendar bigger-110"></i>
 								</span>
@@ -82,40 +82,28 @@
 						</div>
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Nomor Telepon/HP </label>
 						<div class="col-sm-2">
-							<input type="text" id="form-field-1-1" onkeypress="return isNumber(event)" maxlength="12" th:field="*{phone}" placeholder="Ketikkan Nomor Telepon/HP..." class="form-control" />
+							<input type="text" required="required" id="form-field-1-1" onkeypress="return isNumber(event)" maxlength="12" th:field="*{phone}" placeholder="Ketikkan Nomor Telepon/HP..." class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Alamat </label>
 						<div class="col-sm-9">
-							<textarea class="form-control" th:field="*{address}" id="form-field-8" placeholder="Ketikkan Alamat Nasabah..."></textarea>
+							<textarea class="form-control" required="required" th:field="*{address}" id="form-field-8" placeholder="Ketikkan Alamat Nasabah..."></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1-1"> Jenis Pekerjaan </label>
 						<div class="col-sm-4">
-							<select class="form-control" id="form-field-select-1" th:field="*{jobType}" >
+							<select class="form-control" required="required" id="form-field-select-1" th:field="*{jobType}" >
 								<option value="">Pilih Jenis Pekerjaan Disini</option>
-								<option value="Arsitek">Arsitek</option>
-								<option value="Apoteker">Apoteker</option>
-								<option value="Akuntan">Akuntan</option>
-								<option value="Atlet">Atlet</option>
-								<option value="Bidan">Bidan</option>
-								<option value="Dokter">Dokter</option>
-								<option value="Dosen">Dosen</option>
-								<option value="Desainer">Desainer</option>
-								<option value="Guru">Guru</option>
-								<option value="Hakim">Hakim</option>
-								<option value="Jaksa">Jaksa</option>
-								<option value="Kasir">Kasir</option>
-								<option value="Kondektur">Kondektur</option>
-								<option value="Koki">Koki</option>
-								<option value="Dll">Dll</option>
+								 <option th:each="TOccupation : ${listOccupation}"
+				                     th:value="${TOccupation.occp}"
+				                     th:utext="${TOccupation.occpdsc}"/>
 							</select>
 						</div>
 						<label class="col-sm-1 control-label no-padding-right" for="form-field-1-1"> Alamat e-mail </label>
 						<div class="col-sm-4">
-							<input type="email" th:field="*{email}" id="form-field-1-1" placeholder="Ketikkan Alamat e-mail..." class="form-control" />
+							<input type="email" required="required" th:field="*{email}" id="form-field-1-1" placeholder="Ketikkan Alamat e-mail..." class="form-control" />
 						</div>
 					</div>
 					<div class="space-4"></div>

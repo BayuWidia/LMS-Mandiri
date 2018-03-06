@@ -44,12 +44,13 @@ public class DashboardService {
 			f.setId((BigInteger) data[0]);
 			
 			String strInfo = (String) data[1];
-			String[] parts = strInfo.split(",");
-			String part1 = parts[0];
-			String part2 = parts[1]; 
-			f.setInfo(part1);
-			f.setInfoCifTemp(part2);
-			
+			if (strInfo.contains(",")) {
+				String[] parts = strInfo.split(",");
+				String part1 = parts[0];
+				String part2 = parts[1]; 
+				f.setInfo(part1);
+				f.setInfoCifTemp(part2);
+			}
 			f.setUser_nip((String) data[2]);
 			
 			Date date = (Timestamp) data[3];

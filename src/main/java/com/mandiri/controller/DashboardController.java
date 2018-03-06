@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mandiri.filter.CustomerFilter;
 import com.mandiri.filter.DashboardFilter;
 import com.mandiri.filter.UserProfileFilter;
+import com.mandiri.model.Reason;
 import com.mandiri.model.TAuditTrail;
+import com.mandiri.model.TOccupation;
 import com.mandiri.model.Userprofile;
 import com.mandiri.repository.DashboardRepository;
+import com.mandiri.repository.TOccupationRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
 import com.mandiri.service.UserProfileService;
@@ -40,6 +43,9 @@ public class DashboardController {
 	
 	@Autowired
 	private DashboardRepository dashboardRepository;
+	
+	@Autowired
+	private TOccupationRepository tOccupationRepository;
 	
 	@Autowired
 	SessionController sessionController;
@@ -147,6 +153,7 @@ public class DashboardController {
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
 		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
+		model.addAttribute("listOccupation", tOccupationRepository.findAll());
 		
 		return "hasilsearch";
 	}
