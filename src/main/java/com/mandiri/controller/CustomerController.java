@@ -128,7 +128,7 @@ public class CustomerController {
 	    String json = httpEntity.getBody();
 		System.out.println(json);
 		
-		tresponseRepo.save(blankResponse);
+		//tresponseRepo.save(blankResponse);
 		
 		return "test";
 	}
