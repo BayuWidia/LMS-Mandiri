@@ -2,7 +2,11 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -25,6 +29,10 @@ public class TCustomerResponse implements Serializable {
 	@Column(name="actual_edm_id")
 	private String actualEdmId;
 
+	private Long amount;
+
+	private String companyid;
+
 	private Timestamp createdon;
 
 	@Column(name="customer_comment")
@@ -39,6 +47,8 @@ public class TCustomerResponse implements Serializable {
 	@Column(name="data_type")
 	private Integer dataType;
 
+	private String dobisnis;
+
 	private String durasi;
 
 	private String email;
@@ -51,12 +61,21 @@ public class TCustomerResponse implements Serializable {
 
 	private Timestamp modifiedon;
 
+	private String nik;
+
+	private String npwp;
+
 	@Column(name="offering_date")
 	private Timestamp offeringDate;
 
 	private String phone;
 
-	private Timestamp reminder;
+	private String polisnumber;
+
+	@DateTimeFormat(pattern = "dd-MM-yy HH:mm")
+	@Column(nullable = false, columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date reminder;
 
 	@Column(name="response_code")
 	private String responseCode;
@@ -93,7 +112,7 @@ public class TCustomerResponse implements Serializable {
 	//bi-directional many-to-one association to TProduct
 	@ManyToOne
 	@JoinColumn(name="product_id")
-	private TProduct TProduct;
+	private TProduct TProduct1;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
@@ -109,6 +128,11 @@ public class TCustomerResponse implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private Userprofile userprofile3;
+
+	//bi-directional many-to-one association to TProduct
+	@ManyToOne
+	@JoinColumn(name="subproduct_id")
+	private TProduct TProduct2;
 
 	public TCustomerResponse() {
 	}
@@ -135,6 +159,22 @@ public class TCustomerResponse implements Serializable {
 
 	public void setActualEdmId(String actualEdmId) {
 		this.actualEdmId = actualEdmId;
+	}
+
+	public Long getAmount() {
+		return this.amount;
+	}
+
+	public void setAmount(Long amount) {
+		this.amount = amount;
+	}
+
+	public String getCompanyid() {
+		return this.companyid;
+	}
+
+	public void setCompanyid(String companyid) {
+		this.companyid = companyid;
 	}
 
 	public Timestamp getCreatedon() {
@@ -177,6 +217,14 @@ public class TCustomerResponse implements Serializable {
 		this.dataType = dataType;
 	}
 
+	public String getDobisnis() {
+		return this.dobisnis;
+	}
+
+	public void setDobisnis(String dobisnis) {
+		this.dobisnis = dobisnis;
+	}
+
 	public String getDurasi() {
 		return this.durasi;
 	}
@@ -217,6 +265,22 @@ public class TCustomerResponse implements Serializable {
 		this.modifiedon = modifiedon;
 	}
 
+	public String getNik() {
+		return this.nik;
+	}
+
+	public void setNik(String nik) {
+		this.nik = nik;
+	}
+
+	public String getNpwp() {
+		return this.npwp;
+	}
+
+	public void setNpwp(String npwp) {
+		this.npwp = npwp;
+	}
+
 	public Timestamp getOfferingDate() {
 		return this.offeringDate;
 	}
@@ -233,11 +297,19 @@ public class TCustomerResponse implements Serializable {
 		this.phone = phone;
 	}
 
-	public Timestamp getReminder() {
+	public String getPolisnumber() {
+		return this.polisnumber;
+	}
+
+	public void setPolisnumber(String polisnumber) {
+		this.polisnumber = polisnumber;
+	}
+
+	public Date getReminder() {
 		return this.reminder;
 	}
 
-	public void setReminder(Timestamp reminder) {
+	public void setReminder(Date reminder) {
 		this.reminder = reminder;
 	}
 
@@ -321,12 +393,12 @@ public class TCustomerResponse implements Serializable {
 		this.TCpi = TCpi;
 	}
 
-	public TProduct getTProduct() {
-		return this.TProduct;
+	public TProduct getTProduct1() {
+		return this.TProduct1;
 	}
 
-	public void setTProduct(TProduct TProduct) {
-		this.TProduct = TProduct;
+	public void setTProduct1(TProduct TProduct1) {
+		this.TProduct1 = TProduct1;
 	}
 
 	public Userprofile getUserprofile1() {
@@ -351,6 +423,14 @@ public class TCustomerResponse implements Serializable {
 
 	public void setUserprofile3(Userprofile userprofile3) {
 		this.userprofile3 = userprofile3;
+	}
+
+	public TProduct getTProduct2() {
+		return this.TProduct2;
+	}
+
+	public void setTProduct2(TProduct TProduct2) {
+		this.TProduct2 = TProduct2;
 	}
 
 }

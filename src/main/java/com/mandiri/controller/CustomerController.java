@@ -136,12 +136,20 @@ public class CustomerController {
 	@GetMapping(value={"/getDetailProduct"})
 	@ResponseBody
 	public String getDetailProduct(@RequestParam("id") String id){
-		System.out.println(id);
-		
 		TProduct prod = new TProduct();
 		prod = productRepo.findbyId(id);
 		
 		return prod.getDetail();
+	}
+	
+	@GetMapping(value={"/getReasonList"})
+	@ResponseBody
+	public List<Reason> getReasonList(@RequestParam("productGroup") String productGroup){
+		System.out.println(productGroup);
+		
+		List<Reason> listReason = reasonRepo.findbyGroup(productGroup);
+		
+		return listReason;
 	}
 //	
 //	//Testing post from ajax

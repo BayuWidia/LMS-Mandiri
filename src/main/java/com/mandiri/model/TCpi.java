@@ -2,6 +2,9 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +30,9 @@ public class TCpi implements Serializable {
 
 	private String address;
 
-	@Column(name="birth_date")
+	@DateTimeFormat(pattern = "dd-MM-yy HH:mm")
+	@Column(name="birth_date", nullable = false, columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date birthDate;
 
 	@Column(name="birth_place")

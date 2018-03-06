@@ -42,8 +42,8 @@ public class TProduct implements Serializable {
 	private List<TCpo> TCpos;
 
 	//bi-directional many-to-one association to TCustomerResponse
-	@OneToMany(mappedBy="TProduct")
-	private List<TCustomerResponse> TCustomerResponses;
+	@OneToMany(mappedBy="TProduct1")
+	private List<TCustomerResponse> TCustomerResponses1;
 
 	//bi-directional many-to-one association to TProduct
 	@ManyToOne
@@ -53,6 +53,10 @@ public class TProduct implements Serializable {
 	//bi-directional many-to-one association to TProduct
 	@OneToMany(mappedBy="TProduct")
 	private List<TProduct> TProducts;
+
+	//bi-directional many-to-one association to TCustomerResponse
+	@OneToMany(mappedBy="TProduct2")
+	private List<TCustomerResponse> TCustomerResponses2;
 
 	public TProduct() {
 	}
@@ -163,26 +167,26 @@ public class TProduct implements Serializable {
 		return TCpo;
 	}
 
-	public List<TCustomerResponse> getTCustomerResponses() {
-		return this.TCustomerResponses;
+	public List<TCustomerResponse> getTCustomerResponses1() {
+		return this.TCustomerResponses1;
 	}
 
-	public void setTCustomerResponses(List<TCustomerResponse> TCustomerResponses) {
-		this.TCustomerResponses = TCustomerResponses;
+	public void setTCustomerResponses1(List<TCustomerResponse> TCustomerResponses1) {
+		this.TCustomerResponses1 = TCustomerResponses1;
 	}
 
-	public TCustomerResponse addTCustomerRespons(TCustomerResponse TCustomerRespons) {
-		getTCustomerResponses().add(TCustomerRespons);
-		TCustomerRespons.setTProduct(this);
+	public TCustomerResponse addTCustomerResponses1(TCustomerResponse TCustomerResponses1) {
+		getTCustomerResponses1().add(TCustomerResponses1);
+		TCustomerResponses1.setTProduct1(this);
 
-		return TCustomerRespons;
+		return TCustomerResponses1;
 	}
 
-	public TCustomerResponse removeTCustomerRespons(TCustomerResponse TCustomerRespons) {
-		getTCustomerResponses().remove(TCustomerRespons);
-		TCustomerRespons.setTProduct(null);
+	public TCustomerResponse removeTCustomerResponses1(TCustomerResponse TCustomerResponses1) {
+		getTCustomerResponses1().remove(TCustomerResponses1);
+		TCustomerResponses1.setTProduct1(null);
 
-		return TCustomerRespons;
+		return TCustomerResponses1;
 	}
 
 	public TProduct getTProduct() {
@@ -213,6 +217,28 @@ public class TProduct implements Serializable {
 		TProduct.setTProduct(null);
 
 		return TProduct;
+	}
+
+	public List<TCustomerResponse> getTCustomerResponses2() {
+		return this.TCustomerResponses2;
+	}
+
+	public void setTCustomerResponses2(List<TCustomerResponse> TCustomerResponses2) {
+		this.TCustomerResponses2 = TCustomerResponses2;
+	}
+
+	public TCustomerResponse addTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
+		getTCustomerResponses2().add(TCustomerResponses2);
+		TCustomerResponses2.setTProduct2(this);
+
+		return TCustomerResponses2;
+	}
+
+	public TCustomerResponse removeTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
+		getTCustomerResponses2().remove(TCustomerResponses2);
+		TCustomerResponses2.setTProduct2(null);
+
+		return TCustomerResponses2;
 	}
 
 }

@@ -1,0 +1,12 @@
+/*!
+* Custom style 
+*
+* Copyright 2018 LMS Mandiri
+* by Bayu Widia Santoso, Guntur Pramono, Sumardi
+*
+*/
+
+.form-group.required label:after { 
+     color: #d00;
+     content: "*";
+}
