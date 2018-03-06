@@ -37,6 +37,7 @@ import com.mandiri.repository.TCphRepository;
 //import com.mandiri.repository.StatusRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.UserProfileService;
+import com.mandiri.util.GenerateUUID;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -75,7 +76,7 @@ public class CustomerController {
 	
 	//Long cif = 1111L;
 	
-	@GetMapping(value={"/customer-edit/{cif}"})
+	@GetMapping(value={"/customer-view/{cif}"})
 	public String customerEdit(@PathVariable String cif, Model model, HttpSession session){
 		sessionController.getSession(model, session);
 			
@@ -120,6 +121,8 @@ public class CustomerController {
 	
 	@PostMapping(value={"/responseSave"})
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
+		blankResponse.setCustomerResponseId(GenerateUUID.getUUID());
+		
 		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		Userprofile createdby = new Userprofile();
 		createdby.setNip("2222222223");

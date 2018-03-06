@@ -95,7 +95,7 @@
 														<div class="widget-main no-padding">
 															<span class="red bolder" th:text="${userActivity.day}"></span>
 															<br />
-															<a th:if="${userActivity.infoCifTemp} != 'null'" th:href="@{'/customer-edit/' + ${userActivity.infoCifTemp}}">
+															<a th:if="${userActivity.infoCifTemp} != 'null'" th:href="@{'/customer-edit-all/' + ${userActivity.infoCifTemp}}">
 															<label th:text="${userActivity.info}"></label>
 															</a>
 															<label th:if="${userActivity.infoCifTemp} == 'null'" th:text="${userActivity.info}"></label>

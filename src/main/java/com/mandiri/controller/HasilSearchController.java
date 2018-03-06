@@ -81,7 +81,7 @@ public class HasilSearchController {
 		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		dashboardRepository.save(ua);
 		
-		return "redirect:/dashboard";
+		return "redirect:/customer-view/"+cif;
 	}
 	
 	@RequestMapping(path = "/customer-add-action", method = RequestMethod.POST)
