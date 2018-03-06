@@ -70,8 +70,8 @@
 				            </div>
 				            
 				            <div class="panel panel-default" id="divResponseStart" class="center">
-				            	<div class="panel body danger"> 
-				            		<h4>Pilih Tanggapan</h4>
+				            	<div class="panel-body danger"> 
+				            		<h4>Pilih Produk dan Tanggapan</h4>
 				            	</div>
 				            </div>
 				            
@@ -145,6 +145,12 @@
 				            <div class="form-group required cfol ctdk grMNDL">
 				              <label class="control-label" for="phone">Nomor HP</label>
 				              <input type="text" class="form-control ftdk" placeholder="No Handphone" th:field="*{phone}"/>
+				            </div>
+					        
+					        <div class="panel">
+				            	<div id="divErrorMessage" class="txtErrorMessage"> 
+
+				            	</div>
 				            </div>
 					        
 					        <div class="form-group center-block">
@@ -338,6 +344,7 @@
 		$('[name="responseResult"]').prop('checked',false);
 		resetResponseLevel1();
 		$('#divResponseStart').hide();
+		$('#divErrorMessage').html('');
 	}
 	//onchange response result
 	function resetResponseLevel1(){
@@ -384,7 +391,7 @@
 		$('#penawaranTitle').html('Tambah Penawaran Baru');
 	});
 	
-	//populate combo box reason on product change
+	//populate combo box reason on product change - product combo box change - product select change
 	$('#TProduct1').change(function(){
 		resetResponseLevel2();
 		$('#divResponseStart').show();
@@ -395,6 +402,14 @@
 		resetResponseLevel1();
 		
 		filterFormField(this.value);
+	})
+	
+	//Check if Product already selected or not
+	$('[name="responseResult"]').on('click', function(e){
+		if($('option:selected', '#TProduct1').val() == ''){
+			$('#divErrorMessage').html('*Produk belum dipilih');
+			e.preventDefault();
+		}
 	})
 	
 	//Load select option on reason combo box 
