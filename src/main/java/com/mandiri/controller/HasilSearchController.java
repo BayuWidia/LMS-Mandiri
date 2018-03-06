@@ -76,9 +76,9 @@ public class HasilSearchController {
 		TAuditTrail ua = new TAuditTrail();
 		ua.setInfo("Melihat detail customer profile data dengan nama customer "+customer.getName()+","+cif);
 		ua.setAudited(new Timestamp(System.currentTimeMillis()));
-		ua.setUserprofile3(user);
-		ua.setUserprofile1(user);
 		ua.setCreatedon(new Timestamp(System.currentTimeMillis()));
+		ua.setUserprofile1(user);
+		ua.setUserprofile3(user);
 		dashboardRepository.save(ua);
 		
 		return "redirect:/customer-view/"+cif;
