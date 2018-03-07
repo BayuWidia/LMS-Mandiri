@@ -160,18 +160,18 @@
 
 							<div class="space-10"></div>
 							<div  th:each="listUserActivityLeft : ${listUserActivityLefts}">
-								<a th:href="@{'/customer-update-status/' + ${listUserActivityLeft.customerResponseId}}">
-									<label class="inline"> <input type="checkbox"
-										name="form-field-checkbox" class="ace" />
-										<span class="lbl" th:text="${listUserActivityLeft.reminder}"></span>
-										<br> 
-										Nama Customer : <span class="lbl" th:text="${listUserActivityLeft.nama_cpi}"></span>
-										<br/>
-										Nama Produk : <span class="lbl" th:text="${listUserActivityLeft.product_name}"></span>
-									</label>
-								</a>
+								<label class="inline">
+									<span class="red bolder" th:text="${listUserActivityLeft.reminder}"></span>
+									<br> 
+									<b>Nama Customer : </b><span class="lbl" th:text="${listUserActivityLeft.nama_cpi}"></span>
+									<br/>
+									<b>Nama Produk : </b><span class="lbl" th:text="${listUserActivityLeft.product_name}"></span>
+								</label>
+								<br>
+								<a class="btn btn-warning btn-xs btn-block" th:href="@{'/customer-update-status/' + ${listUserActivityLeft.customerResponseId}}">
+								Submit</a>
+								<div class="space-10"></div>
 							</div>
-							<div class="space-10"></div>
 							<div class="pull-center">
 								<span class="blue bolder">Load more.. </span>(Tidak ada
 								reminder)

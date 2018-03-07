@@ -16,7 +16,7 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 
 	@Query(value = "SELECT ua.id, ua.info, ua.user_nip, ua.createdon, ua.criteria, ua.audited, ua.modifiedon, ua.createdby, ua.modifiedby"
 			+ " FROM dev_lms.t_audit_trail ua"
-			+ " where (:userNip is null or (:userNip is not null and ua.user_nip = :userNip)) order by ua.createdon desc limit 10 ", nativeQuery = true)
+			+ " where (:userNip is null or (:userNip is not null and ua.createdby = :userNip)) order by ua.createdon desc limit 10 ", nativeQuery = true)
 	List<Object[]> findTAuditTrail(@Param("userNip") String userNip);
 	
 	@Query(value = "SELECT cus.cif, cpi.name, cpi.nik, cpi.email, cus.phone, cpi.address, cpi.birth_date, cpi.birth_place, "

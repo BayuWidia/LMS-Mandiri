@@ -15,10 +15,11 @@ public interface TCustomerResponseRepository extends JpaRepository<TCustomerResp
 	List<TCustomerResponse> findbyCif(@Param("cif") String cif);
 	
 	
-	@Query(value = "SELECT cus.customer_response_id, cus.reminder, cpi.name as nama_cpi, prod.product_name as product_name FROM dev_lms.t_customer_response cus "
+	@Query(value = "SELECT cus.customer_response_id, cus.reminder, cpi.name as nama_cpi, prod.product_name as product_name, "
+			+ "cus.user_id, cus.status FROM dev_lms.t_customer_response cus "
 			+ "inner join dev_lms.t_cpi cpi on cus.cif = cpi.cif "
 			+ "inner join dev_lms.t_product prod on cus.product_id = prod.product_id "
-			+ "where cus.status = 'f' and cus.reminder = CURRENT_TIMESTAMP - INTERVAL '100 days' "
-			+ "and (:userNip is null or (:userNip is not null and ua.user_id = :userNip))", nativeQuery = true)
+			+ "where cus.status = 'f' and CAST(cus.reminder AS DATE) = CURRENT_DATE"
+			+ "and (:userNip is null or (:userNip is not null and cus.user_id = :userNip)) order by cus.reminder asc", nativeQuery = true)
 	List<Object[]> findReminderOn(@Param("userNip") String userNip);
 }

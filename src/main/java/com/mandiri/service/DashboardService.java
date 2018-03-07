@@ -47,24 +47,20 @@ public class DashboardService {
 			f.setId((BigInteger) data[0]);
 			
 			String strInfo = (String) data[1];
-//			if (strInfo.contains(",")) {
-				String[] parts = strInfo.split(",");
-				String part1 = parts[0];
-				String part2 = parts[1]; 
-				f.setInfo(part1);
-				f.setInfoCifTemp(part2);
-//			}
+			String[] parts = strInfo.split(",");
+			String part1 = parts[0];
+			String part2 = parts[1]; 
+			f.setInfo(part1);
+			f.setInfoCifTemp(part2);
 			f.setUser_nip((String) data[2]);
 			
 			Date date = (Timestamp) data[3];
-//			if (date != null) {
-				DateFormat fmtDate = new SimpleDateFormat("dd MMMM yyyy");
-				DateFormat fmtDay = new SimpleDateFormat("EEEE");
-				String strDate = fmtDate.format(date);
-				String strDay = fmtDay.format(date);
-				f.setCreatedon(strDate);
-				f.setDay(strDay);
-//			}
+			DateFormat fmtDate = new SimpleDateFormat("dd MMMM yyyy");
+			DateFormat fmtDay = new SimpleDateFormat("EEEE");
+			String strDate = fmtDate.format(date);
+			String strDay = fmtDay.format(date);
+			f.setCreatedon(strDate);
+			f.setDay(strDay);
 			f.setCreatedby((Integer) data[4]);
 			
 			lsDataTest.add(f);
