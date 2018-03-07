@@ -83,9 +83,9 @@
 											<span class="timeline-label"> <b>Time Activities</b>
 											</span>
 
-											<div class="timeline-item clearfix" th:each="userActivity : ${userActivitys}">
+											<div class="timeline-item clearfix" th:each="userActivityRight : ${listUserActivityRights}">
 												<div class="timeline-info">
-													<span class="timeline-date" th:text="${userActivity.createdon}"></span>
+													<span class="timeline-date" th:text="${userActivityRight.createdon}"></span>
 
 													<i class="timeline-indicator btn btn-success no-hover"></i>
 												</div>
@@ -93,12 +93,12 @@
 												<div class="widget-box transparent">
 													<div class="widget-body">
 														<div class="widget-main no-padding">
-															<span class="red bolder" th:text="${userActivity.day}"></span>
+															<span class="red bolder" th:text="${userActivityRight.day}"></span>
 															<br />
-															<a th:if="${userActivity.infoCifTemp} != 'null'" th:href="@{'/customer-edit-all/' + ${userActivity.infoCifTemp}}">
-															<label th:text="${userActivity.info}"></label>
+															<a th:if="${userActivityRight.infoCifTemp} != 'null'" th:href="@{'/customer-edit-all/' + ${userActivityRight.infoCifTemp}}">
+															<label th:text="${userActivityRight.info}"></label>
 															</a>
-															<label th:if="${userActivity.infoCifTemp} == 'null'" th:text="${userActivity.info}"></label>
+															<label th:if="${userActivityRight.infoCifTemp} == 'null'" th:text="${userActivityRight.info}"></label>
 															
 														</div>
 													</div>
@@ -159,25 +159,17 @@
 							<div class="hr hr12 dotted"></div>
 
 							<div class="space-10"></div>
-							<div>
-								<label class="inline"> <input type="checkbox"
-									name="form-field-checkbox" class="ace" /> <span class="lbl">
-										Susan Smith is now friends with Alex Doe.</span>
-								</label>
-							</div>
-							<div class="space-10"></div>
-							<div>
-								<label class="inline"> <input type="checkbox"
-									name="form-field-checkbox" class="ace" /> <span class="lbl">
-										Alex Doe changed his profile photo. Take a look</span>
-								</label>
-							</div>
-							<div class="space-10"></div>
-							<div>
-								<label class="inline"> <input type="checkbox"
-									name="form-field-checkbox" class="ace" /> <span class="lbl">
-										Alex Doe joined Country Music group.</span>
-								</label>
+							<div  th:each="listUserActivityLeft : ${listUserActivityLefts}">
+								<a th:href="@{'/customer-update-status/' + ${listUserActivityLeft.customerResponseId}}">
+									<label class="inline"> <input type="checkbox"
+										name="form-field-checkbox" class="ace" />
+										<span class="lbl" th:text="${listUserActivityLeft.reminder}"></span>
+										<br> 
+										Nama Customer : <span class="lbl" th:text="${listUserActivityLeft.nama_cpi}"></span>
+										<br/>
+										Nama Produk : <span class="lbl" th:text="${listUserActivityLeft.product_name}"></span>
+									</label>
+								</a>
 							</div>
 							<div class="space-10"></div>
 							<div class="pull-center">

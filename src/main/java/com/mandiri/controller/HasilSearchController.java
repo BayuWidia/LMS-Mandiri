@@ -136,7 +136,8 @@ public class HasilSearchController {
 		DashboardFilter dashboardFilter = new DashboardFilter();
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
+		model.addAttribute("listUserActivityRights", dashboardService.listUserActivityRight(user.getNip()));
+		model.addAttribute("listUserActivityLefts", dashboardService.listUserActivityLeft(user.getNip()));
 		model.addAttribute("messageDataSimpan", "Data tersebut berhasil disimpan");
 		
 		return "dashboard";

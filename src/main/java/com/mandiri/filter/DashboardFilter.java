@@ -47,6 +47,11 @@ public class DashboardFilter {
 	private String accountNumber;
 	private String cardNumber;
 
+	private String customerResponseId;
+	private String reminder;
+	private String nama_cpi;
+	private String product_name;
+
 	public String getCif() {
 		return cif;
 	}
@@ -357,6 +362,38 @@ public class DashboardFilter {
 
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
+	}
+
+	public String getCustomerResponseId() {
+		return customerResponseId;
+	}
+
+	public void setCustomerResponseId(String customerResponseId) {
+		this.customerResponseId = customerResponseId;
+	}
+
+	public String getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(String reminder) {
+		this.reminder = reminder;
+	}
+
+	public String getNama_cpi() {
+		return nama_cpi;
+	}
+
+	public void setNama_cpi(String nama_cpi) {
+		this.nama_cpi = nama_cpi;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 
 }

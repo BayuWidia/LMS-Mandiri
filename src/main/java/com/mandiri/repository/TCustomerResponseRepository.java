@@ -13,4 +13,12 @@ import com.mandiri.model.TCustomerResponse;
 public interface TCustomerResponseRepository extends JpaRepository<TCustomerResponse, String>{
 	@Query(value = "SELECT c FROM TCustomerResponse c where c.TCpi.cif = :cif")
 	List<TCustomerResponse> findbyCif(@Param("cif") String cif);
+	
+	
+	@Query(value = "SELECT cus.customer_response_id, cus.reminder, cpi.name as nama_cpi, prod.product_name as product_name FROM dev_lms.t_customer_response cus "
+			+ "inner join dev_lms.t_cpi cpi on cus.cif = cpi.cif "
+			+ "inner join dev_lms.t_product prod on cus.product_id = prod.product_id "
+			+ "where cus.status = 'f' and cus.reminder = CURRENT_TIMESTAMP - INTERVAL '100 days' "
+			+ "and (:userNip is null or (:userNip is not null and ua.user_id = :userNip))", nativeQuery = true)
+	List<Object[]> findReminderOn(@Param("userNip") String userNip);
 }

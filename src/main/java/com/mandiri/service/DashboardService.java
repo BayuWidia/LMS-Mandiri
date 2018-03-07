@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.mandiri.filter.DashboardFilter;
 import com.mandiri.model.TAuditTrail;
 import com.mandiri.repository.DashboardRepository;
+import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.util.CustomeUtil;
 
 @Service
@@ -22,20 +23,23 @@ public class DashboardService {
 	@Autowired
 	private DashboardRepository dashboardRepository;
 	
+	@Autowired
+	private TCustomerResponseRepository tCustomerResponseRepository;
+	
 	CustomeUtil customeUtil = new CustomeUtil();
 
 	public List<TAuditTrail> findAll() {
 		return dashboardRepository.findAll();
 	}
 
-	public List<DashboardFilter> listUserActivity(String userNip) {
+	public List<DashboardFilter> listUserActivityRight(String userNip) {
 		List<Object[]> lsData = new ArrayList<>();
 		lsData = dashboardRepository.findTAuditTrail(userNip);
 
-		return convertlist(lsData);
+		return convertlistTAuditTrail(lsData);
 	}
 
-	public List<DashboardFilter> convertlist(List<Object[]> lsData) {
+	public List<DashboardFilter> convertlistTAuditTrail(List<Object[]> lsData) {
 		List<DashboardFilter> lsDataTest = new ArrayList<>();
 
 		for (Object[] data : lsData) {
@@ -68,6 +72,32 @@ public class DashboardService {
 		return lsDataTest;
 	}
 	
+	
+	public List<DashboardFilter> listUserActivityLeft(String userNip) {
+		List<Object[]> lsData = new ArrayList<>();
+		lsData = tCustomerResponseRepository.findReminderOn(userNip);
+
+		return convertlistReminderOn(lsData);
+	}
+
+	public List<DashboardFilter> convertlistReminderOn(List<Object[]> lsData) {
+		List<DashboardFilter> lsDataTest = new ArrayList<>();
+
+		for (Object[] data : lsData) {
+			DashboardFilter f = new DashboardFilter();
+			f.setCustomerResponseId((String) data[0]);
+			Date date = (Timestamp) data[1];
+			DateFormat fmtDate = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
+			String strDate = fmtDate.format(date);
+			f.setReminder(strDate);
+			f.setNama_cpi((String) data[2]);
+			f.setProduct_name((String) data[3]);
+			
+			lsDataTest.add(f);
+		}
+		return lsDataTest;
+	}
+
 	public List<DashboardFilter> listSearchByParam(String strKategori, String strPencarian){
 		List<Object[]> lsData = null;
 		if (strKategori.equalsIgnoreCase("NIK")) {

@@ -23,9 +23,12 @@ import com.mandiri.filter.DashboardFilter;
 import com.mandiri.filter.UserProfileFilter;
 import com.mandiri.model.Reason;
 import com.mandiri.model.TAuditTrail;
+import com.mandiri.model.TCpi;
+import com.mandiri.model.TCustomerResponse;
 import com.mandiri.model.TOccupation;
 import com.mandiri.model.Userprofile;
 import com.mandiri.repository.DashboardRepository;
+import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.repository.TOccupationRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.DashboardService;
@@ -43,6 +46,9 @@ public class DashboardController {
 	
 	@Autowired
 	private DashboardRepository dashboardRepository;
+	
+	@Autowired
+	private TCustomerResponseRepository tCustomerResponseRepository;
 	
 	@Autowired
 	private TOccupationRepository tOccupationRepository;
@@ -80,7 +86,8 @@ public class DashboardController {
 		DashboardFilter dashboardFilter = new DashboardFilter();
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
+		model.addAttribute("listUserActivityRights", dashboardService.listUserActivityRight(user.getNip()));
+		model.addAttribute("listUserActivityLefts", dashboardService.listUserActivityLeft(user.getNip()));
 		
 		return "dashboard";
 	}
@@ -152,7 +159,8 @@ public class DashboardController {
 		model.addAttribute("customerFilter", customerFilter);
 		model.addAttribute("dashboardFilter", dashboardFilter);
 		model.addAttribute("userName", user.getName());
-		model.addAttribute("userActivitys", dashboardService.listUserActivity(user.getNip()));
+		model.addAttribute("listUserActivityRights", dashboardService.listUserActivityRight(user.getNip()));
+		model.addAttribute("listUserActivityLefts", dashboardService.listUserActivityLeft(user.getNip()));
 		model.addAttribute("listOccupation", tOccupationRepository.findAll());
 		
 		return "hasilsearch";
@@ -169,6 +177,45 @@ public class DashboardController {
 //		Cus customer = customerService.findCustomerByCif(Long.valueOf(cif));
 		
 		return "redirect:/dashboard";
+	}
+	
+	
+	@RequestMapping(value="/customer-update-status/{customerResponseId}", method=RequestMethod.GET)
+	public String customerUpdateStatus(@PathVariable String customerResponseId, Model model, HttpSession session){
+		sessionController.getSession(model, session);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
+		
+		TCustomerResponse ua = new TCustomerResponse();
+		ua.setCustomerResponseId(customerResponseId);
+		ua.setStatus(true);
+		tCustomerResponseRepository.save(ua);
+		
+		Date date = new Date();
+		DateFormat fmtDate = new SimpleDateFormat("dd");
+		DateFormat fmtMon = new SimpleDateFormat("MMMM");
+		DateFormat fmtYear = new SimpleDateFormat("yyyy");
+		DateFormat fmtDay = new SimpleDateFormat("EEEE");
+		
+		String strDate = fmtDate.format(date);
+		String strMon = fmtMon.format(date);
+		String strYear = fmtYear.format(date);
+		String strDay = fmtDay.format(date);
+		
+		model.addAttribute("strDate", strDate);
+		model.addAttribute("strMon", strMon);
+		model.addAttribute("strYear", strYear);
+		model.addAttribute("strDay", strDay);
+		
+		DashboardFilter dashboardFilter = new DashboardFilter();
+		model.addAttribute("dashboardFilter", dashboardFilter);
+		model.addAttribute("userName", user.getName());
+		model.addAttribute("listUserActivityRights", dashboardService.listUserActivityRight(user.getNip()));
+		model.addAttribute("listUserActivityLefts", dashboardService.listUserActivityLeft(user.getNip()));
+		model.addAttribute("messageDataSimpan", "Data tersebut berhasil disimpan");
+		
+		return "dashboard";
 	}
 
 }
