@@ -77,6 +77,22 @@ public class TCustomerResponse implements Serializable {
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date reminder;
 
+	@Override
+	public String toString() {
+		return "TCustomerResponse [customerResponseId=" + customerResponseId + ", accountNumber=" + accountNumber
+				+ ", actualEdmId=" + actualEdmId + ", amount=" + amount + ", companyid=" + companyid + ", createdon="
+				+ createdon + ", customerComment=" + customerComment + ", cycleNextId=" + cycleNextId + ", cycleNowId="
+				+ cycleNowId + ", dataType=" + dataType + ", dobisnis=" + dobisnis + ", durasi=" + durasi + ", email="
+				+ email + ", followUp=" + followUp + ", groupcrId=" + groupcrId + ", modifiedon=" + modifiedon
+				+ ", nik=" + nik + ", npwp=" + npwp + ", offeringDate=" + offeringDate + ", phone=" + phone
+				+ ", polisnumber=" + polisnumber + ", reminder=" + reminder + ", responseCode=" + responseCode
+				+ ", responseResult=" + responseResult + ", responseResultDesc=" + responseResultDesc + ", sequence="
+				+ sequence + ", sourceType=" + sourceType + ", status=" + status + ", subResponseCode="
+				+ subResponseCode + ", tanggalSales=" + tanggalSales + ", reason=" + reason + ", TCpi=" + TCpi
+				+ ", TProduct1=" + TProduct1 + ", userprofile1=" + userprofile1 + ", userprofile2=" + userprofile2
+				+ ", userprofile3=" + userprofile3 + ", TProduct2=" + TProduct2 + "]";
+	}
+
 	@Column(name="response_code")
 	private String responseCode;
 

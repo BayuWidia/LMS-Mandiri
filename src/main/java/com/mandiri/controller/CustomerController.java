@@ -121,6 +121,7 @@ public class CustomerController {
 	
 	@PostMapping(value={"/responseSave"})
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
+		System.out.println(blankResponse.toString());
 		blankResponse.setCustomerResponseId(GenerateUUID.getUUID());
 		
 		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));

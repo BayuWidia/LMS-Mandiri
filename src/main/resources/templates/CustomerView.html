@@ -116,9 +116,7 @@
 				            <div class="form-group required cfol ctdk">
 				              <label class="control-label">Alasan Nasabah</label>
 				              <select class="form-control ffol ftdk" th:field="*{reason}">
-<!-- 				                  <option th:each="reason : ${listReason}" -->
-<!-- 				                     th:value="${reason.id}" -->
-<!-- 				                     th:utext="${reason.name}"/> -->
+									
 				              </select>
 				            </div>
 				            <div class="form-group required cfol">
@@ -254,8 +252,8 @@
 								  	<table class="table">
 									    <tbody>
 									      <tr th:each="newoffer : ${listNewOffer}">
-									        <td class="col-md-2 well well-sm text-center">
-									        	<span class="" th:text="${newoffer.TProduct.productName}"></span>
+									        <td class="col-md-2">
+									        	<input type="text" class="form-control text-center" th:value="${newoffer.TProduct.productName}" readonly />
 									        </td>
 									        <td class="col-md-1">
 									        	<button th:onclick="|showDetailProduct('${newoffer.TProduct.productId}')|" th:id="'btnDetail_'+${newoffer.TProduct.productId}" type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalDetail">Detail</button>
@@ -460,6 +458,7 @@
 	$(document).ready(function(){
 		var $form = $('#blankResponse');
 		  $form.on('submit', function(e) {
+			  alert($('#reason').val());
 		    e.preventDefault();
 		    $.ajax({
 		      url: $form.attr('action'),
