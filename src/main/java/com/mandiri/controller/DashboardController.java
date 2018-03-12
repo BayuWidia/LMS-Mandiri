@@ -190,6 +190,7 @@ public class DashboardController {
 		TCustomerResponse ua = new TCustomerResponse();
 		ua.setCustomerResponseId(customerResponseId);
 		ua.setStatus(true);
+		ua.setModifiedon(new Timestamp(System.currentTimeMillis()));
 		tCustomerResponseRepository.save(ua);
 		
 		Date date = new Date();
