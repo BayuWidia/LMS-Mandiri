@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mandiri.model.GroupProduct;
+import com.mandiri.model.Keytracking;
+import com.mandiri.model.Program;
 import com.mandiri.model.Reason;
 import com.mandiri.model.TCph;
 import com.mandiri.model.TCpi;
@@ -27,6 +30,9 @@ import com.mandiri.model.TCustomerResponse;
 import com.mandiri.model.TProduct;
 import com.mandiri.model.Userprofile;
 import com.mandiri.repository.CampaignRepository;
+import com.mandiri.repository.GroupProductRepository;
+import com.mandiri.repository.KeytrackingRepository;
+import com.mandiri.repository.ProgramRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.TCpoRepository;
@@ -58,13 +64,16 @@ public class CustomerController {
 	private TCpoRepository cpoRepo;
 	@Autowired
 	private TCustomerResponseRepository tresponseRepo;
-	
+	@Autowired
+	private GroupProductRepository pgroupRepo;
 	@Autowired
 	private CampaignRepository campaignRepo;
-
+	@Autowired
+	private ProgramRepository programRepo;
 	@Autowired
 	private TProductRepository productRepo;
-	
+	@Autowired
+	private KeytrackingRepository keytrackingRepo;
 	@Autowired
 	private ReasonRepository reasonRepo;
 
@@ -104,8 +113,12 @@ public class CustomerController {
 		model.addAttribute("listOwned", listOwned);
 		
 		//Select list product
-		List<TProduct> listProduk = productRepo.findExceptTrash();
-		model.addAttribute("listProduk", listProduk);
+//		List<TProduct> listProduk = productRepo.findExceptTrash();
+//		model.addAttribute("listProduk", listProduk);
+		
+		//Select list groupproduct
+		List<GroupProduct> listGroupProduct = pgroupRepo.findAll();
+		model.addAttribute("listGroupProduct", listGroupProduct);
 		
 		//Select list product
 		List<Reason> listReason = reasonRepo.findAll();
@@ -155,6 +168,40 @@ public class CustomerController {
 		
 		return listReason;
 	}
+	
+	@GetMapping(value={"/getProductbyGroup"}, produces="application/json")
+	@ResponseBody
+	public List<TProduct> getProductbyGroup(@RequestParam("groupproductid") Long groupproductid){
+		//System.out.println(groupproductid);
+		
+		//TProduct listProduct = productRepo.findByGroupProduct(groupproductid);
+		List<TProduct> listProduct = productRepo.findbyGroupProductid(groupproductid);
+		
+		System.out.println("begok" + listProduct);
+		
+		return listProduct;
+	}
+	
+	@GetMapping(value={"/getProgrambyProduct"})
+	@ResponseBody
+	public List<Program> getProgrambyProduct(@RequestParam("productid") String productid){
+		System.out.println(productid);
+		
+		List<Program> listProgram = programRepo.findbyProductid(productid);
+		
+		return listProgram;
+	}
+	
+	@GetMapping(value={"/getKeytrackingbyProgram"})
+	@ResponseBody
+	public List<Keytracking> getKeytrackingbyProgram(@RequestParam("programid") Long programid){
+		System.out.println(programid);
+		
+		List<Keytracking> listKeytracking = keytrackingRepo.findbyProgramid(programid);
+		System.out.println("flagkey "+listKeytracking.toString());
+		return listKeytracking;
+	}
+	
 //	
 //	//Testing post from ajax
 //	@GetMapping(value={"/Test"})

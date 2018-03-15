@@ -2,6 +2,9 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -23,6 +26,9 @@ public class TProduct implements Serializable {
 
 	private String group;
 
+	@Column(name="icon_location")
+	private String iconLocation;
+
 	@Column(name="product_name")
 	private String productName;
 
@@ -30,33 +36,56 @@ public class TProduct implements Serializable {
 	private String subProductName;
 
 	//bi-directional many-to-one association to Campaign
+	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<Campaign> campaigns;
 
+	//bi-directional many-to-one association to Program
+	@JsonIgnore
+	@OneToMany(mappedBy="TProduct")
+	private List<Program> programs;
+
 	//bi-directional many-to-one association to TCph
+	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TCph> TCphs;
 
 	//bi-directional many-to-one association to TCpo
+	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TCpo> TCpos;
 
 	//bi-directional many-to-one association to TCustomerResponse
+	@JsonIgnore
 	@OneToMany(mappedBy="TProduct1")
 	private List<TCustomerResponse> TCustomerResponses1;
 
+	//bi-directional many-to-one association to TCustomerResponse
+	@JsonIgnore
+	@OneToMany(mappedBy="TProduct2")
+	private List<TCustomerResponse> TCustomerResponses2;
+
+	//bi-directional many-to-one association to TOffer
+	@JsonIgnore
+	@OneToMany(mappedBy="TProduct")
+	private List<TOffer> TOffers;
+
+	//bi-directional many-to-one association to GroupProduct
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="group_product_id")
+	private GroupProduct groupProduct;
+
 	//bi-directional many-to-one association to TProduct
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="sub_product_id")
 	private TProduct TProduct;
 
 	//bi-directional many-to-one association to TProduct
+	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TProduct> TProducts;
-
-	//bi-directional many-to-one association to TCustomerResponse
-	@OneToMany(mappedBy="TProduct2")
-	private List<TCustomerResponse> TCustomerResponses2;
 
 	public TProduct() {
 	}
@@ -83,6 +112,14 @@ public class TProduct implements Serializable {
 
 	public void setGroup(String group) {
 		this.group = group;
+	}
+
+	public String getIconLocation() {
+		return this.iconLocation;
+	}
+
+	public void setIconLocation(String iconLocation) {
+		this.iconLocation = iconLocation;
 	}
 
 	public String getProductName() {
@@ -121,6 +158,28 @@ public class TProduct implements Serializable {
 		campaign.setTProduct(null);
 
 		return campaign;
+	}
+
+	public List<Program> getPrograms() {
+		return this.programs;
+	}
+
+	public void setPrograms(List<Program> programs) {
+		this.programs = programs;
+	}
+
+	public Program addProgram(Program program) {
+		getPrograms().add(program);
+		program.setTProduct(this);
+
+		return program;
+	}
+
+	public Program removeProgram(Program program) {
+		getPrograms().remove(program);
+		program.setTProduct(null);
+
+		return program;
 	}
 
 	public List<TCph> getTCphs() {
@@ -189,6 +248,58 @@ public class TProduct implements Serializable {
 		return TCustomerResponses1;
 	}
 
+	public List<TCustomerResponse> getTCustomerResponses2() {
+		return this.TCustomerResponses2;
+	}
+
+	public void setTCustomerResponses2(List<TCustomerResponse> TCustomerResponses2) {
+		this.TCustomerResponses2 = TCustomerResponses2;
+	}
+
+	public TCustomerResponse addTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
+		getTCustomerResponses2().add(TCustomerResponses2);
+		TCustomerResponses2.setTProduct2(this);
+
+		return TCustomerResponses2;
+	}
+
+	public TCustomerResponse removeTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
+		getTCustomerResponses2().remove(TCustomerResponses2);
+		TCustomerResponses2.setTProduct2(null);
+
+		return TCustomerResponses2;
+	}
+
+	public List<TOffer> getTOffers() {
+		return this.TOffers;
+	}
+
+	public void setTOffers(List<TOffer> TOffers) {
+		this.TOffers = TOffers;
+	}
+
+	public TOffer addTOffer(TOffer TOffer) {
+		getTOffers().add(TOffer);
+		TOffer.setTProduct(this);
+
+		return TOffer;
+	}
+
+	public TOffer removeTOffer(TOffer TOffer) {
+		getTOffers().remove(TOffer);
+		TOffer.setTProduct(null);
+
+		return TOffer;
+	}
+
+	public GroupProduct getGroupProduct() {
+		return this.groupProduct;
+	}
+
+	public void setGroupProduct(GroupProduct groupProduct) {
+		this.groupProduct = groupProduct;
+	}
+
 	public TProduct getTProduct() {
 		return this.TProduct;
 	}
@@ -217,28 +328,6 @@ public class TProduct implements Serializable {
 		TProduct.setTProduct(null);
 
 		return TProduct;
-	}
-
-	public List<TCustomerResponse> getTCustomerResponses2() {
-		return this.TCustomerResponses2;
-	}
-
-	public void setTCustomerResponses2(List<TCustomerResponse> TCustomerResponses2) {
-		this.TCustomerResponses2 = TCustomerResponses2;
-	}
-
-	public TCustomerResponse addTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
-		getTCustomerResponses2().add(TCustomerResponses2);
-		TCustomerResponses2.setTProduct2(this);
-
-		return TCustomerResponses2;
-	}
-
-	public TCustomerResponse removeTCustomerResponses2(TCustomerResponse TCustomerResponses2) {
-		getTCustomerResponses2().remove(TCustomerResponses2);
-		TCustomerResponses2.setTProduct2(null);
-
-		return TCustomerResponses2;
 	}
 
 }

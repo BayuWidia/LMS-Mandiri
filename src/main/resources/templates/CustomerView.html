@@ -42,118 +42,129 @@
 							<form id="blankResponse" name="blankResponse" th:action="@{/responseSave}" th:object="${blankResponse}" method="post">
 								<input type="hidden" th:field="*{customerResponseId}" />
 								<input type="hidden" th:field="*{TCpi.cif}" />
-				            <div class="form-group required">
-				              <label class="control-label">Nama Produk</label>
-				              <select class="form-control" th:field="*{TProduct1}" required>
-				              <option value="">-- Pilih Produk --</option>
-				                  <option th:each="TProduct1 : ${listProduk}"
-				                     th:value="${TProduct1.productId}"
-				                     th:utext="${TProduct1.productName}"
-				                     th:class="${TProduct1.group}"
-				                     />
-				              </select>
-				            </div>
-				            <div class="form-group required cHead">
-				                <label class="control-label">Hasil Tanggapan</label>
-<!-- 				                <input type="hidden" th:field="*{responseResult}"></input> -->
-								<div class="btn-group pull-right">
-									<label class="btn btn-success">
-									    <input type="radio" th:field="*{responseResult}" value="0" autocomplete="off" required>YA
-							  		</label>
-									<label class="btn btn-warning">
-									  <input type="radio" th:field="*{responseResult}" value="2" autocomplete="off">To Be Follow Up
-									</label>
-									<label class="btn btn-danger">
-									  <input type="radio" th:field="*{responseResult}" value="1" autocomplete="off">TIDAK
-									</label>
-								</div>
-				            </div>
-				            
-				            <div class="panel panel-default" id="divResponseStart" class="center">
-				            	<div class="panel-body danger"> 
-				            		<h4>Pilih Produk dan Tanggapan</h4>
-				            	</div>
-				            </div>
-				            
-				            <!-- Form field yang dinamis - Start -->
-				            <!-- Form YA -->
-					        <div class="form-group required cya grCCARD grKSM">
-					        	<label class="control-label" for="nik">NIK</label>
-					        	<input type="text" class="form-control fya fCCARD fKSM" placeholder="" th:field="*{nik}" />
-					        </div>
-					        <div class="form-group required cya grAXA grCCARD">
-					        	<label class="control-label" for="subProduct">Sub Product</label>
-					        	<select class="form-control fya fAXA fCCARD" th:field="*{TProduct2}">
-				              		<option value="">-- Sub Product --</option>
-				              	</select>
-					        </div>
-					        <div class="form-group required cya grFUND grMNDL">
-					        	<label class="control-label" for="account">Account</label>
-					        	<input type="text" class="form-control fya fFUND fMNDL" placeholder="" th:field="*{accountNumber}" />
-					        </div>
-					        <div class="form-group required cya grMIB">
-					        	<label class="control-label" for="companyid">Company ID</label>
-					        	<input type="text" class="form-control fya fMIB" placeholder="" th:field="*{companyid}" />
-					        </div>
-					        <div class="form-group required cya grAXA">
-					        	<label class="control-label" for="polisnumber">Polis Number</label>
-					        	<input type="text" class="form-control fya fAXA" placeholder="" th:field="*{polisnumber}" />
-					        </div>
-					        <div class="form-group required cya grAXA grKSM grFUND">
-					        	<label class="control-label" for="amount">Nominal</label>
-					        	<input type="text" class="form-control fya fAXA fKSM fFUND" placeholder="" th:field="*{amount}" />
-					        </div>
-					        <div class="form-group required cya grEDC">
-					        	<label class="control-label" for="dobisnis">Doing Bisnis As (DBA) Name</label>
-					        	<input type="text" class="form-control fya fEDC" placeholder="" th:field="*{dobisnis}" />
-					        </div>
-					        <div class="form-group required cya grEDC">
-					        	<label class="control-label" for="npwp">NPWP</label>
-					        	<input type="text" class="form-control fya fEDC" placeholder="" th:field="*{npwp}" />
-					        </div>
-				            
-				            <!-- Form Tidak dan followup/ragu2 -->
-				            <div class="form-group required cfol ctdk">
-				              <label class="control-label">Alasan Nasabah</label>
-				              <select class="form-control ffol ftdk" th:field="*{reason}">
-									
-				              </select>
-				            </div>
-				            <div class="form-group required cfol">
-				              <label class="control-label" for="datetimepicker1">Reminder</label>
-				              <div class='input-group date' id='datetimepicker1'>
-				                <input type='text' class="form-control ffol" th:field="*{reminder}" />
-				                <span class="input-group-addon">
-				                  <span class="glyphicon glyphicon-calendar"></span>
-				                </span>
-				              </div>
-			 	              	<script type="text/javascript" th:inline="javascript">
-			 			            $(function () {
-			 			                $('#datetimepicker1').datetimepicker({
-			 			                	format:'DD-MM-YY HH:mm'
-			 			                });
-			 			                
-			 			            });
-						        </script>
-				            </div>
-				            <div class="form-group required cfol ctdk">
-				              <label class="control-label" for="email">Alamat Email</label>
-				              <input type="email" class="form-control ftdk" placeholder="Enter email" th:field="*{email}" />
-				            </div>
-				            <div class="form-group required cfol ctdk grMNDL">
-				              <label class="control-label" for="phone">Nomor HP</label>
-				              <input type="text" class="form-control ftdk" placeholder="No Handphone" th:field="*{phone}"/>
-				            </div>
-					        
-					        <div class="panel">
-				            	<div id="divErrorMessage" class="txtErrorMessage"> 
-
-				            	</div>
-				            </div>
-					        
-					        <div class="form-group center-block">
-				            	<button type="submit" class="btn btn-lg btn-primary center-block">Submit</button>
-				            </div>
+								
+								<div class="form-group required">
+					              <label class="control-label">Product Group</label>
+					              <select class="form-control" id="pgroup" required>
+					              <option value="">-- Pilih Group --</option>
+					                  <option th:each="pgroup : ${listGroupProduct}"
+					                     th:value="${pgroup.id}"
+					                     th:utext="${pgroup.name}"
+					                     />
+					              </select>
+					            </div>
+								
+					            <div class="form-group required">
+					              <label class="control-label">Nama Produk</label>
+					              <select class="form-control" th:field="*{TProduct1}" required>
+<!-- 					              <option value="">-- Pilih Produk --</option> -->
+<!-- 					                  <option th:each="TProduct1 : ${listProduk}" -->
+<!-- 					                     th:value="${TProduct1.productId}" -->
+<!-- 					                     th:utext="${TProduct1.productName}" -->
+<!-- 					                     th:class="${TProduct1.group}" -->
+<!-- 					                     /> -->
+					              </select>
+					            </div>
+					            <div class="form-group required">
+					              <label class="control-label">Program</label>
+					              <select class="form-control" th:field="*{program}" required></select>
+					            </div>
+					            
+					            <div class="form-group required cHead">
+					                <label class="control-label">Hasil Tanggapan</label>
+	<!-- 				                <input type="hidden" th:field="*{responseResult}"></input> -->
+									<div class="btn-group pull-right">
+										<label class="btn btn-success">
+										    <input type="radio" th:field="*{responseResult}" value="0" autocomplete="off" required>YA
+								  		</label>
+										<label class="btn btn-warning">
+										  <input type="radio" th:field="*{responseResult}" value="2" autocomplete="off">To Be Follow Up
+										</label>
+										<label class="btn btn-danger">
+										  <input type="radio" th:field="*{responseResult}" value="1" autocomplete="off">TIDAK
+										</label>
+									</div>
+					            </div>
+					            
+					            <div class="panel panel-default" id="divResponseStart" class="center">
+					            	<div class="panel-body danger"> 
+					            		<h4>Pilih Produk dan Tanggapan</h4>
+					            	</div>
+					            </div>
+					            
+					            <!-- Form field yang dinamis - Start -->
+					            <!-- Form YA -->
+						        <div class="form-group required cya grnik">
+						        	<label class="control-label" for="nik">NIK</label>
+						        	<input type="text" class="form-control fya fnik" placeholder="" th:field="*{nik}" />
+						        </div>
+						        <div class="form-group required cya graccountno">
+						        	<label class="control-label" for="account">Account</label>
+						        	<input type="text" class="form-control fya faccountno" placeholder="" th:field="*{accountNumber}" />
+						        </div>
+						        <div class="form-group required cya grcompanyid">
+						        	<label class="control-label" for="companyid">Company ID</label>
+						        	<input type="text" class="form-control fya fcompanyid" placeholder="" th:field="*{companyid}" />
+						        </div>
+						        <div class="form-group required cya ">
+						        	<label class="control-label" for="polisnumber">Polis Number</label>
+						        	<input type="text" class="form-control fya" placeholder="" th:field="*{polisnumber}" />
+						        </div>
+						        <div class="form-group required cya  ">
+						        	<label class="control-label" for="amount">Nominal</label>
+						        	<input type="text" class="form-control fya" placeholder="" th:field="*{amount}" />
+						        </div>
+						        <div class="form-group required cya ">
+						        	<label class="control-label" for="dobisnis">Doing Bisnis As (DBA) Name</label>
+						        	<input type="text" class="form-control fya" placeholder="" th:field="*{dobisnis}" />
+						        </div>
+						        <div class="form-group required cya ">
+						        	<label class="control-label" for="npwp">NPWP</label>
+						        	<input type="text" class="form-control fya" placeholder="" th:field="*{npwp}" />
+						        </div>
+					            
+					            <!-- Form Tidak dan followup/ragu2 -->
+					            <div class="form-group required cfol ctdk">
+					              <label class="control-label">Alasan Nasabah</label>
+					              <select class="form-control ffol ftdk" th:field="*{reason}">
+										
+					              </select>
+					            </div>
+					            <div class="form-group required cfol">
+					              <label class="control-label" for="datetimepicker1">Reminder</label>
+					              <div class='input-group date' id='datetimepicker1'>
+					                <input type='text' class="form-control ffol" th:field="*{reminder}" />
+					                <span class="input-group-addon">
+					                  <span class="glyphicon glyphicon-calendar"></span>
+					                </span>
+					              </div>
+				 	              	<script type="text/javascript" th:inline="javascript">
+				 			            $(function () {
+				 			                $('#datetimepicker1').datetimepicker({
+				 			                	format:'DD-MM-YY HH:mm'
+				 			                });
+				 			                
+				 			            });
+							        </script>
+					            </div>
+					            <div class="form-group required cfol ctdk">
+					              <label class="control-label" for="email">Alamat Email</label>
+					              <input type="email" class="form-control ftdk" placeholder="Enter email" th:field="*{email}" />
+					            </div>
+					            <div class="form-group required cfol ctdk">
+					              <label class="control-label" for="phone">Nomor HP</label>
+					              <input type="text" class="form-control ftdk" placeholder="No Handphone" th:field="*{phone}"/>
+					            </div>
+						        
+						        <div class="panel">
+					            	<div id="divErrorMessage" class="txtErrorMessage"> 
+	
+					            	</div>
+					            </div>
+						        
+						        <div class="form-group center-block">
+					            	<button type="submit" class="btn btn-lg btn-primary center-block">Submit</button>
+					            </div>
 				          </form>
 				        </div>
 				      </div>
@@ -329,7 +340,7 @@
 </body>
 </html>
 
-<Script type="text/javascript" th:inline="javascript">
+<Script type="text/javascript">
 	
 	//on new penawaran
 	function resetResponseTotal(){
@@ -389,8 +400,22 @@
 		$('#penawaranTitle').html('Tambah Penawaran Baru');
 	});
 	
+	//Populate combo box product
+	$('#pgroup').change(function(){
+		resetResponseLevel2();
+		$('#program').val('');
+		$('#divResponseStart').show();
+		getProductbyGroup(this.value);
+	});
+	
 	//populate combo box reason on product change - product combo box change - product select change
 	$('#TProduct1').change(function(){
+		resetResponseLevel2();
+		$('#divResponseStart').show();
+		getSelectOption('#program', '/getProgrambyProduct?productid='+this.value, 'Program');
+	});
+	
+	$('#program').change(function(){
 		resetResponseLevel2();
 		$('#divResponseStart').show();
 	});
@@ -404,29 +429,76 @@
 	
 	//Check if Product already selected or not
 	$('[name="responseResult"]').on('click', function(e){
-		if($('option:selected', '#TProduct1').val() == ''){
+		if($('option:selected', '#pgroup').val() == ''){
+			$('#divErrorMessage').html('*Group Produk belum dipilih');
+			e.preventDefault();
+		}
+		else if($('option:selected', '#TProduct1').val() == ''){
 			$('#divErrorMessage').html('*Produk belum dipilih');
+			e.preventDefault();
+		}
+		else if($('option:selected', '#program').val() == ''){
+			$('#divErrorMessage').html('*Program belum dipilih');
 			e.preventDefault();
 		}
 	})
 	
-	//Load select option on reason combo box 
-	function getReasonList(p_group){		
+	function getSelectOption(selectid, url, label){
 		$.ajax({
-		      url: '/getReasonList?productGroup='+p_group,
+		      url: url,
 		      type: 'get',
-		      success: function(reasonData) {
-		    	  	var html = '<option value="">--Pilih Reason--</option>';
-	                var len = reasonData.length;
+		      success: function(selectData) {
+		    	  	var html = '<option value="">--Pilih '+label+'--</option>';
+	                var len = selectData.length;
 	                for ( var i = 0; i < len; i++) {
-	                    html += '<option value="' + reasonData[i].id + '">'
-	                            + reasonData[i].name + '</option>';
+	                    html += '<option value="' + selectData[i].id + '">'
+	                            + selectData[i].name + '</option>';
 	                }
 	                html += '</option>';
-	                $('#reason').html(html);
+	                $(selectid).html(html);
 		      },
 		      error: function(e){
 	              alert(e.responseText);
+	          }
+		  });
+	}
+	
+	function getProductbyGroup(groupproductid){
+		$.ajax({
+		      url: '/getProductbyGroup?groupproductid='+groupproductid,
+		      type: 'get',
+		      success: function(data) {
+		    	  	var html = '<option value="">--Pilih Produk--</option>';
+	                var len = data.length;
+	                for ( var i = 0; i < len; i++) {
+	                    html += '<option value="' + data[i].productId + '">'
+	                            + data[i].productName + '</option>';
+	                }
+	                html += '</option>';
+	                $('#TProduct1').html(html);
+		      },
+		      error: function(e){
+	              alert('error' + e.responseText);
+	          }
+		  });
+	}
+	
+	//get showing form field
+	function getKeytracking(){
+		var programid = $('#program').val();
+		$.ajax({
+		      //url: '/getKeytrackingbyProgram?programid='+programid,
+    		  url: '/getKeytrackingbyProgram?programid='+programid,
+		      type: 'get',
+		      success: function(data) {
+	                var len = data.length;
+	                for ( var i = 0; i < len; i++) {
+	                	$('.gr'+data[i].inputClass).show();
+						$('.f'+data[i].inputClass).attr('required', true);
+	                }
+		      },
+		      error: function(e){
+	              alert('error' + e.responseText);
 	          }
 		  });
 	}
@@ -436,21 +508,22 @@
 		var p_group = $('option:selected', '#TProduct1').attr('class');
 		//Ragu-ragu - follow up
 		if(responseValue == '2'){
-			getReasonList('DOUBT');
+			getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
 			$('.cfol').show();
 			$('ffol').attr('required', true);
 		}
 		//Tidak
 		else if(responseValue == '1'){
-			getReasonList(p_group);
+			//getSelectOption('#reason', '/getReasonList?productGroup='+p_group, 'Reason');
+			getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
 			$('.ctdk').show();
 			$('.ftdk').attr('required', true);
 		}
 		//YA
 		else if(responseValue == '0'){
-			$('.gr'+p_group).show();
-			$('.f'+p_group).attr('required', true);
-			
+			//$('.gr'+p_group).show();
+			//$('.f'+p_group).attr('required', true);
+			getKeytracking();
 		}
 	}
 	
@@ -458,7 +531,6 @@
 	$(document).ready(function(){
 		var $form = $('#blankResponse');
 		  $form.on('submit', function(e) {
-			  alert($('#reason').val());
 		    e.preventDefault();
 		    $.ajax({
 		      url: $form.attr('action'),

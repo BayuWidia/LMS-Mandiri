@@ -132,6 +132,14 @@ public class Userprofile implements Serializable {
 	@OneToMany(mappedBy="userprofile")
 	private List<TLoginHistory> TLoginHistories;
 
+	//bi-directional many-to-one association to TOffer
+	@OneToMany(mappedBy="userprofile1")
+	private List<TOffer> TOffers1;
+
+	//bi-directional many-to-one association to TOffer
+	@OneToMany(mappedBy="userprofile2")
+	private List<TOffer> TOffers2;
+
 	public Userprofile() {
 	}
 
@@ -631,6 +639,50 @@ public class Userprofile implements Serializable {
 		TLoginHistory.setUserprofile(null);
 
 		return TLoginHistory;
+	}
+
+	public List<TOffer> getTOffers1() {
+		return this.TOffers1;
+	}
+
+	public void setTOffers1(List<TOffer> TOffers1) {
+		this.TOffers1 = TOffers1;
+	}
+
+	public TOffer addTOffers1(TOffer TOffers1) {
+		getTOffers1().add(TOffers1);
+		TOffers1.setUserprofile1(this);
+
+		return TOffers1;
+	}
+
+	public TOffer removeTOffers1(TOffer TOffers1) {
+		getTOffers1().remove(TOffers1);
+		TOffers1.setUserprofile1(null);
+
+		return TOffers1;
+	}
+
+	public List<TOffer> getTOffers2() {
+		return this.TOffers2;
+	}
+
+	public void setTOffers2(List<TOffer> TOffers2) {
+		this.TOffers2 = TOffers2;
+	}
+
+	public TOffer addTOffers2(TOffer TOffers2) {
+		getTOffers2().add(TOffers2);
+		TOffers2.setUserprofile2(this);
+
+		return TOffers2;
+	}
+
+	public TOffer removeTOffers2(TOffer TOffers2) {
+		getTOffers2().remove(TOffers2);
+		TOffers2.setUserprofile2(null);
+
+		return TOffers2;
 	}
 
 }

@@ -4,21 +4,21 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
- * The persistent class for the t_cpo database table.
+ * The persistent class for the t_offer database table.
  * 
  */
 @Entity
-@Table(name="t_cpo")
-@NamedQuery(name="TCpo.findAll", query="SELECT t FROM TCpo t")
-public class TCpo implements Serializable {
+@Table(name="t_offer")
+@NamedQuery(name="TOffer.findAll", query="SELECT t FROM TOffer t")
+public class TOffer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="cpo_id")
-	private String cpoId;
+	private String id;
 
 	private String area;
 
@@ -38,9 +38,6 @@ public class TCpo implements Serializable {
 
 	@Column(name="indicative_limit")
 	private BigDecimal indicativeLimit;
-
-	@Column(name="is_followed_up")
-	private Boolean isFollowedUp;
 
 	private Boolean ishunter;
 
@@ -64,12 +61,14 @@ public class TCpo implements Serializable {
 	@Column(name="source_type")
 	private Integer sourceType;
 
-	@Column(name="sub_product_id")
-	private String subProductId;
+	private Integer status;
+
+	//bi-directional many-to-one association to TCustomerResponse
+	@OneToMany(mappedBy="TOffer")
+	private List<TCustomerResponse> TCustomerResponses;
 
 	//bi-directional many-to-one association to Program
 	@ManyToOne
-	@JoinColumn(name="program_id")
 	private Program program;
 
 	//bi-directional many-to-one association to TCpi
@@ -92,15 +91,15 @@ public class TCpo implements Serializable {
 	@JoinColumn(name="modifiedby")
 	private Userprofile userprofile2;
 
-	public TCpo() {
+	public TOffer() {
 	}
 
-	public String getCpoId() {
-		return this.cpoId;
+	public String getId() {
+		return this.id;
 	}
 
-	public void setCpoId(String cpoId) {
-		this.cpoId = cpoId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getArea() {
@@ -165,14 +164,6 @@ public class TCpo implements Serializable {
 
 	public void setIndicativeLimit(BigDecimal indicativeLimit) {
 		this.indicativeLimit = indicativeLimit;
-	}
-
-	public Boolean getIsFollowedUp() {
-		return this.isFollowedUp;
-	}
-
-	public void setIsFollowedUp(Boolean isFollowedUp) {
-		this.isFollowedUp = isFollowedUp;
 	}
 
 	public Boolean getIshunter() {
@@ -255,12 +246,34 @@ public class TCpo implements Serializable {
 		this.sourceType = sourceType;
 	}
 
-	public String getSubProductId() {
-		return this.subProductId;
+	public Integer getStatus() {
+		return this.status;
 	}
 
-	public void setSubProductId(String subProductId) {
-		this.subProductId = subProductId;
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public List<TCustomerResponse> getTCustomerResponses() {
+		return this.TCustomerResponses;
+	}
+
+	public void setTCustomerResponses(List<TCustomerResponse> TCustomerResponses) {
+		this.TCustomerResponses = TCustomerResponses;
+	}
+
+	public TCustomerResponse addTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().add(TCustomerRespons);
+		TCustomerRespons.setTOffer(this);
+
+		return TCustomerRespons;
+	}
+
+	public TCustomerResponse removeTCustomerRespons(TCustomerResponse TCustomerRespons) {
+		getTCustomerResponses().remove(TCustomerRespons);
+		TCustomerRespons.setTOffer(null);
+
+		return TCustomerRespons;
 	}
 
 	public Program getProgram() {

@@ -29,6 +29,9 @@ public class TCph implements Serializable {
 
 	private Timestamp createdon;
 
+	@Column(name="date_close_account")
+	private Timestamp dateCloseAccount;
+
 	@Column(name="date_open_account")
 	private Timestamp dateOpenAccount;
 
@@ -95,6 +98,14 @@ public class TCph implements Serializable {
 
 	public void setCreatedon(Timestamp createdon) {
 		this.createdon = createdon;
+	}
+
+	public Timestamp getDateCloseAccount() {
+		return this.dateCloseAccount;
+	}
+
+	public void setDateCloseAccount(Timestamp dateCloseAccount) {
+		this.dateCloseAccount = dateCloseAccount;
 	}
 
 	public Timestamp getDateOpenAccount() {

@@ -53,6 +53,9 @@ public class TCustomerResponse implements Serializable {
 
 	private String email;
 
+	@Column(name="embose_dt")
+	private String emboseDt;
+
 	@Column(name="follow_up")
 	private String followUp;
 
@@ -73,25 +76,9 @@ public class TCustomerResponse implements Serializable {
 	private String polisnumber;
 
 	@DateTimeFormat(pattern = "dd-MM-yy HH:mm")
-	@Column(nullable = false, columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
+	@Column(columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date reminder;
-
-	@Override
-	public String toString() {
-		return "TCustomerResponse [customerResponseId=" + customerResponseId + ", accountNumber=" + accountNumber
-				+ ", actualEdmId=" + actualEdmId + ", amount=" + amount + ", companyid=" + companyid + ", createdon="
-				+ createdon + ", customerComment=" + customerComment + ", cycleNextId=" + cycleNextId + ", cycleNowId="
-				+ cycleNowId + ", dataType=" + dataType + ", dobisnis=" + dobisnis + ", durasi=" + durasi + ", email="
-				+ email + ", followUp=" + followUp + ", groupcrId=" + groupcrId + ", modifiedon=" + modifiedon
-				+ ", nik=" + nik + ", npwp=" + npwp + ", offeringDate=" + offeringDate + ", phone=" + phone
-				+ ", polisnumber=" + polisnumber + ", reminder=" + reminder + ", responseCode=" + responseCode
-				+ ", responseResult=" + responseResult + ", responseResultDesc=" + responseResultDesc + ", sequence="
-				+ sequence + ", sourceType=" + sourceType + ", status=" + status + ", subResponseCode="
-				+ subResponseCode + ", tanggalSales=" + tanggalSales + ", reason=" + reason + ", TCpi=" + TCpi
-				+ ", TProduct1=" + TProduct1 + ", userprofile1=" + userprofile1 + ", userprofile2=" + userprofile2
-				+ ", userprofile3=" + userprofile3 + ", TProduct2=" + TProduct2 + "]";
-	}
 
 	@Column(name="response_code")
 	private String responseCode;
@@ -107,6 +94,8 @@ public class TCustomerResponse implements Serializable {
 	@Column(name="source_type")
 	private Integer sourceType;
 
+	private String ssid;
+
 	private Boolean status;
 
 	@Column(name="sub_response_code")
@@ -114,6 +103,10 @@ public class TCustomerResponse implements Serializable {
 
 	@Column(name="tanggal_sales")
 	private Timestamp tanggalSales;
+
+	//bi-directional many-to-one association to Program
+	@ManyToOne
+	private Program program;
 
 	//bi-directional many-to-one association to Reason
 	@ManyToOne
@@ -125,10 +118,20 @@ public class TCustomerResponse implements Serializable {
 	@JoinColumn(name="cif")
 	private TCpi TCpi;
 
+	//bi-directional many-to-one association to TOffer
+	@ManyToOne
+	@JoinColumn(name="t_offer_id")
+	private TOffer TOffer;
+
 	//bi-directional many-to-one association to TProduct
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private TProduct TProduct1;
+
+	//bi-directional many-to-one association to TProduct
+	@ManyToOne
+	@JoinColumn(name="subproduct_id")
+	private TProduct TProduct2;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
@@ -144,11 +147,6 @@ public class TCustomerResponse implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private Userprofile userprofile3;
-
-	//bi-directional many-to-one association to TProduct
-	@ManyToOne
-	@JoinColumn(name="subproduct_id")
-	private TProduct TProduct2;
 
 	public TCustomerResponse() {
 	}
@@ -255,6 +253,14 @@ public class TCustomerResponse implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getEmboseDt() {
+		return this.emboseDt;
+	}
+
+	public void setEmboseDt(String emboseDt) {
+		this.emboseDt = emboseDt;
 	}
 
 	public String getFollowUp() {
@@ -369,6 +375,14 @@ public class TCustomerResponse implements Serializable {
 		this.sourceType = sourceType;
 	}
 
+	public String getSsid() {
+		return this.ssid;
+	}
+
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
+	}
+
 	public Boolean getStatus() {
 		return this.status;
 	}
@@ -393,6 +407,14 @@ public class TCustomerResponse implements Serializable {
 		this.tanggalSales = tanggalSales;
 	}
 
+	public Program getProgram() {
+		return this.program;
+	}
+
+	public void setProgram(Program program) {
+		this.program = program;
+	}
+
 	public Reason getReason() {
 		return this.reason;
 	}
@@ -409,12 +431,28 @@ public class TCustomerResponse implements Serializable {
 		this.TCpi = TCpi;
 	}
 
+	public TOffer getTOffer() {
+		return this.TOffer;
+	}
+
+	public void setTOffer(TOffer TOffer) {
+		this.TOffer = TOffer;
+	}
+
 	public TProduct getTProduct1() {
 		return this.TProduct1;
 	}
 
 	public void setTProduct1(TProduct TProduct1) {
 		this.TProduct1 = TProduct1;
+	}
+
+	public TProduct getTProduct2() {
+		return this.TProduct2;
+	}
+
+	public void setTProduct2(TProduct TProduct2) {
+		this.TProduct2 = TProduct2;
 	}
 
 	public Userprofile getUserprofile1() {
@@ -439,14 +477,6 @@ public class TCustomerResponse implements Serializable {
 
 	public void setUserprofile3(Userprofile userprofile3) {
 		this.userprofile3 = userprofile3;
-	}
-
-	public TProduct getTProduct2() {
-		return this.TProduct2;
-	}
-
-	public void setTProduct2(TProduct TProduct2) {
-		this.TProduct2 = TProduct2;
 	}
 
 }

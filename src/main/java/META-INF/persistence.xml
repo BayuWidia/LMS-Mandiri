@@ -12,5 +12,9 @@
 		<class>com.mandiri.model.TOccupation</class>
 		<class>com.mandiri.model.TProduct</class>
 		<class>com.mandiri.model.Userprofile</class>
+		<class>com.mandiri.model.Program</class>
+		<class>com.mandiri.model.GroupProduct</class>
+		<class>com.mandiri.model.Keytracking</class>
+		<class>com.mandiri.model.TOffer</class>
 	</persistence-unit>
 </persistence>

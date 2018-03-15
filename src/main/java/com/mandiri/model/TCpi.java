@@ -31,7 +31,7 @@ public class TCpi implements Serializable {
 	private String address;
 
 	@DateTimeFormat(pattern = "dd-MM-yy HH:mm")
-	@Column(name="birth_date", nullable = false, columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
+	@Column(name="birth_date", columnDefinition= "TIMESTAMP WITHOUT TIME ZONE")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date birthDate;
 
@@ -102,6 +102,10 @@ public class TCpi implements Serializable {
 	//bi-directional many-to-one association to TCustomerResponse
 	@OneToMany(mappedBy="TCpi")
 	private List<TCustomerResponse> TCustomerResponses;
+
+	//bi-directional many-to-one association to TOffer
+	@OneToMany(mappedBy="TCpi")
+	private List<TOffer> TOffers;
 
 	public TCpi() {
 	}
@@ -370,6 +374,28 @@ public class TCpi implements Serializable {
 		TCustomerRespons.setTCpi(null);
 
 		return TCustomerRespons;
+	}
+
+	public List<TOffer> getTOffers() {
+		return this.TOffers;
+	}
+
+	public void setTOffers(List<TOffer> TOffers) {
+		this.TOffers = TOffers;
+	}
+
+	public TOffer addTOffer(TOffer TOffer) {
+		getTOffers().add(TOffer);
+		TOffer.setTCpi(this);
+
+		return TOffer;
+	}
+
+	public TOffer removeTOffer(TOffer TOffer) {
+		getTOffers().remove(TOffer);
+		TOffer.setTCpi(null);
+
+		return TOffer;
 	}
 
 }
