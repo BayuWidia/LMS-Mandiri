@@ -99,13 +99,12 @@ public class DashboardController {
 		
 		String strKategori = StringUtil.nvl(dashboardFilter.getKategori(), "");
 		String strPencarian = StringUtil.nvl(dashboardFilter.getPencarian(), "");
-		
-		
-		if (strKategori == "") {
-			model.addAttribute("messageStrKategori", "Kategori Harus Diisi");
-		} else if (strPencarian == "") {
-			model.addAttribute("messageStrPencarian", "Pencarian Harus Diisi");
-		} else {
+
+//		if (strKategori == "") {
+//			model.addAttribute("messageStrKategori", "Kategori Harus Diisi");
+//		} else if (strPencarian == "") {
+//			model.addAttribute("messageStrPencarian", "Pencarian Harus Diisi");
+//		} else {
 			List<DashboardFilter> listData = dashboardService.listSearchByParam(strKategori, strPencarian);
 			System.out.println("listData ::: "+listData);
 			if (listData.size() == 0) {
@@ -113,7 +112,7 @@ public class DashboardController {
 			}
 			model.addAttribute("listDatas",listData);
 			
-		}
+//		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());

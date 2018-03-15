@@ -30,43 +30,77 @@
 						</div>
 					</div>
 					<!-- /.page-header -->
+				
 					<div class="row">
 						<div class="col-xs-12">
-							<div class="widget-box widget-color-blue" style="border-style: dotted; border-radius: 5px">
-								<div class="widget-body">
-									<div class="widget-main">
-										<form class="form-horizontal" th:action="@{/dashboard-search}"
-										th:object="${dashboardFilter}" method="POST">
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pilih Kategori </label>
-												<div class="col-sm-9">
-													<select class="form-control" id="form-field-select-1" th:field="*{kategori}" required="required">
-														<option value="">--Pilih--</option>
-														<option value="NIK">NIK</option>
-														<option value="PHONE">No Telp</option>
-														<option value="CIF">CIF</option>
-														<option value="NAME">NAMA</option>
-														<option value="NOREK">NO REKENING</option>
-														<option value="NOKAR">NO KARTU</option>
+							<div class="widget-body">
+								<div class="widget-main">
+									<form class="form-search" th:action="@{/dashboard-search}"
+									th:object="${dashboardFilter}" method="POST">
+										<div class="row">
+											<div class="col-xs-12 col-sm-10">
+												<div class="input-group">
+													<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
+													<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
+														<option value="NIK" id="flag_nik">NIK</option>
+														<option value="PHONE" id="flag_phone">No Telp</option>
+														<option value="CIF" id="flag_cif">CIF</option>
+														<option value="NAME" id="flag_name">NAMA</option>
+														<option value="NOREK" id="flag_norek">NO REKENING</option>
+														<option value="NOKAR" id="flag_nokar">NO KARTU</option>
 													</select>
+													
+													<span class="input-group-btn">
+														<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-purple btn-sm btn-outline-secondary dropdown-toggle">
+															<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+															Cari
+														</button>
+														<div class="dropdown-menu">
+													      <button type="submit" class="dropdown-item btn_nik" style="margin-left:8%">NIK</button><br/>
+													      <button type="submit" class="dropdown-item btn_phone" style="margin-left:8%">No Telp</button><br/>
+													      <button type="submit" class="dropdown-item btn_cif" style="margin-left:8%">CIF</button><br/>
+													      <button type="submit" class="dropdown-item btn_name" style="margin-left:8%">NAMA</button><br/>
+													      <button type="submit" class="dropdown-item btn_norek" style="margin-left:8%">NO REKENING</button><br/>
+													      <button type="submit" class="dropdown-item btn_nokar" style="margin-left:8%">NO KARTU</button><br/>
+													    </div>
+													</span>
 												</div>
-												<label th:text="${messageStrKategori}" class="col-md-8 control-label text-red"></label>
+												<div class="hr"></div>
 											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pencarian </label>
-												<div class="col-sm-9">
-													<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}" required="required"/>
-												</div>
-												<label th:text="${messageStrPencarian}" class="col-md-8 control-label text-red"></label>
+										</div>
+									</form>
+								
+									<!-- <form class="form-horizontal" th:action="@{/dashboard-search}"
+									th:object="${dashboardFilter}" method="POST">
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pilih Kategori </label>
+											<div class="col-sm-9">
+												<select class="form-control" id="form-field-select-1" th:field="*{kategori}" required="required">
+													<option value="">--Pilih--</option>
+													<option value="NIK">NIK</option>
+													<option value="PHONE">No Telp</option>
+													<option value="CIF">CIF</option>
+													<option value="NAME">NAMA</option>
+													<option value="NOREK">NO REKENING</option>
+													<option value="NOKAR">NO KARTU</option>
+												</select>
 											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"></label>
-												<div class="col-sm-9">
-													<button type="submit" class="btn btn-info btn-block">Cari</button>
-												</div>
+											<label th:text="${messageStrKategori}" class="col-md-8 control-label text-red"></label>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pencarian </label>
+											<div class="col-sm-9">
+												<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}" required="required"/>
 											</div>
-										</form>
-									</div>
+											<label th:text="${messageStrPencarian}" class="col-md-8 control-label text-red"></label>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"></label>
+											<div class="col-sm-9">
+												<button type="submit" class="btn btn-info btn-block">Cari</button>
+											</div>
+										</div>
+									</form> -->
 								</div>
 							</div>
 						</div>
@@ -112,7 +146,7 @@
 							</div>
 							<!-- PAGE CONTENT ENDS -->
 							<br>
-							<div class="inline middle blue bigger-110" style="padding-left: 50%">Loading Data ...</div>
+							<!-- <div class="inline middle blue bigger-110" style="padding-left: 50%">Loading Data ...</div> -->
 						</div>
 						<!-- /.col -->
 						<div class="col-xs-12 col-sm-4 widget-container-col">
@@ -172,8 +206,8 @@
 								Submit</a>
 								<div class="space-10"></div>
 							</div>
-							<div class="pull-center">
-								<span class="blue bolder">Load more.. </span>(Tidak ada
+							<div class="pull-center" th:if="${listUserActivityLeft} == null">
+								<span class="blue bolder"></span>(Tidak ada
 								reminder)
 							</div>
 
@@ -212,6 +246,49 @@
 		 window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
 		</script>
 	<![endif]-->
+	<script type="text/javascript">
+		$('.kategori_hidden').hide();
+		function resetKategori(){
+			$('#flag_nik').attr('selected', false);
+			$('#flag_phone').attr('selected', false);
+			$('#flag_cif').attr('selected', false);
+			$('#flag_name').attr('selected', false);
+			$('#flag_norek').attr('selected', false);
+			$('#flag_nokar').attr('selected', false);
+		}
+		
+		$('.btn_nik').click(function(){
+			resetKategori();
+			$('#flag_nik').attr('selected', true);
+		});
+		
+		$('.btn_phone').click(function(){
+			resetKategori();
+			$('#flag_phone').attr('selected', true);
+		});
+		
+		$('.btn_cif').click(function(){
+			resetKategori();
+			$('#flag_cif').attr('selected', true);
+		});
+		
+		$('.btn_name').click(function(){
+			resetKategori();
+			$('#flag_name').attr('selected', true);
+		});
+		
+		$('.btn_norek').click(function(){
+			resetKategori();
+			$('#flag_norek').attr('selected', true);
+		});
+		
+		$('.btn_nokar').click(function(){
+			resetKategori();
+			$('#flag_nokar').attr('selected', true);
+		});
+	</script>
+	
+	
 	<script type="text/javascript">
 		if ('ontouchstart' in document.documentElement)
 			document

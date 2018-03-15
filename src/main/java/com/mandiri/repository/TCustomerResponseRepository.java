@@ -19,7 +19,7 @@ public interface TCustomerResponseRepository extends JpaRepository<TCustomerResp
 			+ "cus.user_id, cus.status FROM dev_lms.t_customer_response cus "
 			+ "inner join dev_lms.t_cpi cpi on cus.cif = cpi.cif "
 			+ "inner join dev_lms.t_product prod on cus.product_id = prod.product_id "
-			+ "where cus.status = 'f' and CAST(cus.reminder AS DATE) = CURRENT_DATE"
+			+ "where cus.status = 'f' and CAST(cus.reminder AS DATE) = CURRENT_DATE "
 			+ "and (:userNip is null or (:userNip is not null and cus.user_id = :userNip)) order by cus.reminder asc", nativeQuery = true)
 	List<Object[]> findReminderOn(@Param("userNip") String userNip);
 }
