@@ -2,9 +2,6 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 
@@ -23,28 +20,23 @@ public class Program implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to Keytracking
-	@JsonIgnore
 	@OneToMany(mappedBy="program")
 	private List<Keytracking> keytrackings;
 
 	//bi-directional many-to-one association to TProduct
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private TProduct TProduct;
 
 	//bi-directional many-to-one association to TCpo
-	@JsonIgnore
 	@OneToMany(mappedBy="program")
 	private List<TCpo> TCpos;
 
 	//bi-directional many-to-one association to TCustomerResponse
-	@JsonIgnore
 	@OneToMany(mappedBy="program")
 	private List<TCustomerResponse> TCustomerResponses;
 
 	//bi-directional many-to-one association to TOffer
-	@JsonIgnore
 	@OneToMany(mappedBy="program")
 	private List<TOffer> TOffers;
 

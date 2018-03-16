@@ -2,9 +2,6 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 
@@ -36,54 +33,44 @@ public class TProduct implements Serializable {
 	private String subProductName;
 
 	//bi-directional many-to-one association to Campaign
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<Campaign> campaigns;
 
 	//bi-directional many-to-one association to Program
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<Program> programs;
 
 	//bi-directional many-to-one association to TCph
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TCph> TCphs;
 
 	//bi-directional many-to-one association to TCpo
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TCpo> TCpos;
 
 	//bi-directional many-to-one association to TCustomerResponse
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct1")
 	private List<TCustomerResponse> TCustomerResponses1;
 
 	//bi-directional many-to-one association to TCustomerResponse
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct2")
 	private List<TCustomerResponse> TCustomerResponses2;
 
 	//bi-directional many-to-one association to TOffer
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TOffer> TOffers;
 
 	//bi-directional many-to-one association to GroupProduct
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="group_product_id")
 	private GroupProduct groupProduct;
 
 	//bi-directional many-to-one association to TProduct
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="sub_product_id")
 	private TProduct TProduct;
 
 	//bi-directional many-to-one association to TProduct
-	@JsonIgnore
 	@OneToMany(mappedBy="TProduct")
 	private List<TProduct> TProducts;
 

@@ -16,5 +16,8 @@
 		<class>com.mandiri.model.GroupProduct</class>
 		<class>com.mandiri.model.Keytracking</class>
 		<class>com.mandiri.model.TOffer</class>
+		<class>com.mandiri.model.Viewkeytracking</class>
+		<class>com.mandiri.model.Viewproduct</class>
+		<class>com.mandiri.model.Viewprogram</class>
 	</persistence-unit>
 </persistence>
