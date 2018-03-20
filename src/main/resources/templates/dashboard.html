@@ -33,74 +33,61 @@
 				
 					<div class="row">
 						<div class="col-xs-12">
-							<div class="widget-body">
-								<div class="widget-main">
-									<form class="form-search" th:action="@{/dashboard-search}"
-									th:object="${dashboardFilter}" method="POST">
-										<div class="row">
-											<div class="col-xs-12 col-sm-10">
-												<div class="input-group">
-													<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
-													<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
-														<option value="NIK" id="flag_nik">NIK</option>
-														<option value="PHONE" id="flag_phone">No Telp</option>
-														<option value="CIF" id="flag_cif">CIF</option>
-														<option value="NAME" id="flag_name">NAMA</option>
-														<option value="NOREK" id="flag_norek">NO REKENING</option>
-														<option value="NOKAR" id="flag_nokar">NO KARTU</option>
-													</select>
-													
-													<span class="input-group-btn">
-														<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-purple btn-sm btn-outline-secondary dropdown-toggle">
-															<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-															Cari
-														</button>
-														<div class="dropdown-menu">
-													      <button type="submit" class="dropdown-item btn_nik" style="margin-left:8%">NIK</button><br/>
-													      <button type="submit" class="dropdown-item btn_phone" style="margin-left:8%">No Telp</button><br/>
-													      <button type="submit" class="dropdown-item btn_cif" style="margin-left:8%">CIF</button><br/>
-													      <button type="submit" class="dropdown-item btn_name" style="margin-left:8%">NAMA</button><br/>
-													      <button type="submit" class="dropdown-item btn_norek" style="margin-left:8%">NO REKENING</button><br/>
-													      <button type="submit" class="dropdown-item btn_nokar" style="margin-left:8%">NO KARTU</button><br/>
-													    </div>
-													</span>
+							<div class="widget-box" style="color: #DDEEEE; border-radius: 2px" th:if="${userActivityRight} != empty">
+								<div class="widget-body">
+									<div class="widget-main">
+										<form class="form-search" th:action="@{/dashboard-search}"
+										th:object="${dashboardFilter}" method="POST">
+											<div class="row">
+												<div class="col-xs-12 col-sm-10">
+													<div class="input-group">
+														<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
+														<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
+															<option value="NIK" id="flag_nik">NIK</option>
+															<option value="PHONE" id="flag_phone">No Telp</option>
+															<option value="CIF" id="flag_cif">CIF</option>
+															<option value="NAME" id="flag_name">NAMA</option>
+															<option value="NOREK" id="flag_norek">NO REKENING</option>
+															<option value="NOKAR" id="flag_nokar">NO KARTU</option>
+														</select>
+														
+														<span class="input-group-btn">
+															<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-purple btn-sm btn-outline-secondary dropdown-toggle">
+																<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+																Cari
+															</button>
+															<div class="dropdown-menu">
+														      <button type="submit" class="dropdown-item btn_norek" style="margin-left:8%; color:black">
+														      	<i class="ace-icon fa fa-credit-card"></i>
+														      	NO REKENING
+														      </button><br/>
+														      <button type="submit" class="dropdown-item btn_nik" style="margin-left:8%; color:black">
+														      	<i class="ace-icon fa fa-pencil-square-o"></i>
+														      	NIK
+														      </button><br/>
+														      <button type="submit" class="dropdown-item btn_phone" style="margin-left:8%; color:black">
+														      	<i class="ace-icon fa fa-phone"></i>
+														      	No Telp
+														      </button><br/>
+														      <button type="submit" class="dropdown-item btn_cif" style="margin-left:8%; color:black">
+														      	<i class="ace-icon fa fa-eye"></i>
+														      	CIF
+														      </button><br/>
+														      <button type="submit" class="dropdown-item btn_name" style="margin-left:8%; color:black">
+														      	<i class="ace-icon glyphicon glyphicon-user"></i>
+														      	NAMA
+														      </button><br/>
+														      <button type="submit" class="dropdown-item btn_nokar" style="margin-left:8%; color:black">
+														      	<i class="ace-icon fa fa-credit-card"></i>
+														     	NO KARTU
+														     </button><br/>
+														    </div>
+														</span>
+													</div>
 												</div>
-												<div class="hr"></div>
 											</div>
-										</div>
-									</form>
-								
-									<!-- <form class="form-horizontal" th:action="@{/dashboard-search}"
-									th:object="${dashboardFilter}" method="POST">
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pilih Kategori </label>
-											<div class="col-sm-9">
-												<select class="form-control" id="form-field-select-1" th:field="*{kategori}" required="required">
-													<option value="">--Pilih--</option>
-													<option value="NIK">NIK</option>
-													<option value="PHONE">No Telp</option>
-													<option value="CIF">CIF</option>
-													<option value="NAME">NAMA</option>
-													<option value="NOREK">NO REKENING</option>
-													<option value="NOKAR">NO KARTU</option>
-												</select>
-											</div>
-											<label th:text="${messageStrKategori}" class="col-md-8 control-label text-red"></label>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pencarian </label>
-											<div class="col-sm-9">
-												<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}" required="required"/>
-											</div>
-											<label th:text="${messageStrPencarian}" class="col-md-8 control-label text-red"></label>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"></label>
-											<div class="col-sm-9">
-												<button type="submit" class="btn btn-info btn-block">Cari</button>
-											</div>
-										</div>
-									</form> -->
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -109,13 +96,23 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-8 widget-container-col">
 							<!-- PAGE CONTENT BEGINS -->
-
 							<div id="timeline-2">
 								<div class="row">
 									<div class="col-xs-12 col-sm-10 col-sm-offset-1">
 										<div class="timeline-container timeline-style2">
-											<span class="timeline-label"> <b>Time Activities</b>
-											</span>
+											<div class="widget-box" style="color: #DDEEEE; border-radius: 5px" th:if="${userActivityRight} != empty">
+												<label style="padding-left:3%"><b style="color: #276BA6"><h3>Timeline Aktivitas</h3></b></label>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="alert alert-block alert-warning alert-dismissable" th:if="${userActivityRight} == empty">
+														<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+														<h4 class="alert-heading">Belum ada data yang anda cari</h4>
+														<p ></p>
+													</div>
+												</div>
+											</div>
 
 											<div class="timeline-item clearfix" th:each="userActivityRight : ${listUserActivityRights}">
 												<div class="timeline-info">
@@ -211,7 +208,193 @@
 								reminder)
 							</div>
 
-
+							
+							<div class="timeline-container">
+		
+								<div class="timeline-items">
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-info no-hover"></i>
+										</div>
+		
+										<div class="widget-box transparent">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Rabu</h5>
+		
+												<span class="widget-toolbar">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													14 Maret 2017 - 13:59 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="clearfix">
+														<div class="pull-left">
+															<b>Produk</b> <span class="green bolder">"Mandiri Online"</span>.
+															<br />
+															<b>Tanggapan</b> <span class="Red bolder">"Ya"</span>.
+															<br />
+															<b>oleh</b> <span class="Warning bolder">"Mahading"</span>.
+															<br />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-info no-hover"></i>
+										</div>
+		
+										<div class="widget-box transparent">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Kamis</h5>
+		
+												<span class="widget-toolbar">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													15 Maret 2017 - 09:17 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="clearfix">
+														<div class="pull-left">
+															<b>Produk</b> <span class="green bolder">"Reksadana"</span>.
+															<br />
+															<b>Tanggapan</b> <span class="Red bolder">"To Be Follow Up"</span>.
+															<br />
+															<b>oleh</b> <span class="Warning bolder">"Guntur"</span>.
+															<br />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-info no-hover"></i>
+										</div>
+		
+										<div class="widget-box transparent">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Jum'at</h5>
+		
+												<span class="widget-toolbar">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													16 Maret 2017 - 11:00 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="clearfix">
+														<div class="pull-left">
+															<b>Produk</b> <span class="green bolder">"Tabungan Mikro"</span>.
+															<br />
+															<b>Tanggapan</b> <span class="Red bolder">"Tidak"</span>.
+															<br />
+															<b>oleh</b> <span class="Warning bolder">"Sumanto"</span>.
+															<br />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+		
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-primary no-hover"></i>
+										</div>
+		
+										<div class="widget-box widget-color-blue">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Rabu</h5>
+		
+												<span class="widget-toolbar no-border">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													14 Maret 2017 - 13:59 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<b>Produk</b> <span class="green bolder">"Mandiri PowerCash"</span>.
+													<br />
+													<b>Tanggapan</b> <span class="Red bolder">"Tidak"</span>.
+													<br />
+													<b>oleh</b> <span class="Warning bolder">"Elsa"</span>.
+													<br />
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-primary no-hover"></i>
+										</div>
+		
+										<div class="widget-box widget-color-blue">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Kamis</h5>
+		
+												<span class="widget-toolbar no-border">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													15 Maret 2017 - 10:45 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<b>Produk</b> <span class="green bolder">"Tabungan Inventaris"</span>.
+													<br />
+													<b>Tanggapan</b> <span class="Red bolder">"Ya"</span>.
+													<br />
+													<b>oleh</b> <span class="Warning bolder">"Elsa"</span>.
+													<br />
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="timeline-item clearfix">
+										<div class="timeline-info">
+											<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-primary no-hover"></i>
+										</div>
+		
+										<div class="widget-box widget-color-blue">
+											<div class="widget-header widget-header-small">
+												<h5 class="widget-title smaller">Jum'at</h5>
+		
+												<span class="widget-toolbar no-border">
+													<i class="ace-icon fa fa-clock-o bigger-110"></i>
+													16 Maret 2017 - 13:59 
+												</span>
+											</div>
+		
+											<div class="widget-body">
+												<div class="widget-main">
+													<b>Produk</b> <span class="green bolder">"Upgrade Debit Card"</span>.
+													<br />
+													<b>Tanggapan</b> <span class="Red bolder">"To Be Follow Up"</span>.
+													<br />
+													<b>oleh</b> <span class="Warning bolder">"Guntur"</span>.
+													<br />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!-- /.timeline-items -->
+							</div><!-- /.timeline-container -->
+							
+							
 						</div>
 					</div>
 
