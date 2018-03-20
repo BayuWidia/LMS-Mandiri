@@ -129,73 +129,43 @@
 					<!-- /.page-header -->
 					<div class="row">
 						<div class="col-xs-12">
-							<div class="widget-body">
-								<div class="widget-main">
-								<form class="form-search" th:action="@{/dashboard-search}"
-									th:object="${dashboardFilter}" method="POST">
-										<div class="row">
-											<div class="col-xs-12 col-sm-10">
-												<div class="input-group">
-													<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
-													<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
-														<option value="NIK" id="flag_nik">NIK</option>
-														<option value="PHONE" id="flag_phone">No Telp</option>
-														<option value="CIF" id="flag_cif">CIF</option>
-														<option value="NAME" id="flag_name">NAMA</option>
-														<option value="NOREK" id="flag_norek">NO REKENING</option>
-														<option value="NOKAR" id="flag_nokar">NO KARTU</option>
-													</select>
-													
-													<span class="input-group-btn">
-														<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-purple btn-sm btn-outline-secondary dropdown-toggle">
-															<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-															Cari
-														</button>
-														<div class="dropdown-menu">
-													      <button type="submit" class="dropdown-item btn_nik" style="margin-left:8%">NIK</button><br/>
-													      <button type="submit" class="dropdown-item btn_phone" style="margin-left:8%">No Telp</button><br/>
-													      <button type="submit" class="dropdown-item btn_cif" style="margin-left:8%">CIF</button><br/>
-													      <button type="submit" class="dropdown-item btn_name" style="margin-left:8%">NAMA</button><br/>
-													      <button type="submit" class="dropdown-item btn_norek" style="margin-left:8%">NO REKENING</button><br/>
-													      <button type="submit" class="dropdown-item btn_nokar" style="margin-left:8%">NO KARTU</button><br/>
-													    </div>
-													</span>
+							<div class="widget-box" style="color: #DDEEEE; border-radius: 2px" th:if="${userActivityRight} != empty">
+								<div class="widget-body">
+									<div class="widget-main">
+									<form class="form-search" th:action="@{/dashboard-search}"
+										th:object="${dashboardFilter}" method="POST">
+											<div class="row">
+												<div class="col-xs-12 col-sm-10">
+													<div class="input-group">
+														<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
+														<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
+															<option value="NIK" id="flag_nik">NIK</option>
+															<option value="PHONE" id="flag_phone">No Telp</option>
+															<option value="CIF" id="flag_cif">CIF</option>
+															<option value="NAME" id="flag_name">NAMA</option>
+															<option value="NOREK" id="flag_norek">NO REKENING</option>
+															<option value="NOKAR" id="flag_nokar">NO KARTU</option>
+														</select>
+														
+														<span class="input-group-btn">
+															<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-purple btn-sm btn-outline-secondary dropdown-toggle">
+																<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+																Cari
+															</button>
+															<div class="dropdown-menu">
+														      <button type="submit" class="dropdown-item btn_nik" style="margin-left:8%">NIK</button><br/>
+														      <button type="submit" class="dropdown-item btn_phone" style="margin-left:8%">No Telp</button><br/>
+														      <button type="submit" class="dropdown-item btn_cif" style="margin-left:8%">CIF</button><br/>
+														      <button type="submit" class="dropdown-item btn_name" style="margin-left:8%">NAMA</button><br/>
+														      <button type="submit" class="dropdown-item btn_norek" style="margin-left:8%">NO REKENING</button><br/>
+														      <button type="submit" class="dropdown-item btn_nokar" style="margin-left:8%">NO KARTU</button><br/>
+														    </div>
+														</span>
+													</div>
 												</div>
-												<div class="hr"></div>
 											</div>
-										</div>
-									</form>
-									<!-- <form class="form-horizontal" th:action="@{/dashboard-search}"
-									th:object="${dashboardFilter}" method="POST">
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pilih Kategori </label>
-											<div class="col-sm-9">
-												<select class="form-control" id="form-field-select-1" th:field="*{kategori}">
-													<option value="">--Pilih--</option>
-													<option value="NIK">NIK</option>
-													<option value="PHONE">No Telp</option>
-													<option value="CIF">CIF</option>
-													<option value="NAME">NAMA</option>
-													<option value="NOREK">NO REKENING</option>
-													<option value="NOKAR">NO KARTU</option>
-												</select>
-											</div>
-											<label th:text="${messageStrKategori}" class="col-md-8 control-label text-red"></label>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Pencarian </label>
-											<div class="col-sm-9">
-												<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" th:field="*{pencarian}"/>
-											</div>
-											<label th:text="${messageStrPencarian}" class="col-md-8 control-label text-red"></label>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"></label>
-											<div class="col-sm-9">
-												<button type="submit" class="btn btn-info btn-block">Cari</button>
-											</div>
-										</div>
-									</form> -->
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
