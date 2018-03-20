@@ -22,7 +22,7 @@ public class TCpi implements Serializable {
 
 	@Id
 	private String cif;
-
+	
 	public TCpi(String cif) {
 		super();
 		this.cif = cif;

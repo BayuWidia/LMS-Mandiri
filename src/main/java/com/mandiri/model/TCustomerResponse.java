@@ -31,6 +31,8 @@ public class TCustomerResponse implements Serializable {
 
 	private Long amount;
 
+	private String cardno;
+
 	private String companyid;
 
 	private Timestamp createdon;
@@ -181,6 +183,14 @@ public class TCustomerResponse implements Serializable {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+
+	public String getCardno() {
+		return this.cardno;
+	}
+
+	public void setCardno(String cardno) {
+		this.cardno = cardno;
 	}
 
 	public String getCompanyid() {

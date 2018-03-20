@@ -29,15 +29,21 @@ import com.mandiri.model.TCpo;
 import com.mandiri.model.TCustomerResponse;
 import com.mandiri.model.TProduct;
 import com.mandiri.model.Userprofile;
+import com.mandiri.model.Viewkeytracking;
+import com.mandiri.model.Viewproduct;
+import com.mandiri.model.Viewprogram;
 import com.mandiri.repository.CampaignRepository;
 import com.mandiri.repository.GroupProductRepository;
 import com.mandiri.repository.KeytrackingRepository;
+import com.mandiri.repository.ViewProductRepository;
+import com.mandiri.repository.ViewProgramRepository;
 import com.mandiri.repository.ProgramRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.TCpoRepository;
 import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.repository.TProductRepository;
+import com.mandiri.repository.ViewKeytrackingRepository;
 import com.mandiri.repository.ReasonRepository;
 import com.mandiri.repository.TCphRepository;
 //import com.mandiri.repository.StatusRepository;
@@ -76,7 +82,12 @@ public class CustomerController {
 	private KeytrackingRepository keytrackingRepo;
 	@Autowired
 	private ReasonRepository reasonRepo;
-
+	@Autowired
+	private ViewProductRepository viewProductRepo;
+	@Autowired
+	private ViewProgramRepository viewProgramRepo;
+	@Autowired
+	private ViewKeytrackingRepository viewKeytrackingRepo;
 	@Autowired
 	SessionController sessionController;
 	
@@ -169,13 +180,13 @@ public class CustomerController {
 		return listReason;
 	}
 	
-	@GetMapping(value={"/getProductbyGroup"}, produces="application/json")
+	@GetMapping(value={"/getProductbyGroup"})
 	@ResponseBody
-	public List<TProduct> getProductbyGroup(@RequestParam("groupproductid") Long groupproductid){
+	public List<Viewproduct> getProductbyGroup(@RequestParam("groupproductid") Long groupproductid){
 		//System.out.println(groupproductid);
 		
 		//TProduct listProduct = productRepo.findByGroupProduct(groupproductid);
-		List<TProduct> listProduct = productRepo.findbyGroupProductid(groupproductid);
+		List<Viewproduct> listProduct = viewProductRepo.findbyGroupProductid(groupproductid);
 		
 		System.out.println("begok" + listProduct);
 		
@@ -184,21 +195,22 @@ public class CustomerController {
 	
 	@GetMapping(value={"/getProgrambyProduct"})
 	@ResponseBody
-	public List<Program> getProgrambyProduct(@RequestParam("productid") String productid){
+	public List<Viewprogram> getProgrambyProduct(@RequestParam("productid") String productid){
 		System.out.println(productid);
 		
-		List<Program> listProgram = programRepo.findbyProductid(productid);
+		List<Viewprogram> listProgram = viewProgramRepo.findbyProductid(productid);
 		
 		return listProgram;
 	}
 	
 	@GetMapping(value={"/getKeytrackingbyProgram"})
 	@ResponseBody
-	public List<Keytracking> getKeytrackingbyProgram(@RequestParam("programid") Long programid){
+	public List<Viewkeytracking> getKeytrackingbyProgram(@RequestParam("programid") Long programid){
 		System.out.println(programid);
 		
-		List<Keytracking> listKeytracking = keytrackingRepo.findbyProgramid(programid);
+		List<Viewkeytracking> listKeytracking = viewKeytrackingRepo.findbyProgramid(programid);
 		System.out.println("flagkey "+listKeytracking.toString());
+		
 		return listKeytracking;
 	}
 	

@@ -64,6 +64,8 @@ public class TCpo implements Serializable {
 	@Column(name="source_type")
 	private Integer sourceType;
 
+	private Integer status;
+
 	@Column(name="sub_product_id")
 	private String subProductId;
 
@@ -253,6 +255,14 @@ public class TCpo implements Serializable {
 
 	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
+	}
+
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public String getSubProductId() {

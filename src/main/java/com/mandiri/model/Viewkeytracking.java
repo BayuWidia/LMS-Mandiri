@@ -5,12 +5,12 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the keytracking database table.
+ * The persistent class for the viewkeytracking database table.
  * 
  */
 @Entity
-@NamedQuery(name="Keytracking.findAll", query="SELECT k FROM Keytracking k")
-public class Keytracking implements Serializable {
+@NamedQuery(name="Viewkeytracking.findAll", query="SELECT v FROM Viewkeytracking v")
+public class Viewkeytracking implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,11 +21,10 @@ public class Keytracking implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-one association to Program
-	@ManyToOne
-	private Program program;
+	@Column(name="program_id")
+	private Long programId;
 
-	public Keytracking() {
+	public Viewkeytracking() {
 	}
 
 	public Long getId() {
@@ -52,12 +51,12 @@ public class Keytracking implements Serializable {
 		this.name = name;
 	}
 
-	public Program getProgram() {
-		return this.program;
+	public Long getProgramId() {
+		return this.programId;
 	}
 
-	public void setProgram(Program program) {
-		this.program = program;
+	public void setProgramId(Long programId) {
+		this.programId = programId;
 	}
 
 }
