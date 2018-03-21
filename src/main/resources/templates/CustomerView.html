@@ -277,11 +277,13 @@
 									    <tbody>
 									      <tr th:each="newoffer : ${listNewOffer}">
 									        <td class="col-md-2">
-									        	<input type="text" class="form-control text-center" th:value="${newoffer.TProduct.productName}" readonly />
+									        	<input type="text" class="form-control text-center" th:value="${newoffer.TProduct.productName} +' - '+${newoffer.program.name} " readonly />
+<!-- 									        	<em class="text-center" th:text="${newoffer.program.name}"/> -->
 									        </td>
 									        <td class="col-md-1">
 									        	<button th:onclick="|showDetailProduct('${newoffer.TProduct.productId}')|" th:id="'btnDetail_'+${newoffer.TProduct.productId}" type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalDetail">Detail</button>
 									        	<button th:onclick="|showResponseTangggapan('${newoffer.TProduct.productId}', 1)|" th:id="'btnResponse_'+${newoffer.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Tanggapan</button>
+<!-- 									        	<button th:onclick="|showResponseTest('${newoffer.TProduct.groupProduct.id}', '${newoffer.TProduct.productId}', '${newoffer.program.id}' , 1)|" th:id="'btnResponse_'+${newoffer.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Test</button> -->
 									       	</td>
 									      </tr>
 									    </tbody>
@@ -407,6 +409,22 @@
 		$('#TProduct1').trigger("change");
 	};
 
+	function showResponseTest(groupid, produkid, programid, type){
+		alert('group '+ groupid +' produk'+ produkid + 'program' + programid);
+		resetResponseLevel2();
+		$('#divResponseStart').hide();
+		$('#penawaranTitle').html('Tanggapan Customer('+ produkid + ')');
+		
+		$('#pgroup').val(groupid);
+		$('#pgroup').trigger("change");
+		
+		//$('#TProduct1').val(produkid);
+// 		$('#TProduct1').trigger("change");
+		
+// 		$('#program').val(programid);
+// 		$('#program').trigger("change");
+	};
+	
 	//Event button tambah penawaran baru
 	$('#btnPenawaranTambah').click(function(){
 		resetResponseTotal();

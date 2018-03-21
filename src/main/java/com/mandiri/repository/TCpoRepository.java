@@ -11,6 +11,9 @@ import com.mandiri.model.TCpo;
 
 @Repository
 public interface TCpoRepository extends JpaRepository<TCpo, String>{
-	@Query(value = "SELECT c FROM TCpo c where c.TCpi.cif = :cif and c.TProduct.group != 'TRASH' ")
+//	@Query(value = "SELECT c FROM TCpo c where c.TCpi.cif = :cif and c.TProduct.group != 'TRASH' ")
+//	List<TCpo> findbyCif(@Param("cif") String cif);
+	
+	@Query(value = "SELECT c FROM TCpo c where c.TCpi.cif = :cif and c.status = 0 ")
 	List<TCpo> findbyCif(@Param("cif") String cif);
 }

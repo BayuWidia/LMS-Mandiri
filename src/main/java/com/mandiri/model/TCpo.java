@@ -71,7 +71,6 @@ public class TCpo implements Serializable {
 
 	//bi-directional many-to-one association to Program
 	@ManyToOne
-	@JoinColumn(name="program_id")
 	private Program program;
 
 	//bi-directional many-to-one association to TCpi
