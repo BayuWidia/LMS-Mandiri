@@ -42,6 +42,7 @@
 							<form id="blankResponse" name="blankResponse" th:action="@{/responseSave}" th:object="${blankResponse}" method="post">
 								<input type="hidden" th:field="*{customerResponseId}" />
 								<input type="hidden" th:field="*{TCpi.cif}" />
+								<input type="hidden" th:field="*{TOffer.id}" class="TOffer_id" />
 								
 								<div class="form-group required">
 					              <label class="control-label">Product Group</label>
@@ -245,9 +246,9 @@
 								      <td th:text="${customer.nik}"></td>
 								    </tr>
 								    <tr>
-								      <td>Tempat/Tanggal Lahir</td>
+								      <td>Tempat / Tanggal Lahir</td>
 								      <td>:</td>
-								      <td th:text="${customer.birthPlace} +'/' + ${customer.birthDate}"></td>
+								      <td th:text="${customer.birthPlace} +' / ' + ${#dates.format(customer.birthDate, 'dd MMMM yyyy')}"></td>
 								    </tr>
 								    <tr>
 								      <td>Alamat</td>
@@ -277,13 +278,12 @@
 									    <tbody>
 									      <tr th:each="newoffer : ${listNewOffer}">
 									        <td class="col-md-2">
-									        	<input type="text" class="form-control text-center" th:value="${newoffer.TProduct.productName} +' - '+${newoffer.program.name} " readonly />
+									        	<input type="text" class="form-control text-center" th:value="${newoffer.program.TProduct.productName} +' ('+${newoffer.program.name} + ')'" readonly />
 <!-- 									        	<em class="text-center" th:text="${newoffer.program.name}"/> -->
 									        </td>
 									        <td class="col-md-1">
-									        	<button th:onclick="|showDetailProduct('${newoffer.TProduct.productId}')|" th:id="'btnDetail_'+${newoffer.TProduct.productId}" type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalDetail">Detail</button>
-									        	<button th:onclick="|showResponseTangggapan('${newoffer.TProduct.productId}', 1)|" th:id="'btnResponse_'+${newoffer.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Tanggapan</button>
-<!-- 									        	<button th:onclick="|showResponseTest('${newoffer.TProduct.groupProduct.id}', '${newoffer.TProduct.productId}', '${newoffer.program.id}' , 1)|" th:id="'btnResponse_'+${newoffer.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Test</button> -->
+									        	<button th:onclick="|getScriptCpo('${newoffer.cpoId}')|" th:id="'btnDetail_'+${newoffer.script}" type="button" class="btn btn-warning"  data-toggle="modal" data-target="#modalDetail">Detail</button>
+									        	<button th:onclick="|showResponseTanggapan('${newoffer.cpoId}', '${newoffer.program.TProduct.groupProduct.id}', '${newoffer.program.TProduct.productId}', '${newoffer.program.TProduct.productName}', '${newoffer.program.id}', '${newoffer.program.name}')|" th:id="'btnResponse_'+${newoffer.program.TProduct.productId}" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#modalNewPenawaran">Tanggapan</button>
 									       	</td>
 									      </tr>
 									    </tbody>
@@ -294,20 +294,25 @@
 									    <thead class="bg-info text-white">
 									      <tr>
 									        <th class="col-md-1">No.</th>
-									        <th class="col-md-3">Tanggal offer</th>
 									        <th class="col-md-3">Nama Produk</th>
-									        <!-- <th class="col-md-3">Status</th> -->
-									        <th class="col-md-3">Alasan</th>
+									        <th class="col-md-3">Tanggal offer</th>
+									        <th class="col-md-3">Status</th>
+<!-- 									        <th class="col-md-3">Alasan</th> -->
 									      </tr>
 									    </thead>
 									    <tbody>
-			<!-- 						      <tr th:each="offered, iterationStatus : ${offered}"> -->
-			<!-- 						        <td th:text="${iterationStatus.count}">1</td> -->
-			<!-- 						        <td th:text="${offered.createdon}"></td> -->
-			<!-- 						        <td th:text="${offered.product.name}"></td> -->
-			<!-- 						        <td th:text="${offered.status}"></td> -->
-			<!-- 						        <td th:text="${offered.tanggapan}"></td> -->
-			<!-- 						      </tr> -->
+									      <tr th:each="offer, iterationStatus : ${listOffer}">
+									        <td th:text="${iterationStatus.count}">1</td>
+   									        <td th:text="${offer.program.TProduct.productName}+' ('+${offer.program.name} +')'"></td>
+									        <td th:text="${#dates.format(offer.createdon, 'dd MMMM yyyy')}"></td>
+									        <td th:switch="${offer.status}">
+									        	<span th:case="'0'">Ya</span>
+									        	<span th:case="'1'">Tidak</span>
+									        	<span th:case="'2'">To Be Follow Up</span>
+									        	<span th:case="'*'"></span>
+									        </td>
+<!-- 									        <td th:text="${offer.tanggapan}"></td> -->
+									      </tr>
 									    </tbody>
 									  </table>
 								  </div>
@@ -359,6 +364,8 @@
 	
 	//on new penawaran
 	function resetResponseTotal(){
+		clearSelectList('#TProduct1');
+		clearSelectList('#program');
 		resetResponseLevel2();
 		$("#blankResponse")[0].reset();
 		$('#divResponseStart').show();
@@ -400,39 +407,44 @@
 		  });
 	};
 	
-	//show Response form with product already selected
-	function showResponseTangggapan(id, type){
-		resetResponseLevel2();
-		$('#divResponseStart').hide();
-		$('#penawaranTitle').html('Tanggapan Customer('+ id + ')');
-		$('#TProduct1').val(id);
-		$('#TProduct1').trigger("change");
+	//Show popup detail
+	function getScriptCpo(id){
+		$.ajax({
+		      url: '/getScriptCpo?id='+id,
+		      type: 'get',
+		      success: function(response) {
+		    	  $("#modalDetailBody").html(response);
+		      },
+		      error: function(e){
+	              alert(e.responseText);
+	          }
+		  });
 	};
-
-	function showResponseTest(groupid, produkid, programid, type){
-		alert('group '+ groupid +' produk'+ produkid + 'program' + programid);
+	
+	//show Response form with product already selected
+	function showResponseTanggapan(cpoid, groupid, produkid, produkname, programid, programname){
+ 		//alert('group '+ groupid +' produk'+ produkid + 'program' + programid);
+ 		$("input[id='TOffer.id']").val(cpoid);
+ 		
 		resetResponseLevel2();
 		$('#divResponseStart').hide();
-		$('#penawaranTitle').html('Tanggapan Customer('+ produkid + ')');
+		$('#penawaranTitle').html('Tanggapan Customer('+ produkname + ')');
 		
 		$('#pgroup').val(groupid);
-		$('#pgroup').trigger("change");
-		
-		//$('#TProduct1').val(produkid);
-// 		$('#TProduct1').trigger("change");
-		
-// 		$('#program').val(programid);
-// 		$('#program').trigger("change");
+		setSelectList('#TProduct1', produkid, produkname);
+		setSelectList('#program', programid, programname);
 	};
 	
 	//Event button tambah penawaran baru
 	$('#btnPenawaranTambah').click(function(){
+		$("input[id='TOffer.id']").val('');
 		resetResponseTotal();
 		$('#penawaranTitle').html('Tambah Penawaran Baru');
 	});
 	
 	//Populate combo box product
 	$('#pgroup').change(function(){
+		clearSelectList('#program');
 		resetResponseLevel2();
 		$('#program').val('');
 		$('#divResponseStart').show();
@@ -474,6 +486,16 @@
 		}
 	})
 	
+	function setSelectList(selectid, id, name){
+		var html = '<option value="' + id + '" selected="selected" >' + name + '</option>';
+		$(selectid).html(html);
+	}
+	
+	function clearSelectList(selectid){
+		var html = '';
+		$(selectid).html(html);
+	}
+	
 	function getSelectOption(selectid, url, label){
 		$.ajax({
 		      url: url,
@@ -485,7 +507,7 @@
 	                    html += '<option value="' + selectData[i].id + '">'
 	                            + selectData[i].name + '</option>';
 	                }
-	                html += '</option>';
+// 	                html += '</option>';
 	                $(selectid).html(html);
 		      },
 		      error: function(e){

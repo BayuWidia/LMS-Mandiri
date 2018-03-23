@@ -44,10 +44,6 @@ public class TProduct implements Serializable {
 	@OneToMany(mappedBy="TProduct")
 	private List<TCph> TCphs;
 
-	//bi-directional many-to-one association to TCpo
-	@OneToMany(mappedBy="TProduct")
-	private List<TCpo> TCpos;
-
 	//bi-directional many-to-one association to TCustomerResponse
 	@OneToMany(mappedBy="TProduct1")
 	private List<TCustomerResponse> TCustomerResponses1;
@@ -55,10 +51,6 @@ public class TProduct implements Serializable {
 	//bi-directional many-to-one association to TCustomerResponse
 	@OneToMany(mappedBy="TProduct2")
 	private List<TCustomerResponse> TCustomerResponses2;
-
-	//bi-directional many-to-one association to TOffer
-	@OneToMany(mappedBy="TProduct")
-	private List<TOffer> TOffers;
 
 	//bi-directional many-to-one association to GroupProduct
 	@ManyToOne
@@ -191,28 +183,6 @@ public class TProduct implements Serializable {
 		return TCph;
 	}
 
-	public List<TCpo> getTCpos() {
-		return this.TCpos;
-	}
-
-	public void setTCpos(List<TCpo> TCpos) {
-		this.TCpos = TCpos;
-	}
-
-	public TCpo addTCpo(TCpo TCpo) {
-		getTCpos().add(TCpo);
-		TCpo.setTProduct(this);
-
-		return TCpo;
-	}
-
-	public TCpo removeTCpo(TCpo TCpo) {
-		getTCpos().remove(TCpo);
-		TCpo.setTProduct(null);
-
-		return TCpo;
-	}
-
 	public List<TCustomerResponse> getTCustomerResponses1() {
 		return this.TCustomerResponses1;
 	}
@@ -255,28 +225,6 @@ public class TProduct implements Serializable {
 		TCustomerResponses2.setTProduct2(null);
 
 		return TCustomerResponses2;
-	}
-
-	public List<TOffer> getTOffers() {
-		return this.TOffers;
-	}
-
-	public void setTOffers(List<TOffer> TOffers) {
-		this.TOffers = TOffers;
-	}
-
-	public TOffer addTOffer(TOffer TOffer) {
-		getTOffers().add(TOffer);
-		TOffer.setTProduct(this);
-
-		return TOffer;
-	}
-
-	public TOffer removeTOffer(TOffer TOffer) {
-		getTOffers().remove(TOffer);
-		TOffer.setTProduct(null);
-
-		return TOffer;
 	}
 
 	public GroupProduct getGroupProduct() {

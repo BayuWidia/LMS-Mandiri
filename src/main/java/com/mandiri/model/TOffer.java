@@ -50,6 +50,9 @@ public class TOffer implements Serializable {
 
 	private Timestamp offerdate;
 
+	@Column(name="product_id")
+	private String productId;
+
 	private Integer rac;
 
 	private String region;
@@ -64,7 +67,7 @@ public class TOffer implements Serializable {
 	private Integer status;
 
 	//bi-directional many-to-one association to TCustomerResponse
-	@OneToMany(mappedBy="TOffer")
+	@OneToMany(mappedBy="TOffer", cascade = CascadeType.ALL)
 	private List<TCustomerResponse> TCustomerResponses;
 
 	//bi-directional many-to-one association to Program
@@ -75,11 +78,6 @@ public class TOffer implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="cif")
 	private TCpi TCpi;
-
-	//bi-directional many-to-one association to TProduct
-	@ManyToOne
-	@JoinColumn(name="product_id")
-	private TProduct TProduct;
 
 	//bi-directional many-to-one association to Userprofile
 	@ManyToOne
@@ -206,6 +204,14 @@ public class TOffer implements Serializable {
 		this.offerdate = offerdate;
 	}
 
+	public String getProductId() {
+		return this.productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
 	public Integer getRac() {
 		return this.rac;
 	}
@@ -290,14 +296,6 @@ public class TOffer implements Serializable {
 
 	public void setTCpi(TCpi TCpi) {
 		this.TCpi = TCpi;
-	}
-
-	public TProduct getTProduct() {
-		return this.TProduct;
-	}
-
-	public void setTProduct(TProduct TProduct) {
-		this.TProduct = TProduct;
 	}
 
 	public Userprofile getUserprofile1() {

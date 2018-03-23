@@ -1,14 +1,19 @@
 package com.mandiri.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +32,7 @@ import com.mandiri.model.TCph;
 import com.mandiri.model.TCpi;
 import com.mandiri.model.TCpo;
 import com.mandiri.model.TCustomerResponse;
+import com.mandiri.model.TOffer;
 import com.mandiri.model.TProduct;
 import com.mandiri.model.Userprofile;
 import com.mandiri.model.Viewkeytracking;
@@ -43,6 +49,7 @@ import com.mandiri.repository.TCpiRepository;
 import com.mandiri.repository.TCpoRepository;
 import com.mandiri.repository.TCustomerResponseRepository;
 import com.mandiri.repository.TProductRepository;
+import com.mandiri.repository.TOfferRepository;
 import com.mandiri.repository.ViewKeytrackingRepository;
 import com.mandiri.repository.ReasonRepository;
 import com.mandiri.repository.TCphRepository;
@@ -54,10 +61,17 @@ import com.mandiri.util.GenerateUUID;
 import ch.qos.logback.core.net.SyslogOutputStream;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 @Controller
 public class CustomerController {
@@ -83,6 +97,8 @@ public class CustomerController {
 	@Autowired
 	private ReasonRepository reasonRepo;
 	@Autowired
+	private TOfferRepository tofferRepo;
+	@Autowired
 	private ViewProductRepository viewProductRepo;
 	@Autowired
 	private ViewProgramRepository viewProgramRepo;
@@ -90,11 +106,22 @@ public class CustomerController {
 	private ViewKeytrackingRepository viewKeytrackingRepo;
 	@Autowired
 	SessionController sessionController;
-	
+//	@Autowired
+//	private ResponseService responseService;
+
 	@Autowired
 	private TCpiService customerService;
 	
 	//Long cif = 1111L;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy HH:mm");
+	    dateFormat.setLenient(false);
+
+	    // true passed to CustomDateEditor constructor means convert empty String to null
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	}
 	
 	@GetMapping(value={"/customer-view/{cif}"})
 	public String customerEdit(@PathVariable String cif, Model model, HttpSession session){
@@ -111,10 +138,14 @@ public class CustomerController {
 		customer = customerRepo.findbyCif(cif);
 		model.addAttribute("customer", customer);
 		
-		//Get TCpo - offer
+		//Get TCpo - uploaded offer
 		List<TCpo> listNewOffer = cpoRepo.findbyCif(cif);
-		System.out.println("NEW OFFER : "+listNewOffer.size());
 		model.addAttribute("listNewOffer", listNewOffer);
+		
+		//Get Offer - transaction offer
+		List<TOffer> listOffer = tofferRepo.findbyCif(cif);
+		System.out.println("NEW OFFER : "+listOffer.size());
+		model.addAttribute("listOffer", listOffer);
 		
 		List<TCustomerResponse> listOfferd = tresponseRepo.findbyCif(cif);
 		model.addAttribute("listOfferd", listOfferd);
@@ -122,10 +153,6 @@ public class CustomerController {
 		//owned product by cif
 		List<TCph> listOwned = cphRepo.findbyCif(cif);
 		model.addAttribute("listOwned", listOwned);
-		
-		//Select list product
-//		List<TProduct> listProduk = productRepo.findExceptTrash();
-//		model.addAttribute("listProduk", listProduk);
 		
 		//Select list groupproduct
 		List<GroupProduct> listGroupProduct = pgroupRepo.findAll();
@@ -143,22 +170,112 @@ public class CustomerController {
 		return "CustomerView";
 	}
 	
+	@Transactional
 	@PostMapping(value={"/responseSave"})
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
-		System.out.println(blankResponse.toString());
-		blankResponse.setCustomerResponseId(GenerateUUID.getUUID());
 		
+		String returnMessage = "";
+		
+		blankResponse.setCustomerResponseId(GenerateUUID.getUUID());
 		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));
 		Userprofile createdby = new Userprofile();
 		createdby.setNip("2222222223");
 		blankResponse.setUserprofile1(createdby);
 		
+		System.out.println("blank response " +blankResponse.toString());
+		
 	    String json = httpEntity.getBody();
-		System.out.println(json);
+		System.out.println("json string"+ json);
 		
-		//tresponseRepo.save(blankResponse);
+		//CREATE NEW OFFER and TCustomerResponse  & update cpo status to 1
+		//GET selected tCpo records
+		String cpoid = blankResponse.getTOffer().getId();
+		TCpo cpo = new TCpo();
+		TOffer newOffer = new TOffer();
+		String id_newOffer = GenerateUUID.getUUID();
+		newOffer.setId(id_newOffer);
 		
-		return "test";
+		if(blankResponse.getTOffer().getId() != null && blankResponse.getTOffer().getId() != ""){
+			cpo = cpoRepo.findbyId(cpoid);
+			
+			//SET tcpo records to new offer
+			newOffer.setArea(cpo.getArea());
+			newOffer.setBranchCategory(cpo.getBranchCategory());
+			newOffer.setBranchProduct(cpo.getBranchProduct());
+			newOffer.setChannel(cpo.getChannel());
+			newOffer.setCreatedon(new Timestamp(System.currentTimeMillis()));
+			newOffer.setExpirydate(cpo.getExpirydate());
+			newOffer.setIncome(cpo.getIncome());
+			newOffer.setIndicativeLimit(cpo.getIndicativeLimit());
+			newOffer.setIshunter(false);
+			newOffer.setModelId(cpo.getModelId());
+			//newOffer.setModifiedon(cpo.getModifiedon());
+			newOffer.setNominal(cpo.getNominal());
+			newOffer.setOfferdate(new Timestamp(System.currentTimeMillis()));
+			newOffer.setProductId(cpo.getProductId());
+			newOffer.setProgram(cpo.getProgram());
+			newOffer.setRac(cpo.getRac());
+			newOffer.setRegion(cpo.getRegion());
+			newOffer.setScript(cpo.getScript());
+			newOffer.setSequence(cpo.getSequence());
+			newOffer.setSourceType(cpo.getSourceType());
+			newOffer.setStatus(blankResponse.getResponseResult());
+			newOffer.setTCpi(cpo.getTCpi());
+			//Save single customer response
+			blankResponse.setTOffer(newOffer);
+			List<TCustomerResponse> listResponse = new ArrayList<TCustomerResponse>();
+			listResponse.add(blankResponse);
+			newOffer.setTCustomerResponses(listResponse);
+			newOffer.setUserprofile1(blankResponse.getUserprofile1());
+		}
+		else{
+			//newOffer.setArea(cpo.getArea());
+			//newOffer.setBranchCategory(cpo.getBranchCategory());
+			//newOffer.setBranchProduct(cpo.getBranchProduct());
+			//newOffer.setChannel(cpo.getChannel());
+			newOffer.setCreatedon(new Timestamp(System.currentTimeMillis()));
+			//newOffer.setExpirydate(cpo.getExpirydate());
+			//newOffer.setIncome(cpo.getIncome());
+			//newOffer.setIndicativeLimit(cpo.getIndicativeLimit());
+			newOffer.setIshunter(false);
+			//newOffer.setModelId(cpo.getModelId());
+			//newOffer.setModifiedon(cpo.getModifiedon());
+			//newOffer.setNominal(cpo.getNominal());
+			newOffer.setOfferdate(new Timestamp(System.currentTimeMillis()));
+			newOffer.setProductId(blankResponse.getTProduct1().getProductId());
+			newOffer.setProgram(blankResponse.getProgram());
+			//newOffer.setRac(cpo.getRac());
+			//newOffer.setRegion(cpo.getRegion());
+			//newOffer.setScript(cpo.getScript());
+			//newOffer.setSequence(cpo.getSequence());
+			//newOffer.setSourceType(cpo.getSourceType());
+			newOffer.setStatus(blankResponse.getResponseResult());
+			newOffer.setTCpi(blankResponse.getTCpi());
+			//Save single customer response
+			blankResponse.setTOffer(newOffer);
+			List<TCustomerResponse> listResponse = new ArrayList<TCustomerResponse>();
+			listResponse.add(blankResponse);
+			newOffer.setTCustomerResponses(listResponse);
+			newOffer.setUserprofile1(blankResponse.getUserprofile1());
+		}
+		 try {
+			 if(cpoid != null || cpoid != ""){
+				 cpoRepo.setFlagTcpo(cpo.getCpoId());
+			 }
+			 tofferRepo.save(newOffer);
+			 //tresponseRepo.save(blankResponse);
+		  } catch (Exception ex) {
+			  System.out.println(ex.getStackTrace());
+		    // trigger rollback programmatically
+		    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		    returnMessage = "Tangggapan tidak berhasil disimpan";
+		  }
+		
+		 returnMessage = "Tanggapan berhasil disimpan";
+		
+		 System.out.println("TCpoid = "+cpo.getCpoId()+" / Offerid = "+ newOffer.getId());
+		 
+		return returnMessage;
 	}
 
 	@GetMapping(value={"/getDetailProduct"})
@@ -168,6 +285,15 @@ public class CustomerController {
 		prod = productRepo.findbyId(id);
 		
 		return prod.getDetail();
+	}
+	
+	@GetMapping(value={"/getScriptCpo"})
+	@ResponseBody
+	public String getScriptCpo(@RequestParam("id") String id){
+		TCpo cpo = new TCpo();
+		cpo = cpoRepo.findbyId(id);
+		
+		return cpo.getScript();
 	}
 	
 	@GetMapping(value={"/getReasonList"})
