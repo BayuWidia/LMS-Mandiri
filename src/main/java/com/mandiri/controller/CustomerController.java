@@ -147,8 +147,8 @@ public class CustomerController {
 		System.out.println("NEW OFFER : "+listOffer.size());
 		model.addAttribute("listOffer", listOffer);
 		
-		List<TCustomerResponse> listOfferd = tresponseRepo.findbyCif(cif);
-		model.addAttribute("listOfferd", listOfferd);
+		List<TCustomerResponse> listResponse = tresponseRepo.findbyCif(cif);
+		model.addAttribute("listResponse", listResponse);
 		
 		//owned product by cif
 		List<TCph> listOwned = cphRepo.findbyCif(cif);
