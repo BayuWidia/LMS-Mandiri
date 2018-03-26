@@ -53,6 +53,7 @@ import com.mandiri.repository.TOfferRepository;
 import com.mandiri.repository.ViewKeytrackingRepository;
 import com.mandiri.repository.ReasonRepository;
 import com.mandiri.repository.TCphRepository;
+import com.mandiri.service.ResponseService;
 //import com.mandiri.repository.StatusRepository;
 import com.mandiri.service.TCpiService;
 import com.mandiri.service.UserProfileService;
@@ -106,8 +107,8 @@ public class CustomerController {
 	private ViewKeytrackingRepository viewKeytrackingRepo;
 	@Autowired
 	SessionController sessionController;
-//	@Autowired
-//	private ResponseService responseService;
+	@Autowired
+	private ResponseService responseService;
 
 	@Autowired
 	private TCpiService customerService;
@@ -170,112 +171,18 @@ public class CustomerController {
 		return "CustomerView";
 	}
 	
-	@Transactional
 	@PostMapping(value={"/responseSave"})
 	public @ResponseBody String responseSave(@ModelAttribute(value="blankResponse") TCustomerResponse blankResponse, HttpEntity<String> httpEntity) {
-		
-		String returnMessage = "";
-		
-		blankResponse.setCustomerResponseId(GenerateUUID.getUUID());
-		blankResponse.setCreatedon(new Timestamp(System.currentTimeMillis()));
-		Userprofile createdby = new Userprofile();
-		createdby.setNip("2222222223");
-		blankResponse.setUserprofile1(createdby);
-		
+		//Debugging
 		System.out.println("blank response " +blankResponse.toString());
 		
 	    String json = httpEntity.getBody();
 		System.out.println("json string"+ json);
 		
-		//CREATE NEW OFFER and TCustomerResponse  & update cpo status to 1
-		//GET selected tCpo records
-		String cpoid = blankResponse.getTOffer().getId();
-		TCpo cpo = new TCpo();
-		TOffer newOffer = new TOffer();
-		String id_newOffer = GenerateUUID.getUUID();
-		newOffer.setId(id_newOffer);
+		//Execute save offer and response
+		Pair<Integer, String> result = responseService.saveCustomer(blankResponse);
 		
-		if(blankResponse.getTOffer().getId() != null && blankResponse.getTOffer().getId() != ""){
-			cpo = cpoRepo.findbyId(cpoid);
-			
-			//SET tcpo records to new offer
-			newOffer.setArea(cpo.getArea());
-			newOffer.setBranchCategory(cpo.getBranchCategory());
-			newOffer.setBranchProduct(cpo.getBranchProduct());
-			newOffer.setChannel(cpo.getChannel());
-			newOffer.setCreatedon(new Timestamp(System.currentTimeMillis()));
-			newOffer.setExpirydate(cpo.getExpirydate());
-			newOffer.setIncome(cpo.getIncome());
-			newOffer.setIndicativeLimit(cpo.getIndicativeLimit());
-			newOffer.setIshunter(false);
-			newOffer.setModelId(cpo.getModelId());
-			//newOffer.setModifiedon(cpo.getModifiedon());
-			newOffer.setNominal(cpo.getNominal());
-			newOffer.setOfferdate(new Timestamp(System.currentTimeMillis()));
-			newOffer.setProductId(cpo.getProductId());
-			newOffer.setProgram(cpo.getProgram());
-			newOffer.setRac(cpo.getRac());
-			newOffer.setRegion(cpo.getRegion());
-			newOffer.setScript(cpo.getScript());
-			newOffer.setSequence(cpo.getSequence());
-			newOffer.setSourceType(cpo.getSourceType());
-			newOffer.setStatus(blankResponse.getResponseResult());
-			newOffer.setTCpi(cpo.getTCpi());
-			//Save single customer response
-			blankResponse.setTOffer(newOffer);
-			List<TCustomerResponse> listResponse = new ArrayList<TCustomerResponse>();
-			listResponse.add(blankResponse);
-			newOffer.setTCustomerResponses(listResponse);
-			newOffer.setUserprofile1(blankResponse.getUserprofile1());
-		}
-		else{
-			//newOffer.setArea(cpo.getArea());
-			//newOffer.setBranchCategory(cpo.getBranchCategory());
-			//newOffer.setBranchProduct(cpo.getBranchProduct());
-			//newOffer.setChannel(cpo.getChannel());
-			newOffer.setCreatedon(new Timestamp(System.currentTimeMillis()));
-			//newOffer.setExpirydate(cpo.getExpirydate());
-			//newOffer.setIncome(cpo.getIncome());
-			//newOffer.setIndicativeLimit(cpo.getIndicativeLimit());
-			newOffer.setIshunter(false);
-			//newOffer.setModelId(cpo.getModelId());
-			//newOffer.setModifiedon(cpo.getModifiedon());
-			//newOffer.setNominal(cpo.getNominal());
-			newOffer.setOfferdate(new Timestamp(System.currentTimeMillis()));
-			newOffer.setProductId(blankResponse.getTProduct1().getProductId());
-			newOffer.setProgram(blankResponse.getProgram());
-			//newOffer.setRac(cpo.getRac());
-			//newOffer.setRegion(cpo.getRegion());
-			//newOffer.setScript(cpo.getScript());
-			//newOffer.setSequence(cpo.getSequence());
-			//newOffer.setSourceType(cpo.getSourceType());
-			newOffer.setStatus(blankResponse.getResponseResult());
-			newOffer.setTCpi(blankResponse.getTCpi());
-			//Save single customer response
-			blankResponse.setTOffer(newOffer);
-			List<TCustomerResponse> listResponse = new ArrayList<TCustomerResponse>();
-			listResponse.add(blankResponse);
-			newOffer.setTCustomerResponses(listResponse);
-			newOffer.setUserprofile1(blankResponse.getUserprofile1());
-		}
-		 try {
-			 if(cpoid != null || cpoid != ""){
-				 cpoRepo.setFlagTcpo(cpo.getCpoId());
-			 }
-			 tofferRepo.save(newOffer);
-			 //tresponseRepo.save(blankResponse);
-		  } catch (Exception ex) {
-			  System.out.println(ex.getStackTrace());
-		    // trigger rollback programmatically
-		    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		    returnMessage = "Tangggapan tidak berhasil disimpan";
-		  }
-		
-		 returnMessage = "Tanggapan berhasil disimpan";
-		
-		 System.out.println("TCpoid = "+cpo.getCpoId()+" / Offerid = "+ newOffer.getId());
-		 
-		return returnMessage;
+		return result.getSecond();
 	}
 
 	@GetMapping(value={"/getDetailProduct"})
