@@ -139,13 +139,8 @@ public class DashboardService {
 			
 			f.setCif2((String) data[16]);
 			f.setAccountno((String) data[17]);
-			f.setCreatedon3(customeUtil.formatDate((Date) data[18]));
-			f.setCreatedby3((String) data[19]);
-			f.setModifiedon3((String) data[20]);
-			f.setModifiedby3((String) data[21]);
-			
-			f.setAccountNumber((String) data[22]);
-			f.setCardNumber((String) data[23]);
+			f.setAccountNumber((String) data[18]);
+			f.setCardNumber((String) data[19]);
 			
 			lsDataSearch.add(f);
 		}
