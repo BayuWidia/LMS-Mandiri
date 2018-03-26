@@ -1,5 +1,7 @@
 package com.mandiri.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,12 @@ public class TCpiServiceImpl implements TCpiService {
 		// TODO Auto-generated method stub
 		
 		return tCpiRepository.findbyCif(cif);
+	}
+
+	@Override
+	public List<TCpi> getAllTcpis() {
+		// TODO Auto-generated method stub
+		return tCpiRepository.findAll();
 	}
 
 }

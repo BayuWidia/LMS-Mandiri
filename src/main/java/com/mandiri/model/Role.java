@@ -2,7 +2,6 @@ package com.mandiri.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -21,10 +20,6 @@ public class Role implements Serializable {
 	private String desstatus;
 
 	private Integer idroles;
-
-	//bi-directional many-to-one association to Userprofile
-	@OneToMany(mappedBy="role")
-	private List<Userprofile> userprofiles;
 
 	public Role() {
 	}
@@ -51,28 +46,6 @@ public class Role implements Serializable {
 
 	public void setIdroles(Integer idroles) {
 		this.idroles = idroles;
-	}
-
-	public List<Userprofile> getUserprofiles() {
-		return this.userprofiles;
-	}
-
-	public void setUserprofiles(List<Userprofile> userprofiles) {
-		this.userprofiles = userprofiles;
-	}
-
-	public Userprofile addUserprofile(Userprofile userprofile) {
-		getUserprofiles().add(userprofile);
-		userprofile.setRole(this);
-
-		return userprofile;
-	}
-
-	public Userprofile removeUserprofile(Userprofile userprofile) {
-		getUserprofiles().remove(userprofile);
-		userprofile.setRole(null);
-
-		return userprofile;
 	}
 
 }

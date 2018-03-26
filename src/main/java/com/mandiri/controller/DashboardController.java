@@ -217,5 +217,11 @@ public class DashboardController {
 		
 		return "dashboard";
 	}
+	
+	
+	@RequestMapping(path="/tcpi", method=RequestMethod.GET)
+	public List<TCpi> getAllEmployees(){
+		return tCpiService.getAllTcpis();
+	}
 
 }
