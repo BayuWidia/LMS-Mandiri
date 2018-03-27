@@ -50,11 +50,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-            .withUser("2222222223").password("123").roles("CSR");
-//		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-//				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
-//				.dataSource(dataSource).passwordEncoder(passwordEncoder());
+	//protected void configure(AuthenticationManagerBuilder auth){
+		//auth.inMemoryAuthentication()
+        //    .withUser("2222222223").password("123").roles("CSR");
+		
+		auth.jdbcAuthentication()
+		.dataSource(dataSource)
+		.usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
+		//.passwordEncoder(bCryptPasswordEncoder);
+		.passwordEncoder(new Md5PasswordEncoder());
+		
+		//------------------------------------------KETENTUAN WAJIB--------------------------
+		//MD5 gak boleh upper case - harus lower case semua yang di database
 	}
 	
 //	@Bean
@@ -64,10 +71,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //	}
 
 //	@Bean
-//    public PasswordEncoder passwordEncoder(){
-//        PasswordEncoder encoder = (PasswordEncoder) new Md5PasswordEncoder();
-//        return encoder;
-//    }
+//	public PasswordEncoder passwordEncoder(){
+//	    //PasswordEncoder encoder = (PasswordEncoder) new Md5PasswordEncoder();
+//		return (PasswordEncoder) new Md5PasswordEncoder();
+//	    //return encoder;
+//	}
 	 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
