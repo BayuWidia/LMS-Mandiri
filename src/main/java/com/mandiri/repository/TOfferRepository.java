@@ -11,6 +11,7 @@ import com.mandiri.model.TOffer;
 
 @Repository
 public interface TOfferRepository extends JpaRepository<TOffer, Long> {
-	@Query(value = "SELECT c FROM TOffer c where c.TCpi.cif = :cif and c.status = 0 ")
+	//@Query(value = "SELECT c FROM TOffer c where c.TCpi.cif = :cif and c.status = 0 ")
+	@Query(value = "SELECT c FROM TOffer c where c.TCpi.cif = :cif ")
 	List<TOffer> findbyCif(@Param("cif") String cif);
 }

@@ -247,6 +247,14 @@ public class CustomerController {
 		return listKeytracking;
 	}
 	
+	@GetMapping(value = "/response/{cif}")
+	public String showGuestList(Model model, @PathVariable("cif") String cif) {
+	    model.addAttribute("listResponse", tresponseRepo.findbyCif(cif));
+
+	    return "response/customerActivityList";
+	}
+
+	
 //	
 //	//Testing post from ajax
 //	@GetMapping(value={"/Test"})

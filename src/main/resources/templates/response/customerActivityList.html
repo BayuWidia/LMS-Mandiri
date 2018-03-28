@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<body th:fragment="customerActivityList">
+   	<!--Start-->
+   	<div th:each="response : ${listResponse}">
+    	<div class="timeline-item clearfix">
+			<div class="timeline-info">
+				<i th:class="'timeline-indicator ace-icon fa fa-clock-o btn no-hover ' + (${response.responseResult == 2} ? 'btn-success' : (${response.responseResult == 1} ? 'btn-danger' : 'btn-primary'))"></i>
+			</div>
+
+			<div th:class="${response.responseResult == 2} ? 'widget-box widget-color-green' : (${response.responseResult == 1} ? 'widget-box widget-color-red' : 'widget-box widget-color-blue')">
+				<div class="widget-header widget-header-small">
+					<h5 class="widget-title smaller" th:text="${#dates.dayOfWeekName(response.createdon)}"></h5>
+					<span class="widget-toolbar no-border">
+						<i class="ace-icon fa fa-clock-o bigger-110"></i>
+						<span th:text="${#dates.format(response.createdon, 'dd MMMM yyyy HH:mm')}"></span>
+					</span>
+				</div>
+
+				<div class="widget-body">
+					<div class="widget-main">
+						<b>Produk</b> <span class="green bolder" th:text="${response.program.TProduct.productName} +' ('+${response.program.name} + ')'"></span>
+						<br />
+						<b>Tanggapan : </b> 
+						<span class="Red bolder" th:switch="${response.responseResult}">
+				        	<span th:case="'0'">Ya</span>
+				        	<span th:case="'1'">Tidak</span>
+				        	<span th:case="'2'">To Be Follow Up</span>
+				        	<span th:case="'*'"></span>
+						</span>
+						<br />
+						<b>Oleh : </b> <span class="Warning bolder" th:text="${response.userprofile1.name}"></span>
+						<br />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End -->
+  
+</body>
+</html>

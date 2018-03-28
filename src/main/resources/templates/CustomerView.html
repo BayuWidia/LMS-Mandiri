@@ -140,7 +140,7 @@
 					            <!-- Form Tidak dan followup/ragu2 -->
 					            <div class="form-group required cfol ctdk">
 					              <label class="control-label">Alasan Nasabah</label>
-					              <select class="form-control ffol ftdk" th:field="*{reason}">
+					              <select class="form-control ffol ftdk" th:field="*{reason.id}">
 										
 					              </select>
 					            </div>
@@ -350,43 +350,14 @@
 				    </div>
 				    <!--Rigth Side - Customer Activities-->
 				    <div class="panel panel-default col-sm-4">
-				    	<div class="panel-body">Aktivitas Customer</div>
-				    	<!--Start-->
-				    	<div th:each="response : ${listResponse}">
-					    	<div class="timeline-item clearfix">
-								<div class="timeline-info">
-									<i class="timeline-indicator ace-icon fa fa-clock-o btn btn-primary no-hover"></i>
-								</div>
-	
-								<div class="widget-box widget-color-blue">
-									<div class="widget-header widget-header-small">
-										<h5 class="widget-title smaller" th:text="${#dates.dayOfWeekName(response.createdon)}"></h5>
-										<span class="widget-toolbar no-border">
-											<i class="ace-icon fa fa-clock-o bigger-110"></i>
-											<span th:text="${#dates.format(response.createdon, 'dd MMMM yyyy HH:mm')}"></span>
-										</span>
-									</div>
-	
-									<div class="widget-body">
-										<div class="widget-main">
-											<b>Produk</b> <span class="green bolder" th:text="${response.program.TProduct.productName} +' ('+${response.program.name} + ')'"></span>
-											<br />
-											<b>Tanggapan : </b> 
-											<span class="Red bolder" th:switch="${response.responseResult}">
-									        	<span th:case="'0'">Ya</span>
-									        	<span th:case="'1'">Tidak</span>
-									        	<span th:case="'2'">To Be Follow Up</span>
-									        	<span th:case="'*'"></span>
-											</span>
-											<br />
-											<b>Oleh : </b> <span class="Warning bolder" th:text="${response.userprofile1.name}"></span>
-											<br />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End -->
+				    	<div class="panel-body" id="responseTrigger">Aktivitas Customer</div>
+				    </div>
+				    <div class="panel panel-default col-sm-4" >
+				    	<div class="panel-body" id="divResponse">
+				    		<!--Start-->
+				    			<!--/*/ <th:block th:replace="response/customerActivityList :: customerActivityList"></th:block> /*/-->
+							<!-- End -->
+				    	</div>
 				    </div>
 				  </div>
 				</div>
@@ -597,14 +568,16 @@
 		var p_group = $('option:selected', '#TProduct1').attr('class');
 		//Ragu-ragu - follow up
 		if(responseValue == '2'){
-			getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
+			//getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
+			getSelectOption("select[id='reason.id']", '/getReasonList?productGroup=DOUBT', 'Reason');
+			//$("select[id='reason.id']").val(cpoid);
 			$('.cfol').show();
 			$('ffol').attr('required', true);
 		}
 		//Tidak
 		else if(responseValue == '1'){
 			//getSelectOption('#reason', '/getReasonList?productGroup='+p_group, 'Reason');
-			getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
+			getSelectOption("select[id='reason.id']", '/getReasonList?productGroup=DOUBT', 'Reason');
 			$('.ctdk').show();
 			$('.ftdk').attr('required', true);
 		}
@@ -616,6 +589,16 @@
 		}
 	}
 	
+	function retrieveResponse(cif) {
+	    var url = '/response';
+        url = url + '/' + cif;
+
+	    $("#divResponse").load(url);
+	}
+	
+// 	$('#responseTrigger').click(function(){
+// 		retrieveResponse('10000157089');
+// 	});
 	
 	$(document).ready(function(){
 		var $form = $('#blankResponse');
