@@ -19,5 +19,6 @@
 		<class>com.mandiri.model.Viewkeytracking</class>
 		<class>com.mandiri.model.Viewproduct</class>
 		<class>com.mandiri.model.Viewprogram</class>
+		<class>com.mandiri.model.Viewreason</class>
 	</persistence-unit>
 </persistence>

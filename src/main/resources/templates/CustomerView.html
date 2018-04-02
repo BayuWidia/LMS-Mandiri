@@ -514,7 +514,7 @@
 	                    html += '<option value="' + selectData[i].id + '">'
 	                            + selectData[i].name + '</option>';
 	                }
-// 	                html += '</option>';
+	                html += '</option>';
 	                $(selectid).html(html);
 		      },
 		      error: function(e){
@@ -603,6 +603,7 @@
 	$(document).ready(function(){
 		var $form = $('#blankResponse');
 		  $form.on('submit', function(e) {
+			  alert('form submit');
 		    e.preventDefault();
 		    $.ajax({
 		      url: $form.attr('action'),

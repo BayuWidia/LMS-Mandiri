@@ -38,11 +38,13 @@ import com.mandiri.model.Userprofile;
 import com.mandiri.model.Viewkeytracking;
 import com.mandiri.model.Viewproduct;
 import com.mandiri.model.Viewprogram;
+import com.mandiri.model.Viewreason;
 import com.mandiri.repository.CampaignRepository;
 import com.mandiri.repository.GroupProductRepository;
 import com.mandiri.repository.KeytrackingRepository;
 import com.mandiri.repository.ViewProductRepository;
 import com.mandiri.repository.ViewProgramRepository;
+import com.mandiri.repository.ViewReasonRepository;
 import com.mandiri.repository.ProgramRepository;
 //import com.mandiri.repository.CustomerProductRepository;
 import com.mandiri.repository.TCpiRepository;
@@ -105,6 +107,8 @@ public class CustomerController {
 	private ViewProgramRepository viewProgramRepo;
 	@Autowired
 	private ViewKeytrackingRepository viewKeytrackingRepo;
+	@Autowired
+	private ViewReasonRepository viewReasonRepo;
 	@Autowired
 	SessionController sessionController;
 	@Autowired
@@ -205,10 +209,10 @@ public class CustomerController {
 	
 	@GetMapping(value={"/getReasonList"})
 	@ResponseBody
-	public List<Reason> getReasonList(@RequestParam("productGroup") String productGroup){
+	public List<Viewreason> getReasonList(@RequestParam("productGroup") String productGroup){
 		System.out.println(productGroup);
 		
-		List<Reason> listReason = reasonRepo.findbyGroup(productGroup);
+		List<Viewreason> listReason = viewReasonRepo.findbyGroup(productGroup);
 		
 		return listReason;
 	}
