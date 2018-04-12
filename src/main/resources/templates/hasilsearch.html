@@ -138,7 +138,7 @@
 												<div class="col-xs-12 col-sm-10">
 													<div class="input-group">
 														<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
-														<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
+														<select class="form-control kategori_hidden" th:field="*{kategori}" hidden="true">
 															<option value="NIK" id="flag_nik">NIK</option>
 															<option value="PHONE" id="flag_phone">No Telp</option>
 															<option value="CIF" id="flag_cif">CIF</option>
@@ -286,7 +286,10 @@
 		
 		$('.btn_name').click(function(){
 			resetKategori();
-			$('#flag_name').attr('selected', true);
+			//$('#flag_name').attr('selected', true);
+			//$('#flag_name').attr('selected', true);
+			$('#kategori').val('NAME');
+			alert($('#kategori').val());
 		});
 		
 		$('.btn_norek').click(function(){
@@ -540,6 +543,12 @@
 				return 'left';
 			}
 		})
+		
+		$('#pencarian').keypress(function(event) {
+		    if (event.keyCode == 13) {
+		        event.preventDefault();
+		    }
+		});
 	</script>
 
 

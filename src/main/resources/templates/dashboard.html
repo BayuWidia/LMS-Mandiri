@@ -345,6 +345,12 @@
 			resetKategori();
 			$('#flag_nokar').attr('selected', true);
 		});
+		
+		$('#pencarian').keypress(function(event) {
+		    if (event.keyCode == 13) {
+		        event.preventDefault();
+		    }
+		});
 	</script>
 	
 	

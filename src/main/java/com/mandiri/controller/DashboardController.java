@@ -128,7 +128,7 @@ public class DashboardController {
 		String strDay = fmtDay.format(date);
 		
 		if (strKategori.equalsIgnoreCase("NIK")) {
-			strKategori = "Nomor Induk Karyawan";
+			strKategori = "Nomor Identitas";
 		} else if (strKategori.equalsIgnoreCase("PHONE")){
 			strKategori = "Telephone";
 		} else if (strKategori.equalsIgnoreCase("NAME")){

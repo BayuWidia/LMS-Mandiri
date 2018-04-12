@@ -403,7 +403,7 @@
 	//Show popup detail
 	function showDetailProduct(id){
 		$.ajax({
-		      url: '/getDetailProduct?id='+id,
+		      url: '../getDetailProduct?id='+id,
 		      type: 'get',
 		      success: function(response) {
 		    	  $("#modalDetailBody").html(response);
@@ -417,7 +417,7 @@
 	//Show popup detail
 	function getScriptCpo(id){
 		$.ajax({
-		      url: '/getScriptCpo?id='+id,
+		      url: '../getScriptCpo?id='+id,
 		      type: 'get',
 		      success: function(response) {
 		    	  $("#modalDetailBody").html(response);
@@ -462,7 +462,7 @@
 	$('#TProduct1').change(function(){
 		resetResponseLevel2();
 		$('#divResponseStart').show();
-		getSelectOption('#program', '/getProgrambyProduct?productid='+this.value, 'Program');
+		getSelectOption('#program', '../getProgrambyProduct?productid='+this.value, 'Program');
 	});
 	
 	$('#program').change(function(){
@@ -525,7 +525,7 @@
 	
 	function getProductbyGroup(groupproductid){
 		$.ajax({
-		      url: '/getProductbyGroup?groupproductid='+groupproductid,
+		      url: '../getProductbyGroup?groupproductid='+groupproductid,
 		      type: 'get',
 		      success: function(data) {
 		    	  	var html = '<option value="">--Pilih Produk--</option>';
@@ -548,7 +548,7 @@
 		var programid = $('#program').val();
 		$.ajax({
 		      //url: '/getKeytrackingbyProgram?programid='+programid,
-    		  url: '/getKeytrackingbyProgram?programid='+programid,
+    		  url: '../getKeytrackingbyProgram?programid='+programid,
 		      type: 'get',
 		      success: function(data) {
 	                var len = data.length;
@@ -569,7 +569,7 @@
 		//Ragu-ragu - follow up
 		if(responseValue == '2'){
 			//getSelectOption('#reason', '/getReasonList?productGroup=DOUBT', 'Reason');
-			getSelectOption("select[id='reason.id']", '/getReasonList?productGroup=DOUBT', 'Reason');
+			getSelectOption("select[id='reason.id']", '../getReasonList?productGroup=DOUBT', 'Reason');
 			//$("select[id='reason.id']").val(cpoid);
 			$('.cfol').show();
 			$('ffol').attr('required', true);
@@ -577,7 +577,7 @@
 		//Tidak
 		else if(responseValue == '1'){
 			//getSelectOption('#reason', '/getReasonList?productGroup='+p_group, 'Reason');
-			getSelectOption("select[id='reason.id']", '/getReasonList?productGroup=DOUBT', 'Reason');
+			getSelectOption("select[id='reason.id']", '../getReasonList?productGroup=DOUBT', 'Reason');
 			$('.ctdk').show();
 			$('.ftdk').attr('required', true);
 		}
