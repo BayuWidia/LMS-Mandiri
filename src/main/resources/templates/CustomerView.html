@@ -44,9 +44,9 @@
 								<input type="hidden" th:field="*{TCpi.cif}" />
 								<input type="hidden" th:field="*{TOffer.id}" class="TOffer_id" />
 								
-								<div class="form-group required">
+								<div class="form-group required divIsnew">
 					              <label class="control-label">Product Group</label>
-					              <select class="form-control" id="pgroup" required>
+					              <select class="form-control formIsnew" id="pgroup" required>
 					              <option value="">-- Pilih Group --</option>
 					                  <option th:each="pgroup : ${listGroupProduct}"
 					                     th:value="${pgroup.id}"
@@ -55,9 +55,9 @@
 					              </select>
 					            </div>
 								
-					            <div class="form-group required">
+					            <div class="form-group required divIsnew">
 					              <label class="control-label">Nama Produk</label>
-					              <select class="form-control" th:field="*{TProduct1}" required>
+					              <select class="form-control formIsnew" th:field="*{TProduct1}" required>
 <!-- 					              <option value="">-- Pilih Produk --</option> -->
 <!-- 					                  <option th:each="TProduct1 : ${listProduk}" -->
 <!-- 					                     th:value="${TProduct1.productId}" -->
@@ -66,9 +66,9 @@
 <!-- 					                     /> -->
 					              </select>
 					            </div>
-					            <div class="form-group required">
+					            <div class="form-group divIsnew required">
 					              <label class="control-label">Program</label>
-					              <select class="form-control" th:field="*{program}" required></select>
+					              <select class="form-control formIsnew" th:field="*{program}" required></select>
 					            </div>
 					            
 					            <div class="form-group required cHead">
@@ -440,6 +440,9 @@
 		$('#pgroup').val(groupid);
 		setSelectList('#TProduct1', produkid, produkname);
 		setSelectList('#program', programid, programname);
+		
+		$('.divIsnew').hide();
+		//$('.formIsnew').attr('disabled', 'disabled');
 	};
 	
 	//Event button tambah penawaran baru
@@ -447,6 +450,9 @@
 		$("input[id='TOffer.id']").val('');
 		resetResponseTotal();
 		$('#penawaranTitle').html('Tambah Penawaran Baru');
+		
+		$('.divIsnew').show();
+		//$('.formIsnew').removeAttr('disabled');
 	});
 	
 	//Populate combo box product

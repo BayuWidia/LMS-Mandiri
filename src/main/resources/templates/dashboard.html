@@ -30,12 +30,12 @@
 						</div>
 					</div>
 					<!-- /.page-header -->
-				
+					<div class="container">
 					<div class="row">
-						<div class="col-xs-12">
-							<div class="widget-box" style="color: #DDEEEE; border-radius: 2px" th:if="${userActivityRight} != empty">
-								<div class="widget-body">
-									<div class="widget-main">
+						<div class="col-xs-9">
+							<div th:if="${userActivityRight} != empty">
+								<div class="">
+									<div class="">
 										<form class="form-search" th:action="@{/dashboard-search}"
 										th:object="${dashboardFilter}" method="POST">
 											<div class="row">
@@ -91,6 +91,7 @@
 								</div>
 							</div>
 						</div>
+					</div>
 					</div>
 					<br>
 					<div class="row">
