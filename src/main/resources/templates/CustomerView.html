@@ -248,7 +248,11 @@
 								    <tr>
 								      <td>Tempat / Tanggal Lahir</td>
 								      <td>:</td>
-								      <td th:text="${customer.birthPlace} +' / ' + ${#dates.format(customer.birthDate, 'dd MMMM yyyy')}"></td>
+								      <td>
+								      	<span th:text="${customer.birthPlace} +' / ' "></span>
+								      	<span th:text="${customer.birthDate != null} ? ${#dates.format(customer.birthDate, 'dd MMMM yyyy')} : ' ' " ></span>
+<!-- 								      	<span th:text="${#dates.format(customer.birthDate, 'dd MMMM yyyy')}"></span> -->
+								      </td>
 								    </tr>
 								    <tr>
 								      <td>Alamat</td>
@@ -609,7 +613,6 @@
 	$(document).ready(function(){
 		var $form = $('#blankResponse');
 		  $form.on('submit', function(e) {
-			  alert('form submit');
 		    e.preventDefault();
 		    $.ajax({
 		      url: $form.attr('action'),

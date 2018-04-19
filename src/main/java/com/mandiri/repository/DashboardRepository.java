@@ -24,7 +24,7 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			+ "cpi.modifiedon as cpi_modifiedon, cpi.createdby as cpi_createdby, cpi.modifiedby as cpi_modifiedby, "
 			+ "cpi.cif as cpi_cif, cph.account_number, cph.account_number as cph_account_number, "
 			+ "cph.card_number as cph_card_number "
-			+ "FROM dev_lms.t_cpi cpi inner join dev_lms.t_cph cph on cpi.cif = cph.cif "
+			+ "FROM dev_lms.t_cpi cpi left join dev_lms.t_cph cph on cpi.cif = cph.cif "
 			+ "where (:Nik is null or (:Nik is not null and lower(cpi.nik) LIKE CONCAT('%', :Nik, '%'))) ",
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByNik(@Param("Nik") String Nik);
@@ -34,7 +34,7 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			+ "cpi.modifiedon as cpi_modifiedon, cpi.createdby as cpi_createdby, cpi.modifiedby as cpi_modifiedby, "
 			+ "cpi.cif as cpi_cif, cph.account_number, cph.account_number as cph_account_number, "
 			+ "cph.card_number as cph_card_number "
-			+ "FROM dev_lms.t_cpi cpi inner join dev_lms.t_cph cph on cpi.cif = cph.cif "
+			+ "FROM dev_lms.t_cpi cpi left join dev_lms.t_cph cph on cpi.cif = cph.cif "
 			+ "where (:Phone is null or (:Phone is not null and lower(cpi.hp) LIKE CONCAT('%', :Phone, '%'))) ",
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByPhone(@Param("Phone") String Phone);
@@ -44,7 +44,7 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			+ "cpi.modifiedon as cpi_modifiedon, cpi.createdby as cpi_createdby, cpi.modifiedby as cpi_modifiedby, "
 			+ "cpi.cif as cpi_cif, cph.account_number, cph.account_number as cph_account_number, "
 			+ "cph.card_number as cph_card_number "
-			+ "FROM dev_lms.t_cpi cpi inner join dev_lms.t_cph cph on cpi.cif = cph.cif "
+			+ "FROM dev_lms.t_cpi cpi left join dev_lms.t_cph cph on cpi.cif = cph.cif "
 			+ "where (:Name is null or (:Name is not null and lower(cpi.name) LIKE CONCAT('%', :Name, '%'))) ",
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByName(@Param("Name") String Name);
@@ -54,7 +54,7 @@ public interface DashboardRepository extends JpaRepository<TAuditTrail, Long> {
 			+ "cpi.modifiedon as cpi_modifiedon, cpi.createdby as cpi_createdby, cpi.modifiedby as cpi_modifiedby, "
 			+ "cpi.cif as cpi_cif, cph.account_number, cph.account_number as cph_account_number, "
 			+ "cph.card_number as cph_card_number "
-			+ "FROM dev_lms.t_cpi cpi inner join dev_lms.t_cph cph on cpi.cif = cph.cif "
+			+ "FROM dev_lms.t_cpi cpi left join dev_lms.t_cph cph on cpi.cif = cph.cif "
 			+ "where (:Cif is null or (:Cif is not null and CAST(cpi.cif AS TEXT) LIKE CONCAT('%', :Cif, '%'))) ",
 			nativeQuery = true)
 	List<Object[]> findJoinSearchByCif(@Param("Cif") BigInteger Cif);
