@@ -32,15 +32,15 @@
 					<!-- /.page-header -->
 					<div class="container">
 					<div class="row">
-						<div class="col-xs-9">
+						<div class="col-sm-12">
 							<div th:if="${userActivityRight} != empty">
 								<div class="">
 									<div class="">
 										<form class="form-search" th:action="@{/dashboard-search}"
 										th:object="${dashboardFilter}" method="POST">
 											<div class="row">
-												<div class="col-xs-12 col-sm-10">
-													<div class="input-group">
+												<div class="col-sm-12">
+													<div class="input-group row">
 														<input type="text" placeholder="Cari No.Kartu,NIK,Telp,CIF,Nama,No.Rekening..."  class="form-control search-query" th:field="*{pencarian}" required="required"/>
 														<select class="form-control kategori_hidden" id="form-field-select-1" th:field="*{kategori}" hidden="true">
 															<option value="NIK" id="flag_nik">NIK</option>

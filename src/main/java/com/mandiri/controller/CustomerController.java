@@ -113,7 +113,9 @@ public class CustomerController {
 	SessionController sessionController;
 	@Autowired
 	private ResponseService responseService;
-
+	@Autowired
+	private UserProfileService userProfileService;
+	
 	@Autowired
 	private TCpiService customerService;
 	
@@ -131,10 +133,10 @@ public class CustomerController {
 	@GetMapping(value={"/customer-view/{cif}"})
 	public String customerEdit(@PathVariable String cif, Model model, HttpSession session){
 		sessionController.getSession(model, session);
-			
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//User user = userService.findUserByUsername(auth.getName());
-		//TCpi customer = customerService.findCustomerByCif(Long.valueOf(cif));
+		Userprofile user = userProfileService.findUserProfileByNip(auth.getName());
+		model.addAttribute("userName", user.getName());
 			
 		System.out.println(System.getProperty("catalina.base"));
 		
